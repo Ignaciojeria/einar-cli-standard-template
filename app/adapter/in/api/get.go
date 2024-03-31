@@ -16,7 +16,8 @@ type templateGet struct {
 
 func newTemplateGet(conf configuration.Conf) error {
 	adapter := templateGet{}
-	pattern := http.MethodGet + " " + conf.ApiPrefix +
+	const httpMethod = http.MethodGet + " "
+	pattern := httpMethod + conf.ApiPrefix +
 		"/insert-your-custom-pattern-here"
 	log.Println(pattern)
 	http.HandleFunc(pattern, adapter.handle)

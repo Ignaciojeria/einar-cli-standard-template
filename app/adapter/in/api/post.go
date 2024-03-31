@@ -16,7 +16,8 @@ type templatePost struct {
 
 func newTemplatePost(conf configuration.Conf) error {
 	adapter := templatePost{}
-	pattern := http.MethodPost + " " + conf.ApiPrefix +
+	const httpMethod = http.MethodPost + " "
+	pattern := httpMethod + conf.ApiPrefix +
 		"/insert-your-custom-pattern-here"
 	log.Println(pattern)
 	http.HandleFunc(pattern, adapter.handle)
