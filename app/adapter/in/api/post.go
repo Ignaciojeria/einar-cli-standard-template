@@ -15,14 +15,14 @@ type templatePost struct {
 }
 
 func newTemplatePost(conf configuration.Conf) error {
-	post := templatePost{}
+	adapter := templatePost{}
 	pattern := http.MethodPost + " " + conf.ApiPrefix +
 		"/insert-your-custom-pattern-here"
 	log.Println(pattern)
-	http.HandleFunc(pattern, post.handler)
+	http.HandleFunc(pattern, adapter.handle)
 	return nil
 }
 
-func (api templatePost) handler(w http.ResponseWriter, r *http.Request) {
+func (api templatePost) handle(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Unimplemented")
 }
