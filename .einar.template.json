@@ -81,6 +81,81 @@
                     }
                 ]
             }]
+        },
+        {
+            "kind":"put-controller",
+            "adapter_type":"inbound",
+            "command":"einar generate put-controller ${operation_name}",
+            "depends_on":[""],
+            "files": [{
+                "source_file": "app/adapter/in/api/put.go",
+                "destination_dir": "app/adapter/in/api",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"camelCase",
+                        "name": "templatePut",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "newTemplatePut",
+                        "append_at_start":"new",
+                        "append_at_end":""
+                    }
+                ]
+            }]
+        },
+        {
+            "kind":"patch-controller",
+            "adapter_type":"inbound",
+            "command":"einar generate patch-controller ${operation_name}",
+            "depends_on":[""],
+            "files": [{
+                "source_file": "app/adapter/in/api/put.go",
+                "destination_dir": "app/adapter/in/api",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"camelCase",
+                        "name": "templatePatch",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "newTemplatePatch",
+                        "append_at_start":"new",
+                        "append_at_end":""
+                    }
+                ]
+            }]
+        },
+        {
+            "kind":"delete-controller",
+            "adapter_type":"inbound",
+            "command":"einar generate delete-controller ${operation_name}",
+            "depends_on":[""],
+            "files": [{
+                "source_file": "app/adapter/in/api/put.go",
+                "destination_dir": "app/adapter/in/api",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"camelCase",
+                        "name": "templateDelete",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "newTemplateDelete",
+                        "append_at_start":"new",
+                        "append_at_end":""
+                    }
+                ]
+            }]
         }
     ]
 }
