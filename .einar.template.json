@@ -113,7 +113,7 @@
             "command":"einar generate patch-controller ${operation_name}",
             "depends_on":[""],
             "files": [{
-                "source_file": "app/adapter/in/api/put.go",
+                "source_file": "app/adapter/in/api/patch.go",
                 "destination_dir": "app/adapter/in/api",
                 "ioc_discovery":true,
                 "replace_holders": [
@@ -138,7 +138,7 @@
             "command":"einar generate delete-controller ${operation_name}",
             "depends_on":[""],
             "files": [{
-                "source_file": "app/adapter/in/api/put.go",
+                "source_file": "app/adapter/in/api/delete.go",
                 "destination_dir": "app/adapter/in/api",
                 "ioc_discovery":true,
                 "replace_holders": [
