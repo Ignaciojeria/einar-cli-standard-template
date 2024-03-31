@@ -1,0 +1,55 @@
+{
+    "installations_base": [
+        {
+            "name":"godotenv",
+            "library": "github.com/joho/godotenv"
+        },
+        {
+            "name":"einar-ioc",
+            "library": "github.com/Ignaciojeria/einar-ioc@v1.6.0"
+        }
+    ],
+    "base_template": {
+       "folders": [
+            {
+                "source_dir": "app/configuration",
+                "destination_dir": "app/configuration"
+            }
+        ],
+        "files": [
+            {
+                "source_file": "main.go",
+                "destination_file": "main.go"
+            },
+            {
+                "source_file": ".env",
+                "destination_file": ".env"
+            },
+            {
+                "source_file": ".gitignore",
+                "destination_file": ".gitignore"
+            }
+        ]
+    },    
+    "component_commands":[
+        {
+            "kind":"get-controller",
+            "adapter_type":"inbound",
+            "command":"einar generate get-controller ${operation_name}",
+            "depends_on":[""],
+            "files": [{
+                "source_file": "app/adapter/in/controller/get_controller.go",
+                "destination_dir": "app/adapter/in/controller",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"camelCase",
+                        "name": "getController",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    }
+                ]
+            }]
+        }
+    ]
+}
