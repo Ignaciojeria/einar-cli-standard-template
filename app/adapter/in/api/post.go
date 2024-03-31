@@ -15,13 +15,14 @@ type templatePost struct {
 }
 
 func newTemplatePost(conf configuration.Conf) error {
-	templatePost := templatePost{}
-	path := http.MethodPost + " " + conf.ApiPrefix
-	log.Println(path)
-	http.HandleFunc(path, templatePost.handler)
+	post := templatePost{}
+	pattern := http.MethodPost + " " + conf.ApiPrefix +
+		"/insert-your-custom-pattern-here"
+	log.Println(pattern)
+	http.HandleFunc(pattern, post.handler)
 	return nil
 }
 
 func (api templatePost) handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hola, este es un servidor HTTP básico en Go!")
+	fmt.Fprintf(w, "Unimplemented")
 }
