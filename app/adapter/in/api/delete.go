@@ -16,7 +16,7 @@ type templateDelete struct {
 
 func newTemplateDelete(conf configuration.Conf) error {
 	adapter := templateDelete{}
-	pattern := http.MethodPut + " " + conf.ApiPrefix +
+	pattern := http.MethodDelete + " " + conf.ApiPrefix +
 		"/insert-your-custom-pattern-here"
 	log.Println(pattern)
 	http.HandleFunc(pattern, adapter.handle)
