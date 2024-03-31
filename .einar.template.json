@@ -38,13 +38,13 @@
             "command":"einar generate get-controller ${operation_name}",
             "depends_on":[""],
             "files": [{
-                "source_file": "app/adapter/in/controller/get_controller.go",
-                "destination_dir": "app/adapter/in/controller",
+                "source_file": "app/adapter/in/api/get.go",
+                "destination_dir": "app/adapter/in/api",
                 "ioc_discovery":true,
                 "replace_holders": [
                     {
                         "kind":"camelCase",
-                        "name": "getController",
+                        "name": "templateGet",
                         "append_at_start":"",
                         "append_at_end":""
                     }
