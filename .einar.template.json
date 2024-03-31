@@ -47,6 +47,12 @@
                         "name": "templateGet",
                         "append_at_start":"",
                         "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "newTemplateGet",
+                        "append_at_start":"new",
+                        "append_at_end":""
                     }
                 ]
             }]
