@@ -24,7 +24,7 @@ func NewConf() (Conf, error) {
 		ApiPrefix: os.Getenv("ApiPrefix"),
 	}
 	if conf.ApiPrefix == "" {
-		conf.ApiPrefix = "/api/"
+		conf.ApiPrefix = "/api"
 	}
 	if conf.Port == "" {
 		conf.Port = "8080"
