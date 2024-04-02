@@ -1,25 +1,20 @@
 package api
 
 import (
-	"archetype/app/configuration"
+	"archetype/app/infrastructure/server"
 	"fmt"
-	"log"
 	"net/http"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
 )
 
-var _ = ioc.Registry(newTemplateDelete, configuration.NewConf)
+var _ = ioc.Registry(newTemplateDelete, server.NewRouter)
 
 type templateDelete struct {
 }
 
-func newTemplateDelete(conf configuration.Conf) {
-	adapter := templateDelete{}
-	pattern := http.MethodDelete + " " + conf.ApiPrefix +
-		"/insert-your-custom-pattern-here"
-	log.Println(pattern)
-	http.HandleFunc(pattern, adapter.handle)
+func newTemplateDelete(router server.Router) {
+	router.DELETE("/insert-your-custom-pattern-here", templateDelete{}.handle)
 }
 
 func (api templateDelete) handle(w http.ResponseWriter, r *http.Request) {

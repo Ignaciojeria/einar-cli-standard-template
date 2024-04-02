@@ -1,25 +1,20 @@
 package api
 
 import (
-	"archetype/app/configuration"
+	"archetype/app/infrastructure/server"
 	"fmt"
-	"log"
 	"net/http"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
 )
 
-var _ = ioc.Registry(newTemplateGet, configuration.NewConf)
+var _ = ioc.Registry(newTemplateGet, server.NewRouter)
 
 type templateGet struct {
 }
 
-func newTemplateGet(conf configuration.Conf) {
-	adapter := templateGet{}
-	pattern := http.MethodGet + " " + conf.ApiPrefix +
-		"/insert-your-custom-pattern-here"
-	log.Println(pattern)
-	http.HandleFunc(pattern, adapter.handle)
+func newTemplateGet(router server.Router) {
+	router.GET("/insert-your-custom-pattern-here", templateGet{}.handle)
 }
 
 func (api templateGet) handle(w http.ResponseWriter, r *http.Request) {

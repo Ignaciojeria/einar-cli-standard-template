@@ -2,6 +2,8 @@ github.com/Ignaciojeria/einar-ioc v1.7.0 h1:3I/iy+qwZu5Rg3V37L/QyLiPMPetOGKNGwEF
 github.com/Ignaciojeria/einar-ioc v1.7.0/go.mod h1:PK1cQXnSEttRHHDo1hWgKGql+DENcvrBEsEnmoF3iVg=
 github.com/Ignaciojeria/einar-ioc v1.9.0 h1:i95Xr7FTu50zDy6mk+JMaDsjxamJp/2beg1KhCX/wbc=
 github.com/Ignaciojeria/einar-ioc v1.9.0/go.mod h1:anRroLb9+/EdPoyP4Lj+JDjS6xyvbMpG6/x4sHk6Dyk=
+github.com/Ignaciojeria/einar-ioc v1.10.0 h1:9xda1xMZbGz82emHCLBAYB2i0L27X8sh2wIhlNJa8xU=
+github.com/Ignaciojeria/einar-ioc v1.10.0/go.mod h1:anRroLb9+/EdPoyP4Lj+JDjS6xyvbMpG6/x4sHk6Dyk=
 github.com/emirpasic/gods v1.18.1 h1:FXtiHYKDGKCW2KzwZKx0iC0PQmdlorYgdFG9jPXJ1Bc=
 github.com/emirpasic/gods v1.18.1/go.mod h1:8tpGGwCnJ5H4r6BWwaV6OrWmMoPhUl5jm/FMNAnJvWQ=
 github.com/go-test/deep v1.1.0/go.mod h1:5C2ZWiW0ErCdrYzpqxLbTX7MG14M9iiw8DgHncVwcsE=
