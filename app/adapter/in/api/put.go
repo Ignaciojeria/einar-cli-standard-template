@@ -14,13 +14,12 @@ var _ = ioc.Registry(newTemplatePut, configuration.NewConf)
 type templatePut struct {
 }
 
-func newTemplatePut(conf configuration.Conf) error {
+func newTemplatePut(conf configuration.Conf) {
 	adapter := templatePut{}
 	pattern := http.MethodPut + " " + conf.ApiPrefix +
 		"/insert-your-custom-pattern-here"
 	log.Println(pattern)
 	http.HandleFunc(pattern, adapter.handle)
-	return nil
 }
 
 func (api templatePut) handle(w http.ResponseWriter, r *http.Request) {

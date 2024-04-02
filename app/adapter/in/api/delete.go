@@ -14,13 +14,12 @@ var _ = ioc.Registry(newTemplateDelete, configuration.NewConf)
 type templateDelete struct {
 }
 
-func newTemplateDelete(conf configuration.Conf) error {
+func newTemplateDelete(conf configuration.Conf) {
 	adapter := templateDelete{}
 	pattern := http.MethodDelete + " " + conf.ApiPrefix +
 		"/insert-your-custom-pattern-here"
 	log.Println(pattern)
 	http.HandleFunc(pattern, adapter.handle)
-	return nil
 }
 
 func (api templateDelete) handle(w http.ResponseWriter, r *http.Request) {
