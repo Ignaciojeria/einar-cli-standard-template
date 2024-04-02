@@ -6,7 +6,7 @@
         },
         {
             "name":"einar-ioc",
-            "library": "github.com/Ignaciojeria/einar-ioc@v1.7.0"
+            "library": "github.com/Ignaciojeria/einar-ioc"
         }
     ],
     "base_template": {
