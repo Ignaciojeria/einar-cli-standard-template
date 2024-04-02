@@ -13,7 +13,7 @@ var _ = ioc.Registry(newTemplatePost, server.NewRouter)
 type templatePost struct {
 }
 
-func newTemplatePost(router server.Router) {
+func newTemplatePost(router *server.Router) {
 	router.POST("/insert-your-custom-pattern-here", templatePost{}.handle)
 }
 

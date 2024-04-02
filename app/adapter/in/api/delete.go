@@ -13,7 +13,7 @@ var _ = ioc.Registry(newTemplateDelete, server.NewRouter)
 type templateDelete struct {
 }
 
-func newTemplateDelete(router server.Router) {
+func newTemplateDelete(router *server.Router) {
 	router.DELETE("/insert-your-custom-pattern-here", templateDelete{}.handle)
 }
 

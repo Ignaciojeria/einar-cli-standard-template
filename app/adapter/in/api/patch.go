@@ -13,7 +13,7 @@ var _ = ioc.Registry(newTemplatePatch, server.NewRouter)
 type templatePatch struct {
 }
 
-func newTemplatePatch(router server.Router) {
+func newTemplatePatch(router *server.Router) {
 	router.PATCH("/insert-your-custom-pattern-here", templatePatch{}.handle)
 }
 

@@ -17,8 +17,8 @@ type Router struct {
 	registeredPatterns []string
 }
 
-func NewRouter(conf configuration.Conf) Router {
-	server := Router{
+func NewRouter(conf configuration.Conf) *Router {
+	server := &Router{
 		mux:  http.NewServeMux(),
 		conf: conf,
 	}
@@ -55,14 +55,14 @@ func (r *Router) DELETE(pattern string, handler http.HandlerFunc) {
 	r.mux.Handle(pattern, handler)
 }
 
-func (r Router) PrintPatterns() {
+func (r *Router) PrintPatterns() {
 	fmt.Println("registered patterns :")
 	for _, v := range r.registeredPatterns {
 		fmt.Println(v)
 	}
 }
 
-func (r Router) ServeHTTP() {
+func (r *Router) ServeHTTP() {
 	r.PrintPatterns()
 	log.Println("Listening on port :" + r.conf.Port)
 	log.Fatal(http.ListenAndServe(":"+r.conf.Port, r.mux))

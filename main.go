@@ -12,5 +12,5 @@ func main() {
 	if err := ioc.LoadDependencies(); err != nil {
 		log.Fatal(err)
 	}
-	ioc.Get[server.Router](server.NewRouter).ServeHTTP()
+	ioc.Get[*server.Router](server.NewRouter).ServeHTTP()
 }

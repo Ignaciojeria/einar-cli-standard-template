@@ -13,7 +13,7 @@ var _ = ioc.Registry(newTemplateGet, server.NewRouter)
 type templateGet struct {
 }
 
-func newTemplateGet(router server.Router) {
+func newTemplateGet(router *server.Router) {
 	router.GET("/insert-your-custom-pattern-here", templateGet{}.handle)
 }
 
