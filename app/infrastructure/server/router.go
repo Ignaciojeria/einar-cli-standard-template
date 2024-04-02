@@ -9,10 +9,6 @@ import (
 	ioc "github.com/Ignaciojeria/einar-ioc"
 )
 
-type Handler interface {
-	handle(w http.ResponseWriter, r *http.Request)
-}
-
 var _ = ioc.Registry(NewRouter, configuration.NewConf)
 
 type Router struct {
