@@ -60,7 +60,7 @@ func (r *Router) DELETE(pattern string, handler http.HandlerFunc) {
 }
 
 func (r Router) PrintPatterns() {
-	fmt.Println("Einar registered patterns :")
+	fmt.Println("registered patterns :")
 	for _, v := range r.registeredPatterns {
 		fmt.Println(v)
 	}
