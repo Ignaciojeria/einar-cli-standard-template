@@ -5,6 +5,10 @@
             "library": "github.com/joho/godotenv"
         },
         {
+            "name":"dag",
+            "library": "github.com/heimdalr/dag@v1.4.0"
+        },
+        {
             "name":"einar-ioc",
             "library": "github.com/Ignaciojeria/einar-ioc"
         }
