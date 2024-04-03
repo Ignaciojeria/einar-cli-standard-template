@@ -5,10 +5,6 @@
             "library": "github.com/joho/godotenv"
         },
         {
-            "name":"dag",
-            "library": "github.com/heimdalr/dag@v1.4.0"
-        },
-        {
             "name":"einar-ioc",
             "library": "github.com/Ignaciojeria/einar-ioc"
         }
@@ -182,7 +178,10 @@
                     "ioc_discovery":true
                 }
             ],
-            "libraries": ["github.com/google/generative-ai-go/genai"]
+            "libraries": [
+                "github.com/google/generative-ai-go/genai",
+                "github.com/heimdalr/dag@v1.4.0"
+            ]
         }
     ]
 }
