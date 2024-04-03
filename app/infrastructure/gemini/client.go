@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	ioc.Registry(NewClient)
+	ioc.Registry(NewClient, configuration.NewConf)
 }
 
 func NewClient(conf configuration.Conf) (*genai.Client, error) {
