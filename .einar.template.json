@@ -161,5 +161,24 @@
                 ]
             }]
         }
+    ],
+    "installation_commands":[
+        {
+            "name":"gemini",
+            "depends_on":[],
+            "files": [
+                {   
+                    "source_file": "app/infrastructure/gemini/client.go",
+                    "destination_dir": "app/infrastructure/gemini",
+                    "ioc_discovery":true
+                },
+                {   
+                    "source_file": "app/infrastructure/gemini/model.go",
+                    "destination_dir": "app/infrastructure/gemini",
+                    "ioc_discovery":true
+                }
+            ],
+            "libraries": ["github.com/google/generative-ai-go/genai"]
+        }
     ]
 }

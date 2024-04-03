@@ -13,8 +13,9 @@ func init() {
 }
 
 type Conf struct {
-	Port      string
-	ApiPrefix string
+	Port         string
+	ApiPrefix    string
+	GeminiApiKey string
 }
 
 func NewConf() (Conf, error) {
