@@ -8,7 +8,9 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var _ = ioc.Registry(NewConf)
+func init() {
+	ioc.Registry(NewConf)
+}
 
 type Conf struct {
 	Port      string

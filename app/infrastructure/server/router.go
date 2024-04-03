@@ -9,7 +9,9 @@ import (
 	ioc "github.com/Ignaciojeria/einar-ioc"
 )
 
-var _ = ioc.Registry(NewRouter, configuration.NewConf)
+func init() {
+	ioc.Registry(NewRouter, configuration.NewConf)
+}
 
 type Router struct {
 	mux                *http.ServeMux

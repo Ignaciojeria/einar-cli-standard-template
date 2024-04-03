@@ -8,7 +8,9 @@ import (
 	ioc "github.com/Ignaciojeria/einar-ioc"
 )
 
-var _ = ioc.Registry(newTemplateDelete, server.NewRouter)
+func init() {
+	ioc.Registry(newTemplateDelete, server.NewRouter)
+}
 
 type templateDelete struct {
 }

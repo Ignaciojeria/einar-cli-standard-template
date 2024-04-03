@@ -8,7 +8,9 @@ import (
 	ioc "github.com/Ignaciojeria/einar-ioc"
 )
 
-var _ = ioc.Registry(newTemplatePost, server.NewRouter)
+func init() {
+	ioc.Registry(newTemplatePost, server.NewRouter)
+}
 
 type templatePost struct {
 }
