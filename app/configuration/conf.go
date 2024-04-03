@@ -13,9 +13,9 @@ func init() {
 }
 
 type Conf struct {
-	Port         string
-	ApiPrefix    string
-	GeminiApiKey string
+	PORT           string
+	API_PREFIX     string
+	GEMINI_API_KEY string
 }
 
 func NewConf() (Conf, error) {
@@ -23,14 +23,15 @@ func NewConf() (Conf, error) {
 		slog.Warn(".env not found, loading environment from system.")
 	}
 	conf := Conf{
-		Port:      os.Getenv("Port"),
-		ApiPrefix: os.Getenv("ApiPrefix"),
+		PORT:           os.Getenv("PORT"),
+		API_PREFIX:     os.Getenv("API_PREFIX"),
+		GEMINI_API_KEY: os.Getenv("GEMINI_API_KEY"),
 	}
-	if conf.ApiPrefix == "" {
-		conf.ApiPrefix = "/api"
+	if conf.API_PREFIX == "" {
+		conf.API_PREFIX = "/api"
 	}
-	if conf.Port == "" {
-		conf.Port = "8080"
+	if conf.PORT == "" {
+		conf.PORT = "8080"
 	}
 	return conf, nil
 }

@@ -14,5 +14,5 @@ func init() {
 }
 
 func NewClient(conf configuration.Conf) (*genai.Client, error) {
-	return genai.NewClient(context.Background(), option.WithAPIKey(conf.GeminiApiKey))
+	return genai.NewClient(context.Background(), option.WithAPIKey(conf.GEMINI_API_KEY))
 }
