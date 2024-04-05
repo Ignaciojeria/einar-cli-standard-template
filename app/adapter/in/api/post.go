@@ -1,24 +1,23 @@
 package api
 
 import (
-	"archetype/app/infrastructure/server"
-	"fmt"
 	"net/http"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
+	"github.com/labstack/echo/v4"
 )
 
 func init() {
-	ioc.Registry(newTemplatePost, server.NewRouter)
+	ioc.Registry(newTemplatePost, echo.New)
 }
 
 type templatePost struct {
 }
 
-func newTemplatePost(router *server.Router) {
-	router.POST("/insert-your-custom-pattern-here", templatePost{}.handle)
+func newTemplatePost(e *echo.Echo) {
+	e.POST("/insert-your-custom-pattern-here", templatePost{}.handle)
 }
 
-func (api templatePost) handle(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Unimplemented")
+func (api templatePost) handle(c echo.Context) error {
+	return c.String(http.StatusOK, "Unimplemented")
 }
