@@ -9,11 +9,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func init() {
-	ioc.Registry(echo.New)
-}
-
 func main() {
+	ioc.Registry(echo.New)
 	if err := ioc.LoadDependencies(); err != nil {
 		log.Fatal(err)
 	}
