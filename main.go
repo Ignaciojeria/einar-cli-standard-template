@@ -1,16 +1,23 @@
 package main
 
 import (
+	"archetype/app/configuration"
 	_ "archetype/app/configuration"
-	"archetype/app/infrastructure/server"
 	"log"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
+	"github.com/labstack/echo/v4"
 )
+
+func init() {
+	ioc.Registry(echo.New)
+}
 
 func main() {
 	if err := ioc.LoadDependencies(); err != nil {
 		log.Fatal(err)
 	}
-	ioc.Get[*server.Router](server.NewRouter).ServeHTTP()
+	e := ioc.Get[*echo.Echo](echo.New)
+	port := ioc.Get[configuration.Conf](configuration.NewConf).PORT
+	e.Logger.Fatal(e.Start(":" + port))
 }
