@@ -3,7 +3,7 @@ module archetype
 go 1.22.0
 
 require (
-	github.com/Ignaciojeria/einar-ioc v1.12.0
+	github.com/Ignaciojeria/einar-ioc v1.13.0
 	github.com/joho/godotenv v1.5.1
 )
 
