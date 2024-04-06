@@ -8,13 +8,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func init() {
-	ioc.Registry(newTemplatePost, server.NewEchoWrapper)
-}
-
 type templatePost struct {
 }
 
+func init() {
+	ioc.Registry(newTemplatePost, server.NewEchoWrapper)
+}
 func newTemplatePost(e server.EchoWrapper) {
 	e.POST("/insert-your-custom-pattern-here", templatePost{}.handle)
 }

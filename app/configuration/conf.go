@@ -8,15 +8,14 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func init() {
-	ioc.Registry(NewConf)
-}
-
 type Conf struct {
 	PORT           string
 	GEMINI_API_KEY string
 }
 
+func init() {
+	ioc.Registry(NewConf)
+}
 func NewConf() (Conf, error) {
 	if err := godotenv.Load(); err != nil {
 		slog.Warn(".env not found, loading environment from system.")

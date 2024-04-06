@@ -8,20 +8,19 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+type EchoWrapper struct {
+	*echo.Echo
+	conf configuration.Conf
+}
+
 func init() {
 	ioc.Registry(NewEchoWrapper, configuration.NewConf)
 }
-
 func NewEchoWrapper(conf configuration.Conf) EchoWrapper {
 	return EchoWrapper{
 		Echo: echo.New(),
 		conf: conf,
 	}
-}
-
-type EchoWrapper struct {
-	*echo.Echo
-	conf configuration.Conf
 }
 
 func Start() {

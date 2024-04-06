@@ -10,9 +10,8 @@ import (
 )
 
 func init() {
-	ioc.Registry(NewClient, configuration.NewConf)
+	ioc.Registry(newClient, configuration.NewConf)
 }
-
-func NewClient(conf configuration.Conf) (*genai.Client, error) {
+func newClient(conf configuration.Conf) (*genai.Client, error) {
 	return genai.NewClient(context.Background(), option.WithAPIKey(conf.GEMINI_API_KEY))
 }

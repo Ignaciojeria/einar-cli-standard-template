@@ -8,13 +8,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func init() {
-	ioc.Registry(newTemplateDelete, server.NewEchoWrapper)
-}
-
 type templateDelete struct {
 }
 
+func init() {
+	ioc.Registry(newTemplateDelete, server.NewEchoWrapper)
+}
 func newTemplateDelete(e server.EchoWrapper) {
 	e.DELETE("/insert-your-custom-pattern-here", templateDelete{}.handle)
 }

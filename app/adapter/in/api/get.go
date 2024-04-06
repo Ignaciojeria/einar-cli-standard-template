@@ -8,13 +8,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func init() {
-	ioc.Registry(newTemplateGet, server.NewEchoWrapper)
-}
-
 type templateGet struct {
 }
 
+func init() {
+	ioc.Registry(newTemplateGet, server.NewEchoWrapper)
+}
 func newTemplateGet(e server.EchoWrapper) {
 	e.GET("/insert-your-custom-pattern-here", templateGet{}.handle)
 }

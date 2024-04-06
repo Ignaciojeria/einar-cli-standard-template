@@ -8,13 +8,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func init() {
-	ioc.Registry(newTemplatePatch, server.NewEchoWrapper)
-}
-
 type templatePatch struct {
 }
 
+func init() {
+	ioc.Registry(newTemplatePatch, server.NewEchoWrapper)
+}
 func newTemplatePatch(e server.EchoWrapper) {
 	e.PATCH("/insert-your-custom-pattern-here", templatePatch{}.handle)
 }
