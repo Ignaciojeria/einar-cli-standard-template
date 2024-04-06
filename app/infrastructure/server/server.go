@@ -26,10 +26,10 @@ type server struct {
 }
 
 func Start() {
-	ioc.Get[server](newServer).Start()
+	ioc.Get[server](newServer).start()
 }
 
-func (s server) Start() {
+func (s server) start() {
 	s.printRoutes()
 	s.e.Logger.Fatal(s.e.Start(":" + s.conf.PORT))
 }
