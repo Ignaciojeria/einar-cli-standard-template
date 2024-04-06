@@ -20,8 +20,8 @@
                 "destination_dir": "app/configuration"
             },
             {
-                "source_dir": "app/server",
-                "destination_dir": "app/server"
+                "source_dir": "app/infrastructure/server",
+                "destination_dir": "app/infrastructure/server"
             }
         ],
         "files": [
