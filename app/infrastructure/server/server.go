@@ -29,10 +29,6 @@ func Start() {
 	ioc.Get[server](newServer).Start()
 }
 
-func E() *echo.Echo {
-	return ioc.Get[*echo.Echo](echo.New)
-}
-
 func (s server) Start() {
 	s.printRoutes()
 	s.e.Logger.Fatal(s.e.Start(":" + s.conf.PORT))
