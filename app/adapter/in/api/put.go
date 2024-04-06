@@ -1,6 +1,7 @@
 package api
 
 import (
+	"archetype/app/infrastructure/server"
 	"net/http"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
@@ -8,13 +9,13 @@ import (
 )
 
 func init() {
-	ioc.Registry(newTemplatePut, echo.New)
+	ioc.Registry(newTemplatePut, server.NewEchoWrapper)
 }
 
 type templatePut struct {
 }
 
-func newTemplatePut(e *echo.Echo) {
+func newTemplatePut(e server.EchoWrapper) {
 	e.PUT("/insert-your-custom-pattern-here", templatePut{}.handle)
 }
 

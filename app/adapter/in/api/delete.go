@@ -1,6 +1,7 @@
 package api
 
 import (
+	"archetype/app/infrastructure/server"
 	"net/http"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
@@ -8,13 +9,13 @@ import (
 )
 
 func init() {
-	ioc.Registry(newTemplateDelete, echo.New)
+	ioc.Registry(newTemplateDelete, server.NewEchoWrapper)
 }
 
 type templateDelete struct {
 }
 
-func newTemplateDelete(e *echo.Echo) {
+func newTemplateDelete(e server.EchoWrapper) {
 	e.DELETE("/insert-your-custom-pattern-here", templateDelete{}.handle)
 }
 
