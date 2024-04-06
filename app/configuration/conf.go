@@ -29,3 +29,7 @@ func NewConf() (Conf, error) {
 	}
 	return conf, nil
 }
+
+func Values() Conf {
+	return ioc.Get[Conf](NewConf)
+}
