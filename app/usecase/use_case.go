@@ -21,6 +21,7 @@ func newUseCase() IUseCase {
 }
 
 func (u useCase) Execute(ctx context.Context, domain interface{}) (interface{}, error) {
+	// business logic here
 	return nil, nil
 }
 

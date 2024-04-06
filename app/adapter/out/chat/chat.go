@@ -8,7 +8,7 @@ import (
 )
 
 type IChat interface {
-	EphemeralChatExpectJSONResult(ctx context.Context, domain interface{}) (interface{}, error)
+	SendMessage(ctx context.Context, domain interface{}) (interface{}, error)
 }
 
 type chat struct {
@@ -24,7 +24,8 @@ func newChat(model gemini.Gemini1Dot0ProModelWrapper) IChat {
 	}
 }
 
-func (s chat) EphemeralChatExpectJSONResult(ctx context.Context, domain interface{}) (interface{}, error) {
+func (s chat) SendMessage(ctx context.Context, domain interface{}) (interface{}, error) {
+	// design your custom prompt and chat here using gemini-1.0-pro model
 	return s.model.EphemeralChatExpectJSONResult(ctx, `
 	Write a JSON object in a single line.
 
