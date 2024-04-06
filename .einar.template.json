@@ -18,6 +18,10 @@
             {
                 "source_dir": "app/configuration",
                 "destination_dir": "app/configuration"
+            },
+            {
+                "source_dir": "app/server",
+                "destination_dir": "app/server"
             }
         ],
         "files": [
