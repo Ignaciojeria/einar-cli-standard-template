@@ -164,7 +164,39 @@
                     }
                 ]
             }]
+        },
+        {
+            "kind":"usecase",
+            "adapter_type":"inbound",
+            "command":"einar generate usecase ${operation_name}",
+            "depends_on":[""],
+            "files": [{
+                "source_file": "app/usecase/use_case.go",
+                "destination_dir": "app/usecase",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"PascalCase",
+                        "name": "IUseCase",
+                        "append_at_start":"I",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"camelCase",
+                        "name": "useCase",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "Instance",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    }
+                ]
+            }]
         }
+
     ],
     "installation_commands":[
         {

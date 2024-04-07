@@ -25,6 +25,6 @@ func (u useCase) Execute(ctx context.Context, domain interface{}) (interface{}, 
 	return nil, nil
 }
 
-func Usecase() IUseCase {
+func Instance() IUseCase {
 	return ioc.Get[IUseCase](newUseCase)
 }
