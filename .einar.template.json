@@ -196,7 +196,7 @@
                     {
                         "kind":"camelCase",
                         "name": "newUseCase",
-                        "append_at_start":"",
+                        "append_at_start":"New",
                         "append_at_end":""
                     }
                 ]
