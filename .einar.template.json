@@ -252,7 +252,7 @@
                     "ioc_discovery":true
                 },
                 {   
-                    "source_file": "app/infrastructure/gemini/model.go",
+                    "source_file": "app/infrastructure/gemini/gemini-1.0-pro-model_wrapper.go",
                     "destination_dir": "app/infrastructure/gemini",
                     "ioc_discovery":true
                 }
