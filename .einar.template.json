@@ -226,7 +226,7 @@
                     },
                     {
                         "kind":"camelCase",
-                        "name": "chat",
+                        "name": "chatStruct",
                         "append_at_start":"",
                         "append_at_end":""
                     },
