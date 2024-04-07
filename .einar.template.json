@@ -208,8 +208,8 @@
             "command":"einar generate chat-pro ${operation_name}",
             "depends_on":["gemini"],
             "files": [{
-                "source_file": "app/adapter/out/chat.go",
-                "destination_dir": "app/adapter/out",
+                "source_file": "app/adapter/out/chat/chat.go",
+                "destination_dir": "app/adapter/out/chat",
                 "ioc_discovery":true,
                 "replace_holders": [
                     {
