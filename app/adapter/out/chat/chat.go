@@ -16,9 +16,9 @@ type chat struct {
 }
 
 func init() {
-	ioc.Registry(newChat, gemini.NewGemini1Dot0ProModelWrapper)
+	ioc.Registry(NewChat, gemini.NewGemini1Dot0ProModelWrapper)
 }
-func newChat(model gemini.Gemini1Dot0ProModelWrapper) IChat {
+func NewChat(model gemini.Gemini1Dot0ProModelWrapper) IChat {
 	return chat{
 		model: model,
 	}
@@ -33,6 +33,6 @@ func (s chat) SendMessage(ctx context.Context, domain interface{}) (interface{},
 	{"Message":"Hello World"}`)
 }
 
-func Chat() IChat {
-	return ioc.Get[IChat](newChat)
+func Instance() IChat {
+	return ioc.Get[IChat](NewChat)
 }
