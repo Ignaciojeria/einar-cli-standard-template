@@ -4,6 +4,6 @@ import (
 	"context"
 )
 
-var NewUsecase = func(ctx context.Context, domain interface{}) (interface{}, error) {
-	return nil, nil
+func NewUseCase(ctx context.Context, domain interface{}) (interface{}, error) {
+	return "Unimplemented", nil
 }
