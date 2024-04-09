@@ -67,7 +67,13 @@
                     {
                         "kind":"camelCase",
                         "name": "TestNewTemplateGet",
-                        "append_at_start":"Test",
+                        "append_at_start":"Test_",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"camelCase",
+                        "name": "newTemplateGet",
+                        "append_at_start":"",
                         "append_at_end":""
                     }
                 ]
@@ -100,7 +106,13 @@
                     {
                         "kind":"camelCase",
                         "name": "TestNewTemplatePost",
-                        "append_at_start":"Test",
+                        "append_at_start":"Test_",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"camelCase",
+                        "name": "newTemplatePost",
+                        "append_at_start":"",
                         "append_at_end":""
                     }
                 ]
@@ -133,7 +145,13 @@
                     {
                         "kind":"camelCase",
                         "name": "TestNewTemplatePut",
-                        "append_at_start":"Test",
+                        "append_at_start":"Test_",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"camelCase",
+                        "name": "newTemplatePut",
+                        "append_at_start":"",
                         "append_at_end":""
                     }
                 ]
@@ -166,7 +184,13 @@
                     {
                         "kind":"camelCase",
                         "name": "TestNewTemplatePatch",
-                        "append_at_start":"Test",
+                        "append_at_start":"Test_",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"camelCase",
+                        "name": "newTemplatePatch",
+                        "append_at_start":"",
                         "append_at_end":""
                     }
                 ]
@@ -199,7 +223,13 @@
                     {
                         "kind":"camelCase",
                         "name": "TestNewTemplateDelete",
-                        "append_at_start":"Test",
+                        "append_at_start":"Test_",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"camelCase",
+                        "name": "newTemplateDelete",
+                        "append_at_start":"",
                         "append_at_end":""
                     }
                 ]
