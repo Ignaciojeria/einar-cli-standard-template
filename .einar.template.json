@@ -65,9 +65,9 @@
                 "append_at_end":"_test",
                 "replace_holders": [
                     {
-                        "kind":"camelCase",
+                        "kind":"PascalCase",
                         "name": "TestNewTemplateGet",
-                        "append_at_start":"Test_",
+                        "append_at_start":"Test",
                         "append_at_end":""
                     },
                     {
@@ -104,9 +104,9 @@
                 "append_at_end":"_test",
                 "replace_holders": [
                     {
-                        "kind":"camelCase",
+                        "kind":"PascalCase",
                         "name": "TestNewTemplatePost",
-                        "append_at_start":"Test_",
+                        "append_at_start":"Test",
                         "append_at_end":""
                     },
                     {
@@ -143,9 +143,9 @@
                 "append_at_end":"_test",
                 "replace_holders": [
                     {
-                        "kind":"camelCase",
+                        "kind":"PascalCase",
                         "name": "TestNewTemplatePut",
-                        "append_at_start":"Test_",
+                        "append_at_start":"Test",
                         "append_at_end":""
                     },
                     {
@@ -182,9 +182,9 @@
                 "append_at_end":"_test",
                 "replace_holders": [
                     {
-                        "kind":"camelCase",
+                        "kind":"PascalCase",
                         "name": "TestNewTemplatePatch",
-                        "append_at_start":"Test_",
+                        "append_at_start":"Test",
                         "append_at_end":""
                     },
                     {
@@ -221,9 +221,9 @@
                 "append_at_end":"_test",
                 "replace_holders": [
                     {
-                        "kind":"camelCase",
+                        "kind":"PascalCase",
                         "name": "TestNewTemplateDelete",
-                        "append_at_start":"Test_",
+                        "append_at_start":"Test",
                         "append_at_end":""
                     },
                     {
