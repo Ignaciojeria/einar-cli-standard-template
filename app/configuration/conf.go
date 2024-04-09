@@ -9,8 +9,12 @@ import (
 )
 
 type Conf struct {
-	PORT           string
-	GEMINI_API_KEY string
+	PORT              string
+	GEMINI_API_KEY    string
+	GOOGLE_PROJECT_ID string
+	DD_SERVICE        string
+	DD_ENV            string
+	DD_VERSION        string
 }
 
 func init() {
@@ -21,8 +25,9 @@ func NewConf() (Conf, error) {
 		slog.Warn(".env not found, loading environment from system.")
 	}
 	conf := Conf{
-		PORT:           os.Getenv("PORT"),
-		GEMINI_API_KEY: os.Getenv("GEMINI_API_KEY"),
+		PORT:              os.Getenv("PORT"),
+		GEMINI_API_KEY:    os.Getenv("GEMINI_API_KEY"),
+		GOOGLE_PROJECT_ID: os.Getenv("GOOGLE_PROJECT_ID"),
 	}
 	if conf.PORT == "" {
 		conf.PORT = "8080"
