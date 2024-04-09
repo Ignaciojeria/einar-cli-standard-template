@@ -14,11 +14,11 @@ type EchoWrapper struct {
 }
 
 func init() {
-	ioc.Registry(NewEchoWrapper, configuration.NewConf)
+	ioc.Registry(NewEchoWrapper, echo.New, configuration.NewConf)
 }
-func NewEchoWrapper(conf configuration.Conf) EchoWrapper {
+func NewEchoWrapper(e *echo.Echo, conf configuration.Conf) EchoWrapper {
 	return EchoWrapper{
-		Echo: echo.New(),
+		Echo: e,
 		conf: conf,
 	}
 }

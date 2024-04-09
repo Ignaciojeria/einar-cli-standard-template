@@ -8,16 +8,13 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type templateDelete struct {
-}
-
 func init() {
 	ioc.Registry(newTemplateDelete, server.NewEchoWrapper)
 }
 func newTemplateDelete(e server.EchoWrapper) {
-	e.DELETE("/insert-your-custom-pattern-here", templateDelete{}.handle)
-}
-
-func (api templateDelete) handle(c echo.Context) error {
-	return c.String(http.StatusOK, "Unimplemented")
+	e.DELETE("/insert-your-custom-pattern-here", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, map[string]string{
+			"message": "Unimplemented",
+		})
+	})
 }
