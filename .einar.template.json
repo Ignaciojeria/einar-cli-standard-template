@@ -52,14 +52,21 @@
                 "replace_holders": [
                     {
                         "kind":"camelCase",
-                        "name": "templateGet",
+                        "name": "newTemplateGet",
                         "append_at_start":"",
                         "append_at_end":""
-                    },
+                    }
+                ]
+            },
+            {
+                "source_file": "app/adapter/in/api/get_test.go",
+                "destination_dir": "app/adapter/in/api",
+                "ioc_discovery":true,
+                "replace_holders": [
                     {
-                        "kind":"PascalCase",
+                        "kind":"camelCase",
                         "name": "newTemplateGet",
-                        "append_at_start":"new",
+                        "append_at_start":"",
                         "append_at_end":""
                     }
                 ]
@@ -77,14 +84,8 @@
                 "replace_holders": [
                     {
                         "kind":"camelCase",
-                        "name": "templatePost",
-                        "append_at_start":"",
-                        "append_at_end":""
-                    },
-                    {
-                        "kind":"PascalCase",
                         "name": "newTemplatePost",
-                        "append_at_start":"new",
+                        "append_at_start":"",
                         "append_at_end":""
                     }
                 ]
@@ -102,14 +103,8 @@
                 "replace_holders": [
                     {
                         "kind":"camelCase",
-                        "name": "templatePut",
-                        "append_at_start":"",
-                        "append_at_end":""
-                    },
-                    {
-                        "kind":"PascalCase",
                         "name": "newTemplatePut",
-                        "append_at_start":"new",
+                        "append_at_start":"",
                         "append_at_end":""
                     }
                 ]
@@ -127,14 +122,8 @@
                 "replace_holders": [
                     {
                         "kind":"camelCase",
-                        "name": "templatePatch",
-                        "append_at_start":"",
-                        "append_at_end":""
-                    },
-                    {
-                        "kind":"PascalCase",
                         "name": "newTemplatePatch",
-                        "append_at_start":"new",
+                        "append_at_start":"",
                         "append_at_end":""
                     }
                 ]
@@ -152,14 +141,8 @@
                 "replace_holders": [
                     {
                         "kind":"camelCase",
-                        "name": "templateDelete",
-                        "append_at_start":"",
-                        "append_at_end":""
-                    },
-                    {
-                        "kind":"PascalCase",
                         "name": "newTemplateDelete",
-                        "append_at_start":"new",
+                        "append_at_start":"",
                         "append_at_end":""
                     }
                 ]

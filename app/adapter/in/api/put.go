@@ -8,16 +8,14 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type templatePut struct {
-}
 
 func init() {
 	ioc.Registry(newTemplatePut, server.NewEchoWrapper)
 }
 func newTemplatePut(e server.EchoWrapper) {
-	e.PUT("/insert-your-custom-pattern-here", templatePut{}.handle)
-}
-
-func (api templatePut) handle(c echo.Context) error {
-	return c.String(http.StatusOK, "Unimplemented")
+	e.PUT("/insert-your-custom-pattern-here", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, map[string]string{
+			"message": "Unimplemented",
+		})
+	})
 }
