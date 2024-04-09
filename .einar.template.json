@@ -62,6 +62,7 @@
                 "source_file": "app/adapter/in/api/get_test.go",
                 "destination_dir": "app/adapter/in/api",
                 "ioc_discovery":true,
+                "append_at_end":"_test",
                 "replace_holders": [
                     {
                         "kind":"camelCase",

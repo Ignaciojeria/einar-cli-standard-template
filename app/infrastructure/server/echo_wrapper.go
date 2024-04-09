@@ -14,6 +14,7 @@ type EchoWrapper struct {
 }
 
 func init() {
+	ioc.Registry(echo.New)
 	ioc.Registry(NewEchoWrapper, echo.New, configuration.NewConf)
 }
 func NewEchoWrapper(e *echo.Echo, conf configuration.Conf) EchoWrapper {
