@@ -12,7 +12,7 @@ import (
 	ioc "github.com/Ignaciojeria/einar-ioc"
 )
 
-type MessageProcessor struct {
+type MessageProcessorStruct struct {
 	subscriptionReference *pubsub.Subscription
 }
 
@@ -27,7 +27,7 @@ func NewMessageProcessor(
 	subscriptionName := "INSERT_YOUR_SUBSCRIPTION_NAME_HERE"
 	subscriptionRef := subscriptionManager.Subscription(subscriptionName)
 	subscriptionRef.ReceiveSettings.MaxOutstandingMessages = 5
-	messageProcessor := MessageProcessor{
+	messageProcessor := MessageProcessorStruct{
 		subscriptionReference: subscriptionRef,
 	}
 	go subscriptionManager.
@@ -37,7 +37,7 @@ func NewMessageProcessor(
 	return messageProcessor
 }
 
-func (p MessageProcessor) Pull(ctx context.Context, m *pubsub.Message) (statusCode int, err error) {
+func (p MessageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (statusCode int, err error) {
 	var dataModel interface{}
 	defer func() {
 		pubsubwrapper.HandleMessageAcknowledgement(ctx, &pubsubwrapper.HandleMessageAcknowledgementDetails{
@@ -63,6 +63,6 @@ func (p MessageProcessor) Pull(ctx context.Context, m *pubsub.Message) (statusCo
 	return http.StatusOK, nil
 }
 
-func (p MessageProcessor) SubscriptionRef() *pubsub.Subscription {
+func (p MessageProcessorStruct) SubscriptionRef() *pubsub.Subscription {
 	return p.subscriptionReference
 }
