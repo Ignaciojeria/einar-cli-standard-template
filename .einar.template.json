@@ -334,6 +334,7 @@
             {
                 "source_file": "app/adapter/in/subscription/message_processor_test.go",
                 "destination_dir": "app/adapter/in/subscription",
+                "append_at_end":"_test",
                 "ioc_discovery":true,
                 "replace_holders": [
                     {
