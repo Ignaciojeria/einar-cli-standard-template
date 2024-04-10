@@ -15,6 +15,14 @@
         {
             "name":"otel",
             "library": "go.opentelemetry.io/otel"
+        },
+        {
+            "name":"otlptrace",
+            "library": "go.opentelemetry.io/otel/exporters/otlp/otlptrace"
+        },
+        {
+            "name":"otlptracegrpc",
+            "library": "go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
         }
     ],
     "base_template": {
