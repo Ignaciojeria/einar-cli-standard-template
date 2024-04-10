@@ -12,32 +12,10 @@ import (
 	ioc "github.com/Ignaciojeria/einar-ioc"
 )
 
-type MessageProcessorStruct struct {
-	subscriptionReference *pubsub.Subscription
+func (p messageProcessorStruct) subscriptionName() string {
+	return "INSERT_YOUR_SUBSCRIPTION_NAME_HERE"
 }
-
-func init() {
-	ioc.Registry(
-		NewMessageProcessor,
-		pubsubwrapper.NewSubscriptionManager)
-}
-
-func NewMessageProcessor(
-	subscriptionManager pubsubwrapper.SubscriptionManager) pubsubwrapper.MessageProcessor {
-	subscriptionName := "INSERT_YOUR_SUBSCRIPTION_NAME_HERE"
-	subscriptionRef := subscriptionManager.Subscription(subscriptionName)
-	subscriptionRef.ReceiveSettings.MaxOutstandingMessages = 5
-	messageProcessor := MessageProcessorStruct{
-		subscriptionReference: subscriptionRef,
-	}
-	go subscriptionManager.
-		WithMessageProcessor(messageProcessor).
-		WithPushHandler("/subscription/" + subscriptionName).
-		Start()
-	return messageProcessor
-}
-
-func (p MessageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (statusCode int, err error) {
+func (p messageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (statusCode int, err error) {
 	var dataModel interface{}
 	defer func() {
 		pubsubwrapper.HandleMessageAcknowledgement(ctx, &pubsubwrapper.HandleMessageAcknowledgementDetails{
@@ -63,6 +41,31 @@ func (p MessageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (st
 	return http.StatusOK, nil
 }
 
-func (p MessageProcessorStruct) SubscriptionRef() *pubsub.Subscription {
+/* ----- Default Initialization & Configuration Settings ----- */
+
+type messageProcessorStruct struct {
+	subscriptionReference *pubsub.Subscription
+}
+
+func init() {
+	ioc.Registry(
+		newMessageProcessor,
+		pubsubwrapper.NewSubscriptionManager)
+}
+
+func newMessageProcessor(
+	subscriptionManager pubsubwrapper.SubscriptionManager) pubsubwrapper.MessageProcessor {
+	messageProcessor := messageProcessorStruct{}
+	subscriptionRef := subscriptionManager.Subscription(messageProcessor.subscriptionName())
+	subscriptionRef.ReceiveSettings.MaxOutstandingMessages = 5
+	messageProcessor.subscriptionReference = subscriptionRef
+	go subscriptionManager.
+		WithMessageProcessor(messageProcessor).
+		WithPushHandler("/subscription/" + messageProcessor.subscriptionName()).
+		Start()
+	return messageProcessor
+}
+
+func (p messageProcessorStruct) SubscriptionRef() *pubsub.Subscription {
 	return p.subscriptionReference
 }
