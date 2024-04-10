@@ -1,4 +1,4 @@
-package subscription
+package pubsubwrapper
 
 import "go.opentelemetry.io/otel"
 

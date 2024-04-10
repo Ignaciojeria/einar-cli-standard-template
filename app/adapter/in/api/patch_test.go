@@ -6,15 +6,14 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"archetype/app/configuration"
-	"archetype/app/infrastructure/server"
+	"archetype/app/infrastructure/serverwrapper"
 
 	"github.com/labstack/echo/v4"
 )
 
 func TestNewTemplatePatch(t *testing.T) {
 	e := echo.New()
-	wrapper := server.NewEchoWrapper(e, configuration.Conf{PORT: "8080"})
+	wrapper := serverwrapper.NewEchoWrapper(e)
 
 	newTemplatePatch(wrapper)
 

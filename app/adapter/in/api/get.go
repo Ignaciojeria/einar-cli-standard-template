@@ -1,7 +1,7 @@
 package api
 
 import (
-	"archetype/app/infrastructure/server"
+	"archetype/app/infrastructure/serverwrapper"
 	"net/http"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
@@ -9,9 +9,9 @@ import (
 )
 
 func init() {
-	ioc.Registry(newTemplateGet, server.NewEchoWrapper)
+	ioc.Registry(newTemplateGet, serverwrapper.NewEchoWrapper)
 }
-func newTemplateGet(e server.EchoWrapper) {
+func newTemplateGet(e serverwrapper.EchoWrapper) {
 	e.GET("/insert-your-custom-pattern-here", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]string{
 			"message": "Unimplemented",
