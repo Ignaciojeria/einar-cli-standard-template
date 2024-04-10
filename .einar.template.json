@@ -23,6 +23,10 @@
         {
             "name":"otlptracegrpc",
             "library": "go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
+        },
+        {
+            "name":"uuid",
+            "library": "github.com/google/uuid"
         }
     ],
     "base_template": {
@@ -46,6 +50,10 @@
             {
                 "source_dir": "app/constants",
                 "destination_dir": "app/constants"
+            },
+            {
+                "source_dir": "app/infrastructure/observability",
+                "destination_dir": "app/infrastructure/observability"
             }
         ],
         "files": [
