@@ -14,12 +14,12 @@ type ClientWrapper struct {
 }
 
 func init() {
-	ioc.Registry(NewClientWrapper)
+	ioc.Registry(NewClientWrapper, configuration.NewConf)
 }
 
-func NewClientWrapper() (ClientWrapper, error) {
-	c, err := pubsub.NewClient(context.Background(), configuration.Values().GOOGLE_PROJECT_ID)
-	if configuration.Values().GOOGLE_PROJECT_ID == "" {
+func NewClientWrapper(conf configuration.Conf) (ClientWrapper, error) {
+	c, err := pubsub.NewClient(context.Background(), conf.GOOGLE_PROJECT_ID)
+	if conf.GOOGLE_PROJECT_ID == "" {
 		return ClientWrapper{
 			client: &pubsub.Client{},
 		}, errors.New("GOOGLE_PROJECT_ID is not present")

@@ -11,6 +11,10 @@
         {
             "name":"echo",
             "library": "github.com/labstack/echo/v4"
+        },
+        {
+            "name":"otel",
+            "library": "go.opentelemetry.io/otel"
         }
     ],
     "base_template": {
@@ -339,7 +343,9 @@
             ],
             "source_dir": "app/infrastructure/pubsubwrapper",
             "destination_dir": "app/infrastructure/pubsubwrapper",
-            "libraries": ["cloud.google.com/go/pubsub"]
+            "libraries": [
+             "cloud.google.com/go/pubsub",
+             "github.com/heimdalr/dag@v1.4.0"]
         }
     ]
 }
