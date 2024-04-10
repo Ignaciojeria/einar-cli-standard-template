@@ -25,7 +25,7 @@ func NeTracerProvider(ctx context.Context) (*tracesdk.TracerProvider, error) {
 		// Record information about this application in a Resource.
 		tracesdk.WithResource(resource.NewWithAttributes(
 			semconv.SchemaURL,
-			semconv.ServiceNameKey.String(configuration.Values().GOOGLE_PROJECT_ID),
+			semconv.ServiceNameKey.String(configuration.Values().PROJECT_NAME),
 		)),
 	)
 	return tp, nil
