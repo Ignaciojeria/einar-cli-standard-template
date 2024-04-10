@@ -306,8 +306,45 @@
                     }
                 ]
             }]
+        },
+        {
+            "kind":"subscription",
+            "adapter_type":"inbound",
+            "command":"einar generate subscription ${operation_name}",
+            "depends_on":[""],
+            "files": [{
+                "source_file": "app/adapter/in/subscription/message_processor.go",
+                "destination_dir": "app/adapter/in/subscription",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"camelCase",
+                        "name": "messageProcessorStruct",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "newMessageProcessor",
+                        "append_at_start":"new",
+                        "append_at_end":""
+                    }
+                ]
+            },
+            {
+                "source_file": "app/adapter/in/subscription/message_processor_test.go",
+                "destination_dir": "app/adapter/in/subscription",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"PascalCase",
+                        "name": "newMessageProcessor",
+                        "append_at_start":"new",
+                        "append_at_end":""
+                    }
+                ]
+            }]
         }
-
     ],
     "installation_commands":[
         {
