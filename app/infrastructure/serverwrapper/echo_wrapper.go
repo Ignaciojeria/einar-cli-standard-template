@@ -1,4 +1,4 @@
-package server
+package serverwrapper
 
 import (
 	"archetype/app/configuration"
@@ -10,17 +10,15 @@ import (
 
 type EchoWrapper struct {
 	*echo.Echo
-	conf configuration.Conf
 }
 
 func init() {
 	ioc.Registry(echo.New)
-	ioc.Registry(NewEchoWrapper, echo.New, configuration.NewConf)
+	ioc.Registry(NewEchoWrapper, echo.New)
 }
-func NewEchoWrapper(e *echo.Echo, conf configuration.Conf) EchoWrapper {
+func NewEchoWrapper(e *echo.Echo) EchoWrapper {
 	return EchoWrapper{
 		Echo: e,
-		conf: conf,
 	}
 }
 
@@ -30,7 +28,7 @@ func Start() {
 
 func (s EchoWrapper) start() {
 	s.printRoutes()
-	s.Echo.Logger.Fatal(s.Echo.Start(":" + s.conf.PORT))
+	s.Echo.Logger.Fatal(s.Echo.Start(":" + configuration.Values().PORT))
 }
 
 func (s EchoWrapper) printRoutes() {
