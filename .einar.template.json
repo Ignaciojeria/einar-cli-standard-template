@@ -20,8 +20,20 @@
                 "destination_dir": "app/configuration"
             },
             {
-                "source_dir": "app/infrastructure/server",
-                "destination_dir": "app/infrastructure/server"
+                "source_dir": "app/infrastructure/serverwrapper",
+                "destination_dir": "app/infrastructure/serverwrapper"
+            },
+            {
+                "source_dir": "app/adapter/out/slog",
+                "destination_dir": "app/adapter/out/slog"
+            },
+            {
+                "source_dir": "app/exception",
+                "destination_dir": "app/exception"
+            },
+            {
+                "source_dir": "app/constants",
+                "destination_dir": "app/constants"
             }
         ],
         "files": [
@@ -313,6 +325,21 @@
                 "github.com/google/generative-ai-go/genai",
                 "github.com/heimdalr/dag@v1.4.0"
             ]
+        },
+        {
+            "name":"pubsub",
+            "command":"einar install pubsub",
+            "depends_on":[],
+            "files": [
+                {   
+                    "source_file": "mocks/subscription_manager_mock.go",
+                    "destination_dir": "mocks",
+                    "ioc_discovery":true
+                }
+            ],
+            "source_dir": "app/infrastructure/pubsubwrapper",
+            "destination_dir": "app/infrastructure/pubsubwrapper",
+            "libraries": ["cloud.google.com/go/pubsub"]
         }
     ]
 }
