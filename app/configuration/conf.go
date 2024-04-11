@@ -1,8 +1,10 @@
 package configuration
 
 import (
+	"fmt"
 	"log/slog"
 	"os"
+	"reflect"
 	"strings"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
@@ -10,16 +12,16 @@ import (
 )
 
 type Conf struct {
-	PORT                        string
-	COUNTRY                     string
-	GEMINI_API_KEY              string
-	PROJECT_NAME                string
-	GOOGLE_PROJECT_ID           string
-	OTEL_EXPORTER_OTLP_ENDPOINT string
-	DD_SERVICE                  string
-	DD_ENV                      string
-	DD_VERSION                  string
-	DD_AGENT_HOST               string
+	PORT                        string `required:"true"`
+	COUNTRY                     string `required:"true"`
+	GEMINI_API_KEY              string `required:"false"`
+	PROJECT_NAME                string `required:"false"`
+	GOOGLE_PROJECT_ID           string `required:"false"`
+	OTEL_EXPORTER_OTLP_ENDPOINT string `required:"false"`
+	DD_SERVICE                  string `required:"false"`
+	DD_ENV                      string `required:"false"`
+	DD_VERSION                  string `required:"false"`
+	DD_AGENT_HOST               string `required:"false"`
 }
 
 func init() {
@@ -51,9 +53,35 @@ func NewConf() (Conf, error) {
 	if conf.PORT == "" {
 		conf.PORT = "8080"
 	}
-	return conf, nil
+
+	return conf, validateConfig(conf)
 }
 
 func Values() Conf {
 	return ioc.Get[Conf](NewConf)
+}
+
+func validateConfig(conf Conf) error {
+	var validationErrors []error
+
+	val := reflect.ValueOf(conf)
+	for i := 0; i < val.NumField(); i++ {
+		field := val.Type().Field(i)
+		value := val.Field(i).String()
+
+		requiredTag := field.Tag.Get("required")
+		if requiredTag == "true" && value == "" {
+			validationErrors = append(validationErrors, fmt.Errorf("%s is required but not set", field.Name))
+		}
+	}
+	if len(validationErrors) > 0 {
+		// Convert errors to strings
+		var errorStrings []string
+		for _, err := range validationErrors {
+			errorStrings = append(errorStrings, err.Error())
+		}
+		return fmt.Errorf("configuration errors:\n%s", strings.Join(errorStrings, "\n"))
+	}
+
+	return nil
 }
