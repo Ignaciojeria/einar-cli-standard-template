@@ -10,6 +10,7 @@ import (
 
 type Conf struct {
 	PORT                        string
+	COUNTRY                     string
 	GEMINI_API_KEY              string
 	PROJECT_NAME                string
 	GOOGLE_PROJECT_ID           string
@@ -29,6 +30,7 @@ func NewConf() (Conf, error) {
 	}
 	conf := Conf{
 		PORT:                        os.Getenv("PORT"),
+		COUNTRY:                     os.Getenv("COUNTRY"),
 		PROJECT_NAME:                os.Getenv("PROJECT_NAME"),
 		GEMINI_API_KEY:              os.Getenv("GEMINI_API_KEY"),
 		GOOGLE_PROJECT_ID:           os.Getenv("GOOGLE_PROJECT_ID"),

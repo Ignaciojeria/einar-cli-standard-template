@@ -9,10 +9,6 @@
             "library": "github.com/Ignaciojeria/einar-ioc"
         },
         {
-            "name":"echo",
-            "library": "github.com/labstack/echo/v4"
-        },
-        {
             "name":"otel",
             "library": "go.opentelemetry.io/otel"
         },
@@ -27,6 +23,10 @@
         {
             "name":"uuid",
             "library": "github.com/google/uuid"
+        },
+        {
+            "name":"echo",
+            "library": "github.com/labstack/echo/v4"
         }
     ],
     "base_template": {
