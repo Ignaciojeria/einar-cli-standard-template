@@ -3,6 +3,7 @@ package configuration
 import (
 	"log/slog"
 	"os"
+	"strings"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
 	"github.com/joho/godotenv"
@@ -30,7 +31,7 @@ func NewConf() (Conf, error) {
 	}
 	conf := Conf{
 		PORT:                        os.Getenv("PORT"),
-		COUNTRY:                     os.Getenv("COUNTRY"),
+		COUNTRY:                     strings.ToUpper(os.Getenv("COUNTRY")),
 		PROJECT_NAME:                os.Getenv("PROJECT_NAME"),
 		GEMINI_API_KEY:              os.Getenv("GEMINI_API_KEY"),
 		GOOGLE_PROJECT_ID:           os.Getenv("GOOGLE_PROJECT_ID"),
