@@ -59,10 +59,10 @@ func newMessageProcessor(
 	subscriptionRef := subscriptionManager.Subscription(messageProcessor.subscriptionName())
 	subscriptionRef.ReceiveSettings.MaxOutstandingMessages = 5
 	messageProcessor.subscriptionReference = subscriptionRef
-	go subscriptionManager.
+	mp := subscriptionManager.
 		WithMessageProcessor(messageProcessor).
-		WithPushHandler("/subscription/" + messageProcessor.subscriptionName()).
-		Start()
+		WithPushHandler("/subscription/" + messageProcessor.subscriptionName())
+	go mp.Start()
 	return messageProcessor
 }
 

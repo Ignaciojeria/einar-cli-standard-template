@@ -45,14 +45,14 @@ func newSubscriptionManagerWithMessageProcessor(
 	cw ClientWrapper,
 	s serverwrapper.EchoWrapper,
 	mp MessageProcessor) SubscriptionManager {
-	return &SubscriptionWrapper{clientWrapper: cw, httpServer: s}
+	return &SubscriptionWrapper{clientWrapper: cw, httpServer: s, messageProcessor: mp}
 }
 
 func (sw *SubscriptionWrapper) Subscription(id string) *pubsub.Subscription {
 	return sw.clientWrapper.Subscription(id)
 }
 
-func (sw *SubscriptionWrapper) WithMessageProcessor(mp MessageProcessor) SubscriptionManager {
+func (sw SubscriptionWrapper) WithMessageProcessor(mp MessageProcessor) SubscriptionManager {
 	return newSubscriptionManagerWithMessageProcessor(sw.clientWrapper, sw.httpServer, mp)
 }
 
