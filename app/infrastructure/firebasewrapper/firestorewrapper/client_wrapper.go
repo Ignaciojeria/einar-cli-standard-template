@@ -21,13 +21,13 @@ func init() {
 	ioc.Registry(NewClientWrapper, firebasewrapper.NewFirebaseAPP)
 }
 
-func NewClientWrapper(app *firebase.App) (ClientWrapper, error) {
+func NewClientWrapper(app *firebase.App) (*ClientWrapper, error) {
 	client, err := app.Firestore(context.Background())
 	if err != nil {
 		slog.Logger().Error("error getting firestore client", constants.Error, err.Error())
-		return ClientWrapper{}, err
+		return &ClientWrapper{}, err
 	}
-	return ClientWrapper{
+	return &ClientWrapper{
 		client: client,
 	}, nil
 }
