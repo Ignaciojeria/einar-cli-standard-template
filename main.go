@@ -1,9 +1,9 @@
 package main
 
 import (
+	"context"
 	"archetype/app/infrastructure/observability"
 	"archetype/app/infrastructure/serverwrapper"
-	"context"
 	"fmt"
 	"log"
 	"os"
