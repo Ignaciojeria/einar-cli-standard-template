@@ -71,7 +71,7 @@
             },
             {
                 "source_file": "app/usecase/tracer.go",
-                "destination_file": "app/usecase"
+                "destination_file": "app/usecase/tracer.go"
             }
         ]
     },    
