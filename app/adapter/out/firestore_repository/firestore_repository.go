@@ -2,6 +2,7 @@ package firestore_repository
 
 import (
 	"archetype/app/infrastructure/firebasewrapper/firestorewrapper"
+	"archetype/app/infrastructure/observability"
 	"context"
 
 	"cloud.google.com/go/firestore"
@@ -9,7 +10,7 @@ import (
 )
 
 func RunFirestoreOperation(ctx context.Context, entity interface{}) error {
-	_, span := tracer.Start(ctx,
+	_, span := observability.Tracer.Start(ctx,
 		"RunFirestoreOperation",
 		trace.WithSpanKind(trace.SpanKindInternal))
 	defer span.End()

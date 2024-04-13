@@ -68,10 +68,6 @@
             {
                 "source_file": ".gitignore",
                 "destination_file": ".gitignore"
-            },
-            {
-                "source_file": "app/usecase/tracer.go",
-                "destination_file": "app/usecase/tracer.go"
             }
         ]
     },    
@@ -417,11 +413,6 @@
                     "source_file": "mocks/subscription_manager_mock.go",
                     "destination_dir": "mocks",
                     "ioc_discovery":true
-                },
-                {   
-                    "source_file": "app/adapter/in/subscription/tracer.go",
-                    "destination_dir": "app/adapter/in/subscription",
-                    "ioc_discovery":true
                 }
             ],
             "source_dir": "app/infrastructure/pubsubwrapper",
@@ -443,11 +434,6 @@
                 {   
                     "source_file": "app/infrastructure/firebasewrapper/firestorewrapper/client_wrapper.go",
                     "destination_dir": "app/infrastructure/firebasewrapper/firestorewrapper",
-                    "ioc_discovery":true
-                },
-                {   
-                    "source_file": "app/adapter/out/firestore_repository/tracer.go",
-                    "destination_dir": "app/adapter/out/firestore_repository",
                     "ioc_discovery":true
                 }
             ],

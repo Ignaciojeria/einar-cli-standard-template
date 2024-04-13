@@ -2,6 +2,7 @@ package subscription
 
 import (
 	"archetype/app/exception"
+	"archetype/app/infrastructure/observability"
 	"archetype/app/infrastructure/pubsubwrapper/subscriptionwrapper"
 	"context"
 	"encoding/json"
@@ -19,7 +20,7 @@ func (p messageProcessorStruct) subscriptionName() string {
 }
 
 func (p messageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (statusCode int, err error) {
-	_, span := tracer.Start(ctx,
+	_, span := observability.Tracer.Start(ctx,
 		"messageProcessorStruct",
 		trace.WithSpanKind(trace.SpanKindConsumer), trace.WithAttributes(
 			attribute.String("subscription.name", p.subscriptionName()),
