@@ -10,12 +10,15 @@ import (
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
 	ioc "github.com/Ignaciojeria/einar-ioc"
+	"go.opentelemetry.io/otel"
 )
 
 type ClientWrapper struct {
 	collectionRefs sync.Map
 	client         *firestore.Client
 }
+
+var Tracer = otel.Tracer("firestorewrapper")
 
 func init() {
 	ioc.Registry(NewClientWrapper, firebasewrapper.NewFirebaseAPP)
@@ -32,7 +35,7 @@ func NewClientWrapper(app *firebase.App) (ClientWrapper, error) {
 	}, nil
 }
 
-func GetFirestoreCollection(collectionName string) *firestore.CollectionRef {
+func Collection(collectionName string) *firestore.CollectionRef {
 	wrapper := ioc.Get[*ClientWrapper](NewClientWrapper)
 	value, ok := wrapper.collectionRefs.Load(collectionName)
 	if ok {

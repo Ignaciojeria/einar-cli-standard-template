@@ -1,8 +1,20 @@
 package firestoredb
 
-import "archetype/app/infrastructure/firebasewrapper/firestorewrapper"
+import (
+	"archetype/app/infrastructure/firebasewrapper/firestorewrapper"
+	"context"
 
-func RunFirestoreOperation() {
-	var _ = firestorewrapper.
-		GetFirestoreCollection("insert your collection path here")
+	"cloud.google.com/go/firestore"
+	"go.opentelemetry.io/otel/trace"
+)
+
+func RunFirestoreOperation(ctx context.Context, entity interface{}) error {
+	_, span := firestorewrapper.Tracer.Start(ctx,
+		"RunFirestoreOperation",
+		trace.WithSpanKind(trace.SpanKindInternal))
+	defer span.End()
+
+	var _ *firestore.CollectionRef = firestorewrapper.Collection("INSERT_YOUR_COLLECTION_CONSTANT_HERE")
+	//Do something with collection.
+	return nil
 }
