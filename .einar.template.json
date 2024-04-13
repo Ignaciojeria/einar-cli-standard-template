@@ -70,8 +70,8 @@
                 "destination_file": ".gitignore"
             },
             {
-                "source_dir": "app/usecase/tracer.go",
-                "destination_dir": "app/usecase"
+                "source_file": "app/usecase/tracer.go",
+                "destination_file": "app/usecase"
             }
         ]
     },    
