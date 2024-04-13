@@ -36,7 +36,7 @@ func (p messageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (st
 		})
 	}()
 	if err := json.Unmarshal(m.Data, &dataModel); err != nil {
-		return http.StatusBadRequest, err
+		return http.StatusNoContent, err
 	}
 	return http.StatusOK, nil
 }
@@ -59,10 +59,10 @@ func newMessageProcessor(
 	subscriptionRef := subscriptionManager.Subscription(messageProcessor.subscriptionName())
 	subscriptionRef.ReceiveSettings.MaxOutstandingMessages = 5
 	messageProcessor.subscriptionReference = subscriptionRef
-	mp := subscriptionManager.
+	sm := subscriptionManager.
 		WithMessageProcessor(messageProcessor).
 		WithPushHandler("/subscription/" + messageProcessor.subscriptionName())
-	go mp.Start()
+	go sm.Start()
 	return messageProcessor
 }
 

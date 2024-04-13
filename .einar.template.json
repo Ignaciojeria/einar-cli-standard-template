@@ -327,7 +327,7 @@
             "kind":"subscription",
             "adapter_type":"inbound",
             "command":"einar generate subscription ${operation_name}",
-            "depends_on":[""],
+            "depends_on":["pubsub"],
             "files": [{
                 "source_file": "app/adapter/in/subscription/message_processor.go",
                 "destination_dir": "app/adapter/in/subscription",
@@ -361,6 +361,26 @@
                     }
                 ]
             }]
+        },
+        {
+            "kind":"firestore-repository",
+            "adapter_type":"outbound",
+            "command":"einar generate firestore-repository ${operation_name}",
+            "depends_on":["firestore"],
+            "files": [{
+                "source_file": "app/adapter/out/firestore_repository/firestore_repository.go",
+                "destination_dir": "app/adapter/out/firestore_repository",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"PascalCase",
+                        "name": "RunFirestoreOperation",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    }
+                ]
+            }
+        ]
         }
     ],
     "installation_commands":[
@@ -400,6 +420,26 @@
             "libraries": [
              "cloud.google.com/go/pubsub",
              "github.com/heimdalr/dag@v1.4.0"]
+        },
+        {
+            "name":"firestore",
+            "command":"einar install firestore",
+            "depends_on":[],
+            "files": [
+                {   
+                    "source_file": "app/infrastructure/firebasewrapper/firebase_app.go",
+                    "destination_dir": "app/infrastructure/firebasewrapper",
+                    "ioc_discovery":true
+                },
+                {   
+                    "source_file": "app/infrastructure/firebasewrapper/firestorewrapper/client_wrapper.go",
+                    "destination_dir": "app/infrastructure/firebasewrapper/firestorewrapper",
+                    "ioc_discovery":true
+                }
+            ],
+            "libraries": [
+             "firebase.google.com/go",
+             "cloud.google.com/go/firestore"]
         }
     ]
 }
