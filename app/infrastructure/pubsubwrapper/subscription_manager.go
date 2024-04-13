@@ -7,6 +7,7 @@ import (
 	"context"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 
 	"cloud.google.com/go/pubsub"
@@ -83,8 +84,9 @@ func (s *SubscriptionWrapper) WithPushHandler(path string) SubscriptionManager {
 func (s *SubscriptionWrapper) pushHandler(c echo.Context) error {
 	googleChannel := c.Request().Header.Get("X-Goog-Channel-ID")
 
+	var msg pubsub.Message
+
 	if googleChannel != "" {
-		var msg pubsub.Message
 		if err := c.Bind(&msg); err != nil {
 			return c.String(http.StatusNoContent, "error binding Pub/Sub message")
 		}
@@ -98,22 +100,22 @@ func (s *SubscriptionWrapper) pushHandler(c echo.Context) error {
 		return c.String(http.StatusOK, "")
 	}
 
-	if googleChannel == "" {
-		var msg pubsub.Message
-		msg.Attributes = map[string]string{
-			constants.EventType:  c.Request().Header.Get(constants.EventType),
-			constants.EntityType: c.Request().Header.Get(constants.EntityType),
-		}
-		body, err := io.ReadAll(c.Request().Body)
-		if err != nil {
-			return c.String(http.StatusBadRequest, "error reading request body")
-		}
-		msg.Data = body
-		if statusCode, err := s.messageProcessor.Pull(c.Request().Context(), &msg); err != nil {
-			return c.String(statusCode, err.Error())
-		}
-		return c.String(http.StatusOK, "")
+	body, err := io.ReadAll(c.Request().Body)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "error reading request body")
 	}
 
-	return c.String(http.StatusBadRequest, "unknown channel")
+	msg.Attributes = make(map[string]string)
+	for key, values := range c.Request().Header {
+		if len(values) > 0 {
+			msg.Attributes[strings.ToLower(key)] = strings.Join(values, ",")
+		}
+	}
+
+	msg.Data = body
+	if statusCode, err := s.messageProcessor.Pull(c.Request().Context(), &msg); err != nil {
+		return c.String(statusCode, err.Error())
+	}
+	return c.String(http.StatusOK, "")
+
 }
