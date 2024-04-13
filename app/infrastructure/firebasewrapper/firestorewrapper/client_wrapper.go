@@ -10,15 +10,12 @@ import (
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
 	ioc "github.com/Ignaciojeria/einar-ioc"
-	"go.opentelemetry.io/otel"
 )
 
 type ClientWrapper struct {
 	collectionRefs sync.Map
 	client         *firestore.Client
 }
-
-var Tracer = otel.Tracer("firestorewrapper")
 
 func init() {
 	ioc.Registry(NewClientWrapper, firebasewrapper.NewFirebaseAPP)

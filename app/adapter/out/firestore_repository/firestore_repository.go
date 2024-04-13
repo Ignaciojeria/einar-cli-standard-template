@@ -1,4 +1,4 @@
-package firestoredb
+package firestore_repository
 
 import (
 	"archetype/app/infrastructure/firebasewrapper/firestorewrapper"
@@ -9,7 +9,7 @@ import (
 )
 
 func RunFirestoreOperation(ctx context.Context, entity interface{}) error {
-	_, span := firestorewrapper.Tracer.Start(ctx,
+	_, span := tracer.Start(ctx,
 		"RunFirestoreOperation",
 		trace.WithSpanKind(trace.SpanKindInternal))
 	defer span.End()

@@ -2,12 +2,14 @@ package subscription
 
 import (
 	"archetype/app/exception"
-	"archetype/app/infrastructure/pubsubwrapper"
+	"archetype/app/infrastructure/pubsubwrapper/subscriptionwrapper"
 	"context"
 	"encoding/json"
 	"net/http"
 
 	"cloud.google.com/go/pubsub"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/trace"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
 )
@@ -15,25 +17,34 @@ import (
 func (p messageProcessorStruct) subscriptionName() string {
 	return "INSERT_YOUR_SUBSCRIPTION_NAME_HERE"
 }
+
 func (p messageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (statusCode int, err error) {
+	_, span := tracer.Start(ctx,
+		"messageProcessorStruct",
+		trace.WithSpanKind(trace.SpanKindConsumer), trace.WithAttributes(
+			attribute.String("subscription.name", p.subscriptionName()),
+			attribute.String("message.id", m.ID),
+			attribute.String("message.publishTime", m.PublishTime.String()),
+		))
+	defer span.End()
+
 	var dataModel interface{}
 	defer func() {
-		pubsubwrapper.HandleMessageAcknowledgement(ctx, &pubsubwrapper.HandleMessageAcknowledgementDetails{
-			MessageID:        m.ID,
-			PublishTime:      m.PublishTime.String(),
-			SubscriptionName: p.subscriptionReference.String(),
-			Error:            err,
-			Message:          m,
-			ErrorsRequiringNack: []error{
-				exception.INTERNAL_SERVER_ERROR,
-				exception.EXTERNAL_SERVER_ERROR,
-				exception.HTTP_NETWORK_ERROR,
-				exception.PUBSUB_BROKER_ERROR,
-			},
-			CustomLogFields: map[string]interface{}{
-				"dataModel": dataModel,
-			},
-		})
+		subscriptionwrapper.HandleMessageAcknowledgement(span,
+			&subscriptionwrapper.HandleMessageAcknowledgementDetails{
+				SubscriptionName: p.subscriptionReference.String(),
+				Error:            err,
+				Message:          m,
+				ErrorsRequiringNack: []error{
+					exception.INTERNAL_SERVER_ERROR,
+					exception.EXTERNAL_SERVER_ERROR,
+					exception.HTTP_NETWORK_ERROR,
+					exception.PUBSUB_BROKER_ERROR,
+				},
+				CustomLogFields: map[string]interface{}{
+					"dataModel": dataModel,
+				},
+			})
 	}()
 	if err := json.Unmarshal(m.Data, &dataModel); err != nil {
 		return http.StatusNoContent, err
@@ -50,11 +61,11 @@ type messageProcessorStruct struct {
 func init() {
 	ioc.Registry(
 		newMessageProcessor,
-		pubsubwrapper.NewSubscriptionManager)
+		subscriptionwrapper.NewSubscriptionManager)
 }
 
 func newMessageProcessor(
-	subscriptionManager pubsubwrapper.SubscriptionManager) pubsubwrapper.MessageProcessor {
+	subscriptionManager subscriptionwrapper.SubscriptionManager) subscriptionwrapper.MessageProcessor {
 	messageProcessor := messageProcessorStruct{}
 	subscriptionRef := subscriptionManager.Subscription(messageProcessor.subscriptionName())
 	subscriptionRef.ReceiveSettings.MaxOutstandingMessages = 5

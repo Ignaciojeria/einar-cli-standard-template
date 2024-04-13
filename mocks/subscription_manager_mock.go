@@ -1,7 +1,7 @@
 package mocks
 
 import (
-	"archetype/app/infrastructure/pubsubwrapper"
+	"archetype/app/infrastructure/pubsubwrapper/subscriptionwrapper"
 
 	"cloud.google.com/go/pubsub"
 )
@@ -9,13 +9,13 @@ import (
 // MockSubscriptionManager is a mock implementation of the SubscriptionManager interface.
 type MockSubscriptionManager struct {
 	SubscriptionFunc         func(id string) *pubsub.Subscription
-	WithMessageProcessorFunc func(mp pubsubwrapper.MessageProcessor) pubsubwrapper.SubscriptionManager
-	WithPushHandlerFunc      func(path string) pubsubwrapper.SubscriptionManager
-	StartFunc                func() (pubsubwrapper.SubscriptionManager, error)
+	WithMessageProcessorFunc func(mp subscriptionwrapper.MessageProcessor) subscriptionwrapper.SubscriptionManager
+	WithPushHandlerFunc      func(path string) subscriptionwrapper.SubscriptionManager
+	StartFunc                func() (subscriptionwrapper.SubscriptionManager, error)
 }
 
 // Ensure MockSubscriptionManager implements SubscriptionManager.
-var _ pubsubwrapper.SubscriptionManager = &MockSubscriptionManager{}
+var _ subscriptionwrapper.SubscriptionManager = &MockSubscriptionManager{}
 
 // New creates a new mock instance of a subscription, simulating the behavior of the interface's New method.
 func (m *MockSubscriptionManager) Subscription(id string) *pubsub.Subscription {
@@ -26,7 +26,7 @@ func (m *MockSubscriptionManager) Subscription(id string) *pubsub.Subscription {
 }
 
 // From simulates the behavior of the From method of the interface, allowing chaining.
-func (m *MockSubscriptionManager) WithMessageProcessor(mp pubsubwrapper.MessageProcessor) pubsubwrapper.SubscriptionManager {
+func (m *MockSubscriptionManager) WithMessageProcessor(mp subscriptionwrapper.MessageProcessor) subscriptionwrapper.SubscriptionManager {
 	if m.WithMessageProcessorFunc != nil {
 		return m.WithMessageProcessorFunc(mp)
 	}
@@ -34,7 +34,7 @@ func (m *MockSubscriptionManager) WithMessageProcessor(mp pubsubwrapper.MessageP
 }
 
 // WithPushHandler simulates the behavior of the interface's WithPushHandler method, allowing chaining.
-func (m *MockSubscriptionManager) WithPushHandler(path string) pubsubwrapper.SubscriptionManager {
+func (m *MockSubscriptionManager) WithPushHandler(path string) subscriptionwrapper.SubscriptionManager {
 	if m.WithPushHandlerFunc != nil {
 		return m.WithPushHandlerFunc(path)
 	}
@@ -42,7 +42,7 @@ func (m *MockSubscriptionManager) WithPushHandler(path string) pubsubwrapper.Sub
 }
 
 // Start simulates the behavior of the Start method of the interface, initializing the subscription.
-func (m *MockSubscriptionManager) Start() (pubsubwrapper.SubscriptionManager, error) {
+func (m *MockSubscriptionManager) Start() (subscriptionwrapper.SubscriptionManager, error) {
 	if m.StartFunc != nil {
 		return m.StartFunc()
 	}

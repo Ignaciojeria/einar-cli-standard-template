@@ -1,8 +1,9 @@
-package pubsubwrapper
+package subscriptionwrapper
 
 import (
 	"archetype/app/adapter/out/slog"
 	"archetype/app/constants"
+	"archetype/app/infrastructure/pubsubwrapper"
 	"archetype/app/infrastructure/serverwrapper"
 	"context"
 	"io"
@@ -23,7 +24,7 @@ type SubscriptionManager interface {
 }
 
 type SubscriptionWrapper struct {
-	clientWrapper    ClientWrapper
+	clientWrapper    pubsubwrapper.ClientWrapper
 	httpServer       serverwrapper.EchoWrapper
 	messageProcessor MessageProcessor
 }
@@ -33,17 +34,17 @@ const subscription_name = "subscription_name"
 func init() {
 	ioc.Registry(
 		NewSubscriptionManager,
-		NewClientWrapper,
+		pubsubwrapper.NewClientWrapper,
 		serverwrapper.NewEchoWrapper,
 	)
 }
 
-func NewSubscriptionManager(cw ClientWrapper, s serverwrapper.EchoWrapper) SubscriptionManager {
+func NewSubscriptionManager(cw pubsubwrapper.ClientWrapper, s serverwrapper.EchoWrapper) SubscriptionManager {
 	return &SubscriptionWrapper{clientWrapper: cw, httpServer: s}
 }
 
 func newSubscriptionManagerWithMessageProcessor(
-	cw ClientWrapper,
+	cw pubsubwrapper.ClientWrapper,
 	s serverwrapper.EchoWrapper,
 	mp MessageProcessor) SubscriptionManager {
 	return &SubscriptionWrapper{clientWrapper: cw, httpServer: s, messageProcessor: mp}

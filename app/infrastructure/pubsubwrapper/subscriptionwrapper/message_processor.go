@@ -1,4 +1,4 @@
-package pubsubwrapper
+package subscriptionwrapper
 
 import (
 	"context"

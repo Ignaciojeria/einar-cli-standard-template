@@ -1,13 +1,11 @@
-package pubsubwrapper
+package subscriptionwrapper
 
 import (
 	"archetype/app/adapter/out/slog"
 	"archetype/app/constants"
-	"context"
 	"errors"
 
 	"cloud.google.com/go/pubsub"
-	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/trace"
@@ -17,24 +15,11 @@ type HandleMessageAcknowledgementDetails struct {
 	SubscriptionName    string
 	Error               error
 	Message             *pubsub.Message
-	MessageID           string
-	PublishTime         string
 	ErrorsRequiringNack []error
 	CustomLogFields     map[string]interface{}
 }
 
-var subscription_tracer = otel.Tracer("pubsub-subscription")
-
-func HandleMessageAcknowledgement(ctx context.Context, details *HandleMessageAcknowledgementDetails) {
-	_, span := subscription_tracer.Start(ctx,
-		"HandleMessageAcknowledgement",
-		trace.WithSpanKind(trace.SpanKindConsumer), trace.WithAttributes(
-			attribute.String("subscription.name", details.SubscriptionName),
-			attribute.String("message.id", details.MessageID),
-			attribute.String("message.publishTime", details.PublishTime),
-		))
-	defer span.End()
-
+func HandleMessageAcknowledgement(span trace.Span, details *HandleMessageAcknowledgementDetails) {
 	if details.Error != nil {
 		span.RecordError(details.Error)
 		span.SetStatus(codes.Error, details.Error.Error())
