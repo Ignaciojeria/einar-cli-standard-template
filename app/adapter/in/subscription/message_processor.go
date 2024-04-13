@@ -32,7 +32,7 @@ func (p messageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (st
 	defer func() {
 		subscriptionwrapper.HandleMessageAcknowledgement(span,
 			&subscriptionwrapper.HandleMessageAcknowledgementDetails{
-				SubscriptionName: p.subscriptionReference.String(),
+				SubscriptionName: p.subscriptionName(),
 				Error:            err,
 				Message:          m,
 				ErrorsRequiringNack: []error{
