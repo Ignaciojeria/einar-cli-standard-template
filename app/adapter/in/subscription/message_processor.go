@@ -26,7 +26,6 @@ func (p messageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (st
 			attribute.String("message.id", m.ID),
 			attribute.String("message.publishTime", m.PublishTime.String()),
 		))
-	defer span.End()
 
 	var dataModel interface{}
 	defer func() {
@@ -45,6 +44,7 @@ func (p messageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (st
 					"dataModel": dataModel,
 				},
 			})
+		span.End()
 	}()
 	if err := json.Unmarshal(m.Data, &dataModel); err != nil {
 		return http.StatusNoContent, err
