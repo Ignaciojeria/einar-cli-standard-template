@@ -4,6 +4,7 @@ import (
 	"archetype/app/adapter/out/slog"
 	"archetype/app/constants"
 	"errors"
+	"net/http"
 
 	"cloud.google.com/go/pubsub"
 	"go.opentelemetry.io/otel/attribute"
@@ -15,11 +16,13 @@ type HandleMessageAcknowledgementDetails struct {
 	SubscriptionName    string
 	Error               error
 	Message             *pubsub.Message
+	MessageID           string
+	PublishTime         string
 	ErrorsRequiringNack []error
-	CustomLogFields     map[string]interface{}
+	CustomLogFields     slog.CustomLogFields
 }
 
-func HandleMessageAcknowledgement(span trace.Span, details *HandleMessageAcknowledgementDetails) {
+func HandleMessageAcknowledgement(span trace.Span, details *HandleMessageAcknowledgementDetails) int {
 	if details.Error != nil {
 		span.RecordError(details.Error)
 		span.SetStatus(codes.Error, details.Error.Error())
@@ -34,13 +37,13 @@ func HandleMessageAcknowledgement(span trace.Span, details *HandleMessageAcknowl
 				span.AddEvent("Event processing nacked, retrying",
 					trace.WithAttributes(attribute.String(constants.Error, details.Error.Error())))
 				details.Message.Nack()
-				return
+				return http.StatusInternalServerError
 			}
 		}
 		span.AddEvent("Event discarded",
 			trace.WithAttributes(attribute.String(constants.Error, details.Error.Error())))
 		details.Message.Ack()
-		return
+		return http.StatusAccepted
 	}
 	span.SetStatus(codes.Ok, details.SubscriptionName+"_succedded")
 	slog.SpanLogger(span).Info(
@@ -49,4 +52,5 @@ func HandleMessageAcknowledgement(span trace.Span, details *HandleMessageAcknowl
 		constants.Fields, details.CustomLogFields,
 	)
 	details.Message.Ack()
+	return http.StatusOK
 }

@@ -2,6 +2,7 @@ package slog
 
 import (
 	"archetype/app/configuration"
+	"archetype/app/constants"
 	"log/slog"
 	"os"
 	"strconv"
@@ -44,10 +45,22 @@ func SpanLogger(span trace.Span) *slog.Logger {
 	return logger.With(
 		slog.String(traceIDKey, traceID),
 		slog.String(spanIDKey, spanID),
+		slog.String(ddTraceIDKey, convertTraceID(traceID)),
+		slog.String(ddSpanIDKey, convertTraceID(spanID)),
 		slog.String(ddServiceKey, ddService),
 		slog.String(ddEnvKey, ddEnv),
 		slog.String(ddVersionKey, ddVersion),
 	)
+}
+
+type CustomLogFields map[string]interface{}
+
+func LogSpanError(span trace.Span, message string, fields CustomLogFields) {
+	SpanLogger(span).Error(message, constants.Fields, fields)
+}
+
+func LogSpanInfo(span trace.Span, message string, fields CustomLogFields) {
+	SpanLogger(span).Info(message, constants.Fields, fields)
 }
 
 func Logger() *slog.Logger {

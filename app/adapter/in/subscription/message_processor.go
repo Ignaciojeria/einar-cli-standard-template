@@ -1,12 +1,12 @@
 package subscription
 
 import (
+	"archetype/app/adapter/out/slog"
 	"archetype/app/exception"
 	"archetype/app/infrastructure/observability"
 	"archetype/app/infrastructure/pubsubwrapper/subscriptionwrapper"
 	"context"
 	"encoding/json"
-	"net/http"
 
 	"cloud.google.com/go/pubsub"
 	"go.opentelemetry.io/otel/attribute"
@@ -30,7 +30,7 @@ func (p messageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (st
 
 	var dataModel interface{}
 	defer func() {
-		subscriptionwrapper.HandleMessageAcknowledgement(span,
+		statusCode = subscriptionwrapper.HandleMessageAcknowledgement(span,
 			&subscriptionwrapper.HandleMessageAcknowledgementDetails{
 				SubscriptionName: p.subscriptionName(),
 				Error:            err,
@@ -41,16 +41,16 @@ func (p messageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (st
 					exception.HTTP_NETWORK_ERROR,
 					exception.PUBSUB_BROKER_ERROR,
 				},
-				CustomLogFields: map[string]interface{}{
+				CustomLogFields: slog.CustomLogFields{
 					"dataModel": dataModel,
 				},
 			})
 		span.End()
 	}()
 	if err := json.Unmarshal(m.Data, &dataModel); err != nil {
-		return http.StatusNoContent, err
+		return statusCode, err
 	}
-	return http.StatusOK, nil
+	return statusCode, nil
 }
 
 /* ----- Default Initialization & Configuration Settings ----- */
