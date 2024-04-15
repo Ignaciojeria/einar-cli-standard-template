@@ -16,8 +16,6 @@ type HandleMessageAcknowledgementDetails struct {
 	SubscriptionName    string
 	Error               error
 	Message             *pubsub.Message
-	MessageID           string
-	PublishTime         string
 	ErrorsRequiringNack []error
 	CustomLogFields     slog.CustomLogFields
 }
@@ -31,6 +29,8 @@ func HandleMessageAcknowledgement(span trace.Span, details *HandleMessageAcknowl
 			subscription_name, details.SubscriptionName,
 			constants.Fields, details.CustomLogFields,
 			constants.Error, details.Error,
+			constants.MessageAttributes, details.Message.Attributes,
+			constants.MessageData, string(details.Message.Data),
 		)
 		for _, err := range details.ErrorsRequiringNack {
 			if errors.Is(details.Error, err) {
@@ -50,6 +50,8 @@ func HandleMessageAcknowledgement(span trace.Span, details *HandleMessageAcknowl
 		details.SubscriptionName+"_succedded",
 		subscription_name, details.SubscriptionName,
 		constants.Fields, details.CustomLogFields,
+		constants.MessageAttributes, details.Message.Attributes,
+		constants.MessageData, string(details.Message.Data),
 	)
 	details.Message.Ack()
 	return http.StatusOK

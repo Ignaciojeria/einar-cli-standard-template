@@ -11,4 +11,7 @@ const EventType = "eventType"
 const EntityType = "entityType"
 const DefaultPushHandlerPrefix = "/subscription/"
 
+const MessageAttributes = "attributes"
+const MessageData = "data"
+
 const TopicName = "topicName"

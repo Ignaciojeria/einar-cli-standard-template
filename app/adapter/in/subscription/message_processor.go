@@ -42,7 +42,7 @@ func (p messageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (st
 					exception.PUBSUB_BROKER_ERROR,
 				},
 				CustomLogFields: slog.CustomLogFields{
-					"dataModel": dataModel,
+					"customIndexField": "MyCustomFieldForIndexWhenSearchLogs",
 				},
 			})
 		span.End()
