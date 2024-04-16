@@ -1,9 +1,10 @@
 package firebasewrapper
 
 import (
-	"archetype/app/adapter/out/slog"
-	"archetype/app/configuration"
-	"archetype/app/constants"
+	"archetype/app/shared/configuration"
+	"archetype/app/shared/constants"
+	"archetype/app/shared/slog"
+
 	"context"
 
 	firebase "firebase.google.com/go"

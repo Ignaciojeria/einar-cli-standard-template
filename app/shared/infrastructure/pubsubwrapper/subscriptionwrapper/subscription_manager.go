@@ -1,10 +1,11 @@
 package subscriptionwrapper
 
 import (
-	"archetype/app/adapter/out/slog"
-	"archetype/app/constants"
-	"archetype/app/infrastructure/pubsubwrapper"
-	"archetype/app/infrastructure/serverwrapper"
+	"archetype/app/shared/constants"
+	"archetype/app/shared/infrastructure/pubsubwrapper"
+	"archetype/app/shared/infrastructure/serverwrapper"
+	"archetype/app/shared/slog"
+
 	"context"
 	"io"
 	"net/http"

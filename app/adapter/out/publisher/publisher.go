@@ -1,11 +1,11 @@
 package publisher
 
 import (
-	"archetype/app/adapter/out/slog"
-	"archetype/app/constants"
-	"archetype/app/exception"
-	"archetype/app/infrastructure/observability"
-	"archetype/app/infrastructure/pubsubwrapper/topicwrapper"
+	"archetype/app/shared/constants"
+	"archetype/app/shared/exception"
+	"archetype/app/shared/infrastructure/observability"
+	"archetype/app/shared/infrastructure/pubsubwrapper/topicwrapper"
+	"archetype/app/shared/slog"
 	"context"
 	"encoding/json"
 

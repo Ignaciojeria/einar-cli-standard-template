@@ -1,7 +1,7 @@
 package subscription
 
 import (
-	"archetype/app/configuration"
+	"archetype/app/shared/configuration"
 	"archetype/mocks"
 	"context"
 	"encoding/json"

@@ -1,7 +1,7 @@
 package observability
 
 import (
-	"archetype/app/configuration"
+	"archetype/app/shared/configuration"
 	"context"
 	"fmt"
 

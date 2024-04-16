@@ -32,28 +32,28 @@
     "base_template": {
        "folders": [
             {
-                "source_dir": "app/configuration",
-                "destination_dir": "app/configuration"
+                "source_dir": "app/shared/configuration",
+                "destination_dir": "app/shared/configuration"
             },
             {
-                "source_dir": "app/infrastructure/serverwrapper",
-                "destination_dir": "app/infrastructure/serverwrapper"
+                "source_dir": "app/shared/infrastructure/serverwrapper",
+                "destination_dir": "app/shared/infrastructure/serverwrapper"
             },
             {
-                "source_dir": "app/adapter/out/slog",
-                "destination_dir": "app/adapter/out/slog"
+                "source_dir": "app/shared/slog",
+                "destination_dir": "app/shared/slog"
             },
             {
-                "source_dir": "app/exception",
-                "destination_dir": "app/exception"
+                "source_dir": "app/shared/exception",
+                "destination_dir": "app/shared/exception"
             },
             {
-                "source_dir": "app/constants",
-                "destination_dir": "app/constants"
+                "source_dir": "app/shared/constants",
+                "destination_dir": "app/shared/constants"
             },
             {
-                "source_dir": "app/infrastructure/observability",
-                "destination_dir": "app/infrastructure/observability"
+                "source_dir": "app/shared/infrastructure/observability",
+                "destination_dir": "app/shared/infrastructure/observability"
             }
         ],
         "files": [
@@ -409,13 +409,13 @@
             "depends_on":[],
             "files": [
                 {   
-                    "source_file": "app/infrastructure/gemini/client.go",
-                    "destination_dir": "app/infrastructure/gemini",
+                    "source_file": "app/shared/infrastructure/gemini/client.go",
+                    "destination_dir": "app/shared/infrastructure/gemini",
                     "ioc_discovery":true
                 },
                 {   
-                    "source_file": "app/infrastructure/gemini/gemini-1.0-pro-model_wrapper.go",
-                    "destination_dir": "app/infrastructure/gemini",
+                    "source_file": "app/shared/infrastructure/gemini/gemini-1.0-pro-model_wrapper.go",
+                    "destination_dir": "app/shared/infrastructure/gemini",
                     "ioc_discovery":true
                 }
             ],
@@ -435,8 +435,8 @@
                     "ioc_discovery":true
                 }
             ],
-            "source_dir": "app/infrastructure/pubsubwrapper",
-            "destination_dir": "app/infrastructure/pubsubwrapper",
+            "source_dir": "app/shared/infrastructure/pubsubwrapper",
+            "destination_dir": "app/shared/infrastructure/pubsubwrapper",
             "libraries": [
              "cloud.google.com/go/pubsub",
              "github.com/heimdalr/dag@v1.4.0"]
@@ -447,13 +447,13 @@
             "depends_on":[],
             "files": [
                 {   
-                    "source_file": "app/infrastructure/firebasewrapper/firebase_app.go",
-                    "destination_dir": "app/infrastructure/firebasewrapper",
+                    "source_file": "app/shared/infrastructure/firebasewrapper/firebase_app.go",
+                    "destination_dir": "app/shared/infrastructure/firebasewrapper",
                     "ioc_discovery":true
                 },
                 {   
-                    "source_file": "app/infrastructure/firebasewrapper/firestorewrapper/client_wrapper.go",
-                    "destination_dir": "app/infrastructure/firebasewrapper/firestorewrapper",
+                    "source_file": "app/shared/infrastructure/firebasewrapper/firestorewrapper/client_wrapper.go",
+                    "destination_dir": "app/shared/infrastructure/firebasewrapper/firestorewrapper",
                     "ioc_discovery":true
                 }
             ],

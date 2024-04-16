@@ -1,8 +1,9 @@
 package subscriptionwrapper
 
 import (
-	"archetype/app/adapter/out/slog"
-	"archetype/app/constants"
+	"archetype/app/shared/constants"
+	"archetype/app/shared/slog"
+
 	"errors"
 	"net/http"
 

@@ -1,8 +1,8 @@
 package slog
 
 import (
-	"archetype/app/configuration"
-	"archetype/app/constants"
+	"archetype/app/shared/configuration"
+	"archetype/app/shared/constants"
 	"log/slog"
 	"os"
 	"strconv"

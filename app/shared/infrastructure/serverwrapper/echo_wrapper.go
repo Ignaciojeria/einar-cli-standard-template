@@ -1,7 +1,7 @@
 package serverwrapper
 
 import (
-	"archetype/app/configuration"
+	"archetype/app/shared/configuration"
 	"log"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"

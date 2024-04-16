@@ -1,10 +1,11 @@
 package subscription
 
 import (
-	"archetype/app/adapter/out/slog"
-	"archetype/app/exception"
-	"archetype/app/infrastructure/observability"
-	"archetype/app/infrastructure/pubsubwrapper/subscriptionwrapper"
+	"archetype/app/shared/exception"
+	"archetype/app/shared/infrastructure/observability"
+	"archetype/app/shared/infrastructure/pubsubwrapper/subscriptionwrapper"
+	"archetype/app/shared/slog"
+
 	"context"
 	"encoding/json"
 

@@ -1,7 +1,7 @@
 package topicwrapper
 
 import (
-	"archetype/app/infrastructure/pubsubwrapper"
+	"archetype/app/shared/infrastructure/pubsubwrapper"
 	"sync"
 
 	"cloud.google.com/go/pubsub"

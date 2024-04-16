@@ -1,9 +1,10 @@
 package firestorewrapper
 
 import (
-	"archetype/app/adapter/out/slog"
-	"archetype/app/constants"
-	"archetype/app/infrastructure/firebasewrapper"
+	"archetype/app/shared/constants"
+	"archetype/app/shared/infrastructure/firebasewrapper"
+	"archetype/app/shared/slog"
+
 	"context"
 	"sync"
 

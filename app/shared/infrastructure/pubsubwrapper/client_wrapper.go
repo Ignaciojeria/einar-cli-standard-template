@@ -1,7 +1,7 @@
 package pubsubwrapper
 
 import (
-	"archetype/app/configuration"
+	"archetype/app/shared/configuration"
 	"context"
 	"errors"
 
