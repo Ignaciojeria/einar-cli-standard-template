@@ -1,7 +1,7 @@
 package gemini
 
 import (
-	"archetype/app/configuration"
+	"archetype/app/shared/configuration"
 	"context"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"

@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"archetype/app/infrastructure/serverwrapper"
+	"archetype/app/shared/infrastructure/serverwrapper"
 
 	"github.com/labstack/echo/v4"
 )

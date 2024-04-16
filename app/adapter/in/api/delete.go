@@ -1,7 +1,7 @@
 package api
 
 import (
-	"archetype/app/infrastructure/serverwrapper"
+	"archetype/app/shared/infrastructure/serverwrapper"
 	"net/http"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"

@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"archetype/app/infrastructure/observability"
+	"archetype/app/shared/infrastructure/observability"
 	"context"
 )
 

@@ -1,7 +1,7 @@
 package chat
 
 import (
-	"archetype/app/infrastructure/gemini"
+	"archetype/app/shared/infrastructure/gemini"
 	"context"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
