@@ -381,6 +381,39 @@
                 ]
             }
         ]
+        },
+        {
+            "kind":"publisher",
+            "adapter_type":"outbound",
+            "command":"einar generate publisher ${operation_name}",
+            "depends_on":["pubsub"],
+            "files": [{
+                "source_file": "app/adapter/out/publisher/publisher.go",
+                "destination_dir": "app/adapter/out/publisher",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"PascalCase",
+                        "name": "PublishEvent",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    }
+                ]
+            },
+            {
+                "source_file": "app/adapter/in/subscription/message_processor_test.go",
+                "destination_dir": "app/adapter/in/subscription",
+                "append_at_end":"_test",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"PascalCase",
+                        "name": "newMessageProcessor",
+                        "append_at_start":"new",
+                        "append_at_end":""
+                    }
+                ]
+            }]
         }
     ],
     "installation_commands":[
