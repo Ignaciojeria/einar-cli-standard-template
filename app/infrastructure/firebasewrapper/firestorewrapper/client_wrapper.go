@@ -50,7 +50,7 @@ func Collection(collectionName string) *firestore.CollectionRef {
 	return newCollectionRef
 }
 
-func GetFirestoreClient(collectionName string) *firestore.Client {
+func Client() *firestore.Client {
 	wrapper := ioc.Get[*ClientWrapper](NewClientWrapper)
 	return wrapper.client
 }
