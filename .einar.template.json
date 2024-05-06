@@ -70,6 +70,10 @@
                 "destination_file": "main.go"
             },
             {
+                "source_file": ".version",
+                "destination_file": ".version"
+            },
+            {
                 "source_file": ".env",
                 "destination_file": ".env"
             },
