@@ -1,5 +1,6 @@
 package constants
 
+const Version = "version"
 const Error = "error"
 const Sucess = "success"
 

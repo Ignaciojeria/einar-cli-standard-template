@@ -27,6 +27,10 @@
         {
             "name":"echo",
             "library": "github.com/labstack/echo/v4"
+        },
+        {
+            "name":"health-check",
+            "library": "github.com/hellofresh/health-go/v5"
         }
     ],
     "base_template": {
@@ -54,6 +58,10 @@
             {
                 "source_dir": "app/shared/infrastructure/observability",
                 "destination_dir": "app/shared/infrastructure/observability"
+            },
+            {
+                "source_dir": "app/shared/infrastructure/healthcheck",
+                "destination_dir": "app/shared/infrastructure/healthcheck"
             }
         ],
         "files": [

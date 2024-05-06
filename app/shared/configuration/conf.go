@@ -1,6 +1,7 @@
 package configuration
 
 import (
+	"archetype/app/shared/constants"
 	"fmt"
 	"log/slog"
 	"os"
@@ -13,6 +14,7 @@ import (
 
 type Conf struct {
 	PORT                        string `required:"true"`
+	VERSION                     string `required:"true"`
 	COUNTRY                     string `required:"true"`
 	GEMINI_API_KEY              string `required:"false"`
 	PROJECT_NAME                string `required:"false"`
@@ -33,17 +35,14 @@ func NewConf() (Conf, error) {
 	}
 	conf := Conf{
 		PORT:                        os.Getenv("PORT"),
+		VERSION:                     os.Getenv(constants.Version),
 		COUNTRY:                     strings.ToUpper(os.Getenv("COUNTRY")),
 		PROJECT_NAME:                os.Getenv("PROJECT_NAME"),
 		GEMINI_API_KEY:              os.Getenv("GEMINI_API_KEY"),
 		GOOGLE_PROJECT_ID:           os.Getenv("GOOGLE_PROJECT_ID"),
 		OTEL_EXPORTER_OTLP_ENDPOINT: os.Getenv("OTEL_EXPORTER_OTLP_ENDPOINT"),
-		DD_AGENT_HOST:               os.Getenv("DD_AGENT_HOST"),
-		DD_SERVICE:                  os.Getenv("DD_SERVICE"),
-		DD_ENV:                      os.Getenv("DD_ENV"),
-		DD_VERSION:                  os.Getenv("DD_VERSION"),
 	}
-
+	setupDatadog(&conf)
 	if conf.DD_SERVICE != "" && conf.DD_ENV != "" &&
 		conf.DD_VERSION != "" && conf.DD_AGENT_HOST != "" &&
 		conf.OTEL_EXPORTER_OTLP_ENDPOINT != "" {
@@ -84,4 +83,16 @@ func validateConfig(conf Conf) error {
 	}
 
 	return nil
+}
+
+func setupDatadog(c *Conf) {
+	os.Setenv("DD_SERVICE", c.PROJECT_NAME)
+	c.DD_SERVICE = c.PROJECT_NAME
+	if os.Getenv("DD_ENV") == "" {
+		os.Setenv("DD_ENV", "unknown")
+	}
+	c.DD_ENV = os.Getenv("DD_ENV")
+	c.DD_AGENT_HOST = os.Getenv("DD_AGENT_HOST")
+	os.Setenv("DD_VERSION", c.VERSION)
+	c.DD_VERSION = c.VERSION
 }

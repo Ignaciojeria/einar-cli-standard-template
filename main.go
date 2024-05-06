@@ -1,9 +1,12 @@
 package main
 
 import (
+	"archetype/app/shared/constants"
+	_ "archetype/app/shared/infrastructure/healthcheck"
 	"archetype/app/shared/infrastructure/observability"
 	"archetype/app/shared/infrastructure/serverwrapper"
 	"context"
+	_ "embed"
 	"fmt"
 	"log"
 	"os"
@@ -13,7 +16,11 @@ import (
 	"go.opentelemetry.io/otel"
 )
 
+//go:embed .version
+var version string
+
 func main() {
+	os.Setenv(constants.Version, version)
 	if err := ioc.LoadDependencies(); err != nil {
 		log.Fatal(err)
 	}

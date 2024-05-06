@@ -32,6 +32,8 @@ require (
 	github.com/googleapis/gax-go/v2 v2.12.2 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.19.0 // indirect
 	github.com/heimdalr/dag v1.4.0 // indirect
+	github.com/hellofresh/health-go v2.0.2+incompatible // indirect
+	github.com/hellofresh/health-go/v5 v5.5.3 // indirect
 	github.com/labstack/echo/v4 v4.11.4 // indirect
 	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
