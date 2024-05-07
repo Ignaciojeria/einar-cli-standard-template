@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"archetype/app/shared/configuration"
 	"archetype/app/shared/infrastructure/serverwrapper"
 
 	"github.com/labstack/echo/v4"
@@ -13,7 +14,7 @@ import (
 
 func TestNewTemplatePost(t *testing.T) {
 	e := echo.New()
-	wrapper := serverwrapper.NewEchoWrapper(e)
+	wrapper := serverwrapper.NewEchoWrapper(e, configuration.Conf{})
 
 	newTemplatePost(wrapper)
 

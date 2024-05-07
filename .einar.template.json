@@ -31,6 +31,14 @@
         {
             "name":"health-check",
             "library": "github.com/hellofresh/health-go/v5"
+        },
+        {
+            "name":"echo-middleware",
+            "library": "github.com/labstack/echo/v4/middleware"
+        },
+        {
+            "name":"otel-echo",
+            "library": "go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho"
         }
     ],
     "base_template": {
