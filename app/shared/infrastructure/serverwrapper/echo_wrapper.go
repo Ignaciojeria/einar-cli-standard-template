@@ -3,7 +3,7 @@ package serverwrapper
 import (
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/infrastructure/observability"
-	logger "archetype/app/shared/slog"
+	logger "archetype/app/shared/logger"
 	"log"
 	"log/slog"
 

@@ -4,7 +4,7 @@ import (
 	"archetype/app/shared/constants"
 	"archetype/app/shared/infrastructure/pubsubwrapper"
 	"archetype/app/shared/infrastructure/serverwrapper"
-	"archetype/app/shared/slog"
+	"archetype/app/shared/logger"
 
 	"context"
 	"io"
@@ -62,7 +62,7 @@ func (sw SubscriptionWrapper) WithMessageProcessor(mp MessageProcessor) Subscrip
 func (s *SubscriptionWrapper) Start() (SubscriptionManager, error) {
 	ctx := context.Background()
 	if err := s.messageProcessor.SubscriptionRef().Receive(ctx, s.receive); err != nil {
-		slog.Logger().Error(
+		logger.Logger().Error(
 			"subscription_signal_broken",
 			subscription_name, s.messageProcessor.SubscriptionRef().String(),
 			constants.Error, err.Error(),

@@ -1,4 +1,4 @@
-package slog
+package logger
 
 import (
 	"archetype/app/shared/configuration"

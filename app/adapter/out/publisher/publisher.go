@@ -5,7 +5,7 @@ import (
 	"archetype/app/shared/exception"
 	"archetype/app/shared/infrastructure/observability"
 	"archetype/app/shared/infrastructure/pubsubwrapper/topicwrapper"
-	"archetype/app/shared/slog"
+	"archetype/app/shared/logger"
 	"context"
 	"encoding/json"
 
@@ -44,9 +44,9 @@ func PublishEvent(ctx context.Context, REPLACE_BY_YOUR_DOMAIN interface{}) (err 
 	if err != nil {
 		span.SetStatus(codes.Error, exception.PUBSUB_BROKER_ERROR.Error())
 		span.RecordError(err)
-		slog.
+		logger.
 			LogSpanError(span, exception.PUBSUB_BROKER_ERROR.Error(),
-				slog.CustomLogFields{
+				logger.CustomLogFields{
 					constants.Error: err.Error(),
 				})
 		return exception.PUBSUB_BROKER_ERROR

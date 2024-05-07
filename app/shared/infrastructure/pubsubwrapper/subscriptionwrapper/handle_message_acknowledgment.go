@@ -2,7 +2,7 @@ package subscriptionwrapper
 
 import (
 	"archetype/app/shared/constants"
-	"archetype/app/shared/slog"
+	"archetype/app/shared/logger"
 
 	"errors"
 	"net/http"
@@ -18,14 +18,14 @@ type HandleMessageAcknowledgementDetails struct {
 	Error               error
 	Message             *pubsub.Message
 	ErrorsRequiringNack []error
-	CustomLogFields     slog.CustomLogFields
+	CustomLogFields     logger.CustomLogFields
 }
 
 func HandleMessageAcknowledgement(span trace.Span, details *HandleMessageAcknowledgementDetails) int {
 	if details.Error != nil {
 		span.RecordError(details.Error)
 		span.SetStatus(codes.Error, details.Error.Error())
-		slog.SpanLogger(span).Error(
+		logger.SpanLogger(span).Error(
 			details.SubscriptionName+"_exception",
 			subscription_name, details.SubscriptionName,
 			constants.Fields, details.CustomLogFields,
@@ -47,7 +47,7 @@ func HandleMessageAcknowledgement(span trace.Span, details *HandleMessageAcknowl
 		return http.StatusAccepted
 	}
 	span.SetStatus(codes.Ok, details.SubscriptionName+"_succedded")
-	slog.SpanLogger(span).Info(
+	logger.SpanLogger(span).Info(
 		details.SubscriptionName+"_succedded",
 		subscription_name, details.SubscriptionName,
 		constants.Fields, details.CustomLogFields,

@@ -4,7 +4,7 @@ import (
 	"archetype/app/shared/exception"
 	"archetype/app/shared/infrastructure/observability"
 	"archetype/app/shared/infrastructure/pubsubwrapper/subscriptionwrapper"
-	"archetype/app/shared/slog"
+	"archetype/app/shared/logger"
 
 	"context"
 	"encoding/json"
@@ -42,7 +42,7 @@ func (p messageProcessorStruct) Pull(ctx context.Context, m *pubsub.Message) (st
 					exception.HTTP_NETWORK_ERROR,
 					exception.PUBSUB_BROKER_ERROR,
 				},
-				CustomLogFields: slog.CustomLogFields{
+				CustomLogFields: logger.CustomLogFields{
 					"customIndexField": "MyCustomFieldForIndexWhenSearchLogs",
 				},
 			})

@@ -3,7 +3,7 @@ package firestorewrapper
 import (
 	"archetype/app/shared/constants"
 	"archetype/app/shared/infrastructure/firebasewrapper"
-	"archetype/app/shared/slog"
+	"archetype/app/shared/logger"
 
 	"context"
 	"sync"
@@ -25,7 +25,7 @@ func init() {
 func NewClientWrapper(app *firebase.App) (*ClientWrapper, error) {
 	client, err := app.Firestore(context.Background())
 	if err != nil {
-		slog.Logger().Error("error getting firestore client", constants.Error, err.Error())
+		logger.Logger().Error("error getting firestore client", constants.Error, err.Error())
 		return &ClientWrapper{}, err
 	}
 	return &ClientWrapper{
