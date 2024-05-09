@@ -33,25 +33,20 @@ func NewClientWrapper(app *firebase.App) (*ClientWrapper, error) {
 	}, nil
 }
 
-func Collection(collectionName string) *firestore.CollectionRef {
-	wrapper := ioc.Get[*ClientWrapper](NewClientWrapper)
+func (wrapper *ClientWrapper) Collection(collectionName string) *firestore.CollectionRef {
 	value, ok := wrapper.collectionRefs.Load(collectionName)
 	if ok {
 		// If the collection reference was found, return it.
 		return value.(*firestore.CollectionRef)
 	}
-
 	// If the collection reference was not found, create a new one.
 	newCollectionRef := wrapper.client.Collection(collectionName)
-
 	// Store the new collection reference in the map.
 	wrapper.collectionRefs.Store(collectionName, newCollectionRef)
-
 	// Return the new collection reference.
 	return newCollectionRef
 }
 
-func Client() *firestore.Client {
-	wrapper := ioc.Get[*ClientWrapper](NewClientWrapper)
+func (wrapper *ClientWrapper) Client() *firestore.Client {
 	return wrapper.client
 }

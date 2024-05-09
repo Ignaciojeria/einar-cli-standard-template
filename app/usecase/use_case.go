@@ -15,7 +15,7 @@ func init() {
 
 func NewUseCase() INewUsecase {
 	return func(ctx context.Context, input interface{}) (interface{}, error) {
-		_, span := observability.Tracer.Start(ctx, "NewUseCase")
+		_, span := observability.Tracer.Start(ctx, "INewUsecase")
 		defer span.End()
 		return input, nil
 	}

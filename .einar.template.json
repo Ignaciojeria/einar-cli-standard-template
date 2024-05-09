@@ -400,8 +400,14 @@
                 "replace_holders": [
                     {
                         "kind":"PascalCase",
-                        "name": "RunFirestoreOperation",
+                        "name": "IRunFirestoreOperation",
                         "append_at_start":"",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "NewRunFirestoreOperation",
+                        "append_at_start":"New",
                         "append_at_end":""
                     }
                 ]
