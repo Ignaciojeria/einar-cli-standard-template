@@ -299,8 +299,14 @@
                 "replace_holders": [
                     {
                         "kind":"PascalCase",
-                        "name": "NewUseCase",
+                        "name": "INewUsecase",
                         "append_at_start":"",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "NewUseCase",
+                        "append_at_start":"New",
                         "append_at_end":""
                     }
                 ]
