@@ -5,7 +5,6 @@ import (
 	"archetype/app/shared/infrastructure/observability"
 	"context"
 
-	"cloud.google.com/go/firestore"
 	ioc "github.com/Ignaciojeria/einar-ioc"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -23,8 +22,7 @@ func NewRunFirestoreOperation(c *firestorewrapper.ClientWrapper) IRunFirestoreOp
 			"IRunFirestoreOperation",
 			trace.WithSpanKind(trace.SpanKindInternal))
 		defer span.End()
-		var _ *firestore.CollectionRef = c.Collection("INSERT_YOUR_COLLECTION_CONSTANT_HERE")
-		//Do something with collection.
+		//PUT YOUR FIRESTORE OPERATION HERE
 		return nil
 	}
 }
