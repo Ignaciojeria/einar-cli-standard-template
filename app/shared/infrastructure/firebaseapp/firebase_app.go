@@ -2,8 +2,6 @@ package firebaseapp
 
 import (
 	"archetype/app/shared/configuration"
-	"archetype/app/shared/constants"
-	"archetype/app/shared/logger"
 
 	"context"
 
@@ -21,7 +19,6 @@ func NewFirebaseAPP(conf configuration.Conf) (*firebase.App, error) {
 		ProjectID: conf.GOOGLE_PROJECT_ID,
 	})
 	if err != nil {
-		logger.Logger().Error("error initializing firebase app", constants.Error, err.Error())
 		return nil, err
 	}
 	return app, nil
