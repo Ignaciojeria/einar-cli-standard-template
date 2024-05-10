@@ -1,7 +1,7 @@
 package firestorewrapper
 
 import (
-	"archetype/app/shared/infrastructure/firebasewrapper"
+	"archetype/app/shared/infrastructure/firebaseapp"
 
 	"context"
 	"sync"
@@ -19,7 +19,7 @@ type ClientWrapper struct {
 }
 
 func init() {
-	ioc.Registry(NewClientWrapper, firebasewrapper.NewFirebaseAPP)
+	ioc.Registry(NewClientWrapper, firebaseapp.NewFirebaseAPP)
 }
 
 func NewClientWrapper(app *firebase.App) (*ClientWrapper, error) {

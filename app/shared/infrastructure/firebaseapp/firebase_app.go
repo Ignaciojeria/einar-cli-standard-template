@@ -1,4 +1,4 @@
-package firebasewrapper
+package firebaseapp
 
 import (
 	"archetype/app/shared/configuration"
