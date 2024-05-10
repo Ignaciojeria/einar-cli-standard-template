@@ -1,9 +1,7 @@
 package firestorewrapper
 
 import (
-	"archetype/app/shared/constants"
 	"archetype/app/shared/infrastructure/firebasewrapper"
-	"archetype/app/shared/logger"
 
 	"context"
 	"sync"
@@ -11,6 +9,8 @@ import (
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
 	ioc "github.com/Ignaciojeria/einar-ioc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type ClientWrapper struct {
@@ -23,10 +23,14 @@ func init() {
 }
 
 func NewClientWrapper(app *firebase.App) (*ClientWrapper, error) {
-	client, err := app.Firestore(context.Background())
+	ctx := context.Background()
+	client, err := app.Firestore(ctx)
 	if err != nil {
-		logger.Logger().Error("error getting firestore client", constants.Error, err.Error())
 		return &ClientWrapper{}, err
+	}
+	_, err = client.Collection("health").Doc("ping").Get(ctx)
+	if status.Code(err) != codes.NotFound {
+		return nil, err
 	}
 	return &ClientWrapper{
 		client: client,
