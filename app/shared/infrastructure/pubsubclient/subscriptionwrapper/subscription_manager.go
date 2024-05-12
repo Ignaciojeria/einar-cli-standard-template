@@ -2,7 +2,7 @@ package subscriptionwrapper
 
 import (
 	"archetype/app/shared/constants"
-	"archetype/app/shared/infrastructure/pubsubwrapper"
+	"archetype/app/shared/infrastructure/pubsubclient"
 	"archetype/app/shared/infrastructure/serverwrapper"
 	"archetype/app/shared/logger"
 
@@ -25,7 +25,7 @@ type SubscriptionManager interface {
 }
 
 type SubscriptionWrapper struct {
-	clientWrapper    pubsubwrapper.ClientWrapper
+	clientWrapper    pubsubclient.ClientWrapper
 	httpServer       serverwrapper.EchoWrapper
 	messageProcessor MessageProcessor
 }
@@ -35,17 +35,17 @@ const subscription_name = "subscription_name"
 func init() {
 	ioc.Registry(
 		NewSubscriptionManager,
-		pubsubwrapper.NewClientWrapper,
+		pubsubclient.NewClientWrapper,
 		serverwrapper.NewEchoWrapper,
 	)
 }
 
-func NewSubscriptionManager(cw pubsubwrapper.ClientWrapper, s serverwrapper.EchoWrapper) SubscriptionManager {
+func NewSubscriptionManager(cw pubsubclient.ClientWrapper, s serverwrapper.EchoWrapper) SubscriptionManager {
 	return &SubscriptionWrapper{clientWrapper: cw, httpServer: s}
 }
 
 func newSubscriptionManagerWithMessageProcessor(
-	cw pubsubwrapper.ClientWrapper,
+	cw pubsubclient.ClientWrapper,
 	s serverwrapper.EchoWrapper,
 	mp MessageProcessor) SubscriptionManager {
 	return &SubscriptionWrapper{clientWrapper: cw, httpServer: s, messageProcessor: mp}
@@ -119,5 +119,4 @@ func (s *SubscriptionWrapper) pushHandler(c echo.Context) error {
 		return c.String(statusCode, err.Error())
 	}
 	return c.String(http.StatusOK, "")
-
 }

@@ -4,55 +4,64 @@ import (
 	"archetype/app/shared/constants"
 	"archetype/app/shared/exception"
 	"archetype/app/shared/infrastructure/observability"
-	"archetype/app/shared/infrastructure/pubsubwrapper/topicwrapper"
+	"archetype/app/shared/infrastructure/pubsubclient"
 	"archetype/app/shared/logger"
 	"context"
 	"encoding/json"
 
 	"cloud.google.com/go/pubsub"
+	ioc "github.com/Ignaciojeria/einar-ioc"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/trace"
 )
 
-func PublishEvent(ctx context.Context, REPLACE_BY_YOUR_DOMAIN interface{}) (err error) {
-	topicName := "INSERT YOUR TOPIC NAME HERE"
+type INewPublishEvent func(ctx context.Context, input interface{}) error
 
-	_, span := observability.Tracer.Start(ctx, "PublishEvent",
-		trace.WithSpanKind(trace.SpanKindProducer),
-		trace.WithAttributes(attribute.String(constants.TopicName, topicName)),
-	)
-	defer span.End()
+func init() {
+	ioc.Registry(NewPublishEvent,
+		pubsubclient.NewClientWrapper)
+}
+func NewPublishEvent(c pubsubclient.ClientWrapper) INewPublishEvent {
+	topicName := "INSERT_YOUR_TOPIC_NAME_HERE"
+	topic := c.Topic(topicName)
+	return func(ctx context.Context, input interface{}) error {
+		_, span := observability.Tracer.Start(ctx, "INewPublishEvent",
+			trace.WithSpanKind(trace.SpanKindProducer),
+			trace.WithAttributes(attribute.String(constants.TopicName, topicName)),
+		)
+		defer span.End()
 
-	bytes, err := json.Marshal(REPLACE_BY_YOUR_DOMAIN)
-	if err != nil {
-		return err
+		bytes, err := json.Marshal(input)
+		if err != nil {
+			return err
+		}
+
+		message := &pubsub.Message{
+			Attributes: map[string]string{
+				"customAttribute1": "attr1",
+				"customAttribute2": "attr2",
+			},
+			Data: bytes,
+		}
+
+		result := topic.Publish(ctx, message)
+		// Get the server-generated message ID.
+		messageID, err := result.Get(ctx)
+
+		if err != nil {
+			span.SetStatus(codes.Error, exception.PUBSUB_BROKER_ERROR.Error())
+			span.RecordError(err)
+			logger.
+				LogSpanError(span, exception.PUBSUB_BROKER_ERROR.Error(),
+					logger.CustomLogFields{
+						constants.Error: err.Error(),
+					})
+			return exception.PUBSUB_BROKER_ERROR
+		}
+
+		span.SetStatus(codes.Ok, "Message published with ID: "+messageID)
+
+		return nil
 	}
-
-	message := &pubsub.Message{
-		Attributes: map[string]string{
-			"customAttribute1": "attr1",
-			"customAttribute2": "attr2",
-		},
-		Data: bytes,
-	}
-
-	result := topicwrapper.Get(topicName).Publish(ctx, message)
-	// Get the server-generated message ID.
-	messageID, err := result.Get(ctx)
-
-	if err != nil {
-		span.SetStatus(codes.Error, exception.PUBSUB_BROKER_ERROR.Error())
-		span.RecordError(err)
-		logger.
-			LogSpanError(span, exception.PUBSUB_BROKER_ERROR.Error(),
-				logger.CustomLogFields{
-					constants.Error: err.Error(),
-				})
-		return exception.PUBSUB_BROKER_ERROR
-	}
-
-	span.SetStatus(codes.Ok, "Message published with ID: "+messageID)
-
-	return nil
 }

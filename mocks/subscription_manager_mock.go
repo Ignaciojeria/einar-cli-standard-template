@@ -1,7 +1,7 @@
 package mocks
 
 import (
-	"archetype/app/shared/infrastructure/pubsubwrapper/subscriptionwrapper"
+	"archetype/app/shared/infrastructure/pubsubclient/subscriptionwrapper"
 
 	"cloud.google.com/go/pubsub"
 )

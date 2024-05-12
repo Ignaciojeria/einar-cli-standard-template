@@ -426,8 +426,14 @@
                 "replace_holders": [
                     {
                         "kind":"PascalCase",
-                        "name": "PublishEvent",
+                        "name": "INewPublishEvent",
                         "append_at_start":"",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "NewPublishEvent",
+                        "append_at_start":"New",
                         "append_at_end":""
                     }
                 ]

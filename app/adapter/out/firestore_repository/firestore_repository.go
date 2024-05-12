@@ -1,7 +1,7 @@
 package firestore_repository
 
 import (
-	"archetype/app/shared/infrastructure/firebasewrapper/firestorewrapper"
+	"archetype/app/shared/infrastructure/firebaseapp/firestorewrapper"
 	"archetype/app/shared/infrastructure/observability"
 	"context"
 

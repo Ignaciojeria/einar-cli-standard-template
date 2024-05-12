@@ -3,7 +3,7 @@ package subscription
 import (
 	"archetype/app/shared/exception"
 	"archetype/app/shared/infrastructure/observability"
-	"archetype/app/shared/infrastructure/pubsubwrapper/subscriptionwrapper"
+	"archetype/app/shared/infrastructure/pubsubclient/subscriptionwrapper"
 	"archetype/app/shared/logger"
 
 	"context"

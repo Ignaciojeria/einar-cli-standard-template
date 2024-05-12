@@ -4,7 +4,6 @@ import (
 	"archetype/app/shared/infrastructure/firebaseapp"
 
 	"context"
-	"sync"
 
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
@@ -14,8 +13,7 @@ import (
 )
 
 type ClientWrapper struct {
-	collectionRefs sync.Map
-	client         *firestore.Client
+	client *firestore.Client
 }
 
 func init() {
@@ -35,20 +33,6 @@ func NewClientWrapper(app *firebase.App) (*ClientWrapper, error) {
 	return &ClientWrapper{
 		client: client,
 	}, nil
-}
-
-func (wrapper *ClientWrapper) Collection(collectionName string) *firestore.CollectionRef {
-	value, ok := wrapper.collectionRefs.Load(collectionName)
-	if ok {
-		// If the collection reference was found, return it.
-		return value.(*firestore.CollectionRef)
-	}
-	// If the collection reference was not found, create a new one.
-	newCollectionRef := wrapper.client.Collection(collectionName)
-	// Store the new collection reference in the map.
-	wrapper.collectionRefs.Store(collectionName, newCollectionRef)
-	// Return the new collection reference.
-	return newCollectionRef
 }
 
 func (wrapper *ClientWrapper) Client() *firestore.Client {
