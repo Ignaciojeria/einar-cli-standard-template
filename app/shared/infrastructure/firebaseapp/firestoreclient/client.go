@@ -1,4 +1,4 @@
-package firestorewrapper
+package firestoreclient
 
 import (
 	"archetype/app/shared/infrastructure/firebaseapp"
@@ -12,29 +12,18 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-type ClientWrapper struct {
-	client *firestore.Client
-}
-
 func init() {
-	ioc.Registry(NewClientWrapper, firebaseapp.NewFirebaseAPP)
+	ioc.Registry(NewClient, firebaseapp.NewFirebaseAPP)
 }
-
-func NewClientWrapper(app *firebase.App) (*ClientWrapper, error) {
+func NewClient(app *firebase.App) (*firestore.Client, error) {
 	ctx := context.Background()
 	client, err := app.Firestore(ctx)
 	if err != nil {
-		return &ClientWrapper{}, err
+		return nil, err
 	}
 	_, err = client.Collection("health").Doc("ping").Get(ctx)
 	if status.Code(err) != codes.NotFound {
 		return nil, err
 	}
-	return &ClientWrapper{
-		client: client,
-	}, nil
-}
-
-func (wrapper *ClientWrapper) Client() *firestore.Client {
-	return wrapper.client
+	return client, nil
 }

@@ -12,7 +12,6 @@ import (
 func init() {
 	ioc.Registry(NewFirebaseAPP, configuration.NewConf)
 }
-
 func NewFirebaseAPP(conf configuration.Conf) (*firebase.App, error) {
 	ctx := context.Background()
 	app, err := firebase.NewApp(ctx, &firebase.Config{

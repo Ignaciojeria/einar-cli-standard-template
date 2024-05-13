@@ -490,8 +490,8 @@
                     "ioc_discovery":true
                 },
                 {   
-                    "source_file": "app/shared/infrastructure/firebaseapp/firestorewrapper/client_wrapper.go",
-                    "destination_dir": "app/shared/infrastructure/firebaseapp/firestorewrapper",
+                    "source_file": "app/shared/infrastructure/firebaseapp/firestoreclient/client.go",
+                    "destination_dir": "app/shared/infrastructure/firebaseapp/firestoreclient",
                     "ioc_discovery":true
                 }
             ],
