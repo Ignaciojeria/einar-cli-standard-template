@@ -473,8 +473,8 @@
                     "ioc_discovery":true
                 }
             ],
-            "source_dir": "app/shared/infrastructure/pubsubwrapper",
-            "destination_dir": "app/shared/infrastructure/pubsubwrapper",
+            "source_dir": "app/shared/infrastructure/pubsubclient",
+            "destination_dir": "app/shared/infrastructure/pubsubclient",
             "libraries": [
              "cloud.google.com/go/pubsub",
              "github.com/heimdalr/dag@v1.4.0"]
@@ -485,13 +485,13 @@
             "depends_on":[],
             "files": [
                 {   
-                    "source_file": "app/shared/infrastructure/firebasewrapper/firebase_app.go",
-                    "destination_dir": "app/shared/infrastructure/firebasewrapper",
+                    "source_file": "app/shared/infrastructure/firebaseapp/firebase_app.go",
+                    "destination_dir": "app/shared/infrastructure/firebaseapp",
                     "ioc_discovery":true
                 },
                 {   
-                    "source_file": "app/shared/infrastructure/firebasewrapper/firestorewrapper/client_wrapper.go",
-                    "destination_dir": "app/shared/infrastructure/firebasewrapper/firestorewrapper",
+                    "source_file": "app/shared/infrastructure/firebaseapp/firestorewrapper/client_wrapper.go",
+                    "destination_dir": "app/shared/infrastructure/firebaseapp/firestorewrapper",
                     "ioc_discovery":true
                 }
             ],
