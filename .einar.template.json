@@ -360,12 +360,6 @@
                 "ioc_discovery":true,
                 "replace_holders": [
                     {
-                        "kind":"camelCase",
-                        "name": "messageProcessorStruct",
-                        "append_at_start":"",
-                        "append_at_end":""
-                    },
-                    {
                         "kind":"PascalCase",
                         "name": "newMessageProcessor",
                         "append_at_start":"new",

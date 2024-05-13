@@ -42,7 +42,7 @@ func (m *MockSubscriptionManager) WithPushHandler(path string) subscriptionwrapp
 }
 
 // Start simulates the behavior of the Start method of the interface, initializing the subscription.
-func (m *MockSubscriptionManager) Start() (subscriptionwrapper.SubscriptionManager, error) {
+func (m *MockSubscriptionManager) Start(subRef *pubsub.Subscription) (subscriptionwrapper.SubscriptionManager, error) {
 	if m.StartFunc != nil {
 		return m.StartFunc()
 	}

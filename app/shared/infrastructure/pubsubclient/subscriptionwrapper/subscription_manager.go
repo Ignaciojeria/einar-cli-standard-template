@@ -21,7 +21,7 @@ type SubscriptionManager interface {
 	Subscription(id string) *pubsub.Subscription
 	WithMessageProcessor(mp MessageProcessor) SubscriptionManager
 	WithPushHandler(path string) SubscriptionManager
-	Start() (SubscriptionManager, error)
+	Start(subscriptionRef *pubsub.Subscription) (SubscriptionManager, error)
 }
 
 type SubscriptionWrapper struct {
@@ -39,7 +39,6 @@ func init() {
 		serverwrapper.NewEchoWrapper,
 	)
 }
-
 func NewSubscriptionManager(c *pubsub.Client, s serverwrapper.EchoWrapper) SubscriptionManager {
 	return &SubscriptionWrapper{client: c, httpServer: s}
 }
@@ -59,23 +58,23 @@ func (sw SubscriptionWrapper) WithMessageProcessor(mp MessageProcessor) Subscrip
 	return newSubscriptionManagerWithMessageProcessor(sw.client, sw.httpServer, mp)
 }
 
-func (s *SubscriptionWrapper) Start() (SubscriptionManager, error) {
+func (s *SubscriptionWrapper) Start(subscriptionRef *pubsub.Subscription) (SubscriptionManager, error) {
 	ctx := context.Background()
-	if err := s.messageProcessor.SubscriptionRef().Receive(ctx, s.receive); err != nil {
+	if err := subscriptionRef.Receive(ctx, s.receive); err != nil {
 		logger.Logger().Error(
 			"subscription_signal_broken",
-			subscription_name, s.messageProcessor.SubscriptionRef().String(),
+			subscription_name, subscriptionRef.String(),
 			constants.Error, err.Error(),
 		)
 		time.Sleep(10 * time.Second)
-		go s.Start()
+		go s.Start(subscriptionRef)
 		return s, err
 	}
 	return s, nil
 }
 
 func (s *SubscriptionWrapper) receive(ctx context.Context, m *pubsub.Message) {
-	s.messageProcessor.Pull(ctx, m)
+	s.messageProcessor(ctx, m)
 }
 
 func (s *SubscriptionWrapper) WithPushHandler(path string) SubscriptionManager {
@@ -92,7 +91,7 @@ func (s *SubscriptionWrapper) pushHandler(c echo.Context) error {
 		if err := c.Bind(&msg); err != nil {
 			return c.String(http.StatusNoContent, "error binding Pub/Sub message")
 		}
-		statusCode, err := s.messageProcessor.Pull(c.Request().Context(), &msg)
+		statusCode, err := s.messageProcessor(c.Request().Context(), &msg)
 		if statusCode >= 500 && statusCode <= 599 {
 			return c.String(statusCode, "")
 		}
@@ -115,7 +114,7 @@ func (s *SubscriptionWrapper) pushHandler(c echo.Context) error {
 	}
 
 	msg.Data = body
-	if statusCode, err := s.messageProcessor.Pull(c.Request().Context(), &msg); err != nil {
+	if statusCode, err := s.messageProcessor(c.Request().Context(), &msg); err != nil {
 		return c.String(statusCode, err.Error())
 	}
 	return c.String(http.StatusOK, "")

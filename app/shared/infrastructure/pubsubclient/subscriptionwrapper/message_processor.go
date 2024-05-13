@@ -6,7 +6,4 @@ import (
 	"cloud.google.com/go/pubsub"
 )
 
-type MessageProcessor interface {
-	Pull(ctx context.Context, m *pubsub.Message) (statusCode int, err error)
-	SubscriptionRef() *pubsub.Subscription
-}
+type MessageProcessor func(ctx context.Context, m *pubsub.Message) (statusCode int, err error)

@@ -43,7 +43,7 @@ func TestMessageProcessor_Pull(t *testing.T) {
 	messageProcessor := newMessageProcessor(mockMgr)
 
 	// Invoke the Pull method with a background context and the mock message
-	statusCode, err := messageProcessor.Pull(context.Background(), mockMessage)
+	statusCode, err := messageProcessor(context.Background(), mockMessage)
 
 	// Assert that there's no error from MessageProcessor.Pull
 	if err != nil {
