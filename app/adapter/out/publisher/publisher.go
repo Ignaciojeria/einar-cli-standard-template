@@ -19,7 +19,8 @@ import (
 type INewPublishEvent func(ctx context.Context, input interface{}) error
 
 func init() {
-	ioc.Registry(NewPublishEvent,
+	ioc.Registry(
+		NewPublishEvent,
 		pubsubclient.NewClient)
 }
 func NewPublishEvent(c *pubsub.Client) INewPublishEvent {
