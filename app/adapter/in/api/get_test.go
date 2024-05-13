@@ -8,13 +8,15 @@ import (
 
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/infrastructure/serverwrapper"
+	"archetype/app/shared/logger"
 
 	"github.com/labstack/echo/v4"
 )
 
 func TestNewTemplateGet(t *testing.T) {
 	e := echo.New()
-	wrapper := serverwrapper.NewEchoWrapper(e, configuration.Conf{})
+	conf := configuration.Conf{}
+	wrapper := serverwrapper.NewEchoWrapper(e, conf, logger.NewLogger(conf))
 
 	newTemplateGet(wrapper)
 

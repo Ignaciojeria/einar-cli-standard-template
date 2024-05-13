@@ -26,6 +26,7 @@ type SubscriptionManager interface {
 
 type SubscriptionWrapper struct {
 	client           *pubsub.Client
+	logger           logger.Logger
 	httpServer       serverwrapper.EchoWrapper
 	messageProcessor MessageProcessor
 }
@@ -37,10 +38,14 @@ func init() {
 		NewSubscriptionManager,
 		pubsubclient.NewClient,
 		serverwrapper.NewEchoWrapper,
+		logger.NewLogger,
 	)
 }
-func NewSubscriptionManager(c *pubsub.Client, s serverwrapper.EchoWrapper) SubscriptionManager {
-	return &SubscriptionWrapper{client: c, httpServer: s}
+func NewSubscriptionManager(
+	c *pubsub.Client,
+	s serverwrapper.EchoWrapper,
+	l logger.Logger) SubscriptionManager {
+	return &SubscriptionWrapper{client: c, httpServer: s, logger: l}
 }
 
 func newSubscriptionManagerWithMessageProcessor(
@@ -60,8 +65,9 @@ func (sw SubscriptionWrapper) WithMessageProcessor(mp MessageProcessor) Subscrip
 
 func (s *SubscriptionWrapper) Start(subscriptionRef *pubsub.Subscription) (SubscriptionManager, error) {
 	ctx := context.Background()
+
 	if err := subscriptionRef.Receive(ctx, s.receive); err != nil {
-		logger.Logger().Error(
+		s.logger.Error(
 			"subscription_signal_broken",
 			subscription_name, subscriptionRef.String(),
 			constants.Error, err.Error(),

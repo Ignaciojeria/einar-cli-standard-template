@@ -2,6 +2,8 @@ package subscription
 
 import (
 	"archetype/app/shared/configuration"
+	"archetype/app/shared/infrastructure/pubsubclient/subscriptionwrapper"
+	"archetype/app/shared/logger"
 	"archetype/mocks"
 	"context"
 	"encoding/json"
@@ -39,8 +41,11 @@ func TestMessageProcessor_Pull(t *testing.T) {
 			return mockSubscription
 		},
 	}
-
-	messageProcessor := newMessageProcessor(mockMgr)
+	messageProcessor := newMessageProcessor(mockMgr, subscriptionwrapper.NewHandleMessageAcknowledgement(
+		logger.NewLogger(configuration.Conf{
+			PROJECT_NAME: "fake-project",
+		}),
+	))
 
 	// Invoke the Pull method with a background context and the mock message
 	statusCode, err := messageProcessor(context.Background(), mockMessage)

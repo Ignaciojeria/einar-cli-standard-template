@@ -15,14 +15,22 @@ import (
 
 type EchoWrapper struct {
 	*echo.Echo
+	conf configuration.Conf
 }
 
 func init() {
 	ioc.Registry(echo.New)
-	ioc.Registry(NewEchoWrapper, echo.New, configuration.NewConf)
+	ioc.Registry(
+		NewEchoWrapper,
+		echo.New,
+		configuration.NewConf,
+		logger.NewLogger)
 }
 
-func NewEchoWrapper(e *echo.Echo, c configuration.Conf) EchoWrapper {
+func NewEchoWrapper(
+	e *echo.Echo,
+	c configuration.Conf,
+	l logger.Logger) EchoWrapper {
 	e.Use(otelecho.Middleware(c.PROJECT_NAME))
 	e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
 		LogStatus:   true,
@@ -33,12 +41,12 @@ func NewEchoWrapper(e *echo.Echo, c configuration.Conf) EchoWrapper {
 			spanCtx, span := observability.Tracer.Start(c.Request().Context(), "RequestLogger")
 			defer span.End()
 			if v.Error == nil {
-				logger.SpanLogger(span).LogAttrs(spanCtx, slog.LevelInfo, "REQUEST",
+				l.SpanLogger(span).LogAttrs(spanCtx, slog.LevelInfo, "REQUEST",
 					slog.String("uri", v.URI),
 					slog.Int("status", v.Status),
 				)
 			} else {
-				logger.SpanLogger(span).LogAttrs(spanCtx, slog.LevelError, "REQUEST_ERROR",
+				l.SpanLogger(span).LogAttrs(spanCtx, slog.LevelError, "REQUEST_ERROR",
 					slog.String("uri", v.URI),
 					slog.Int("status", v.Status),
 					slog.String("err", v.Error.Error()),
@@ -58,7 +66,7 @@ func Start() {
 
 func (s EchoWrapper) start() {
 	s.printRoutes()
-	s.Echo.Logger.Fatal(s.Echo.Start(":" + configuration.Values().PORT))
+	s.Echo.Logger.Fatal(s.Echo.Start(":" + s.conf.PORT))
 }
 
 func (s EchoWrapper) printRoutes() {

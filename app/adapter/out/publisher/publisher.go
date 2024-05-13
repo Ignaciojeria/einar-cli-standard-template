@@ -21,9 +21,10 @@ type INewPublishEvent func(ctx context.Context, input interface{}) error
 func init() {
 	ioc.Registry(
 		NewPublishEvent,
-		pubsubclient.NewClient)
+		pubsubclient.NewClient,
+		logger.NewLogger)
 }
-func NewPublishEvent(c *pubsub.Client) INewPublishEvent {
+func NewPublishEvent(c *pubsub.Client, l logger.Logger) INewPublishEvent {
 	topicName := "INSERT_YOUR_TOPIC_NAME_HERE"
 	topic := c.Topic(topicName)
 	return func(ctx context.Context, input interface{}) error {
@@ -53,11 +54,10 @@ func NewPublishEvent(c *pubsub.Client) INewPublishEvent {
 		if err != nil {
 			span.SetStatus(codes.Error, exception.PUBSUB_BROKER_ERROR.Error())
 			span.RecordError(err)
-			logger.
-				LogSpanError(span, exception.PUBSUB_BROKER_ERROR.Error(),
-					logger.CustomLogFields{
-						constants.Error: err.Error(),
-					})
+			l.LogSpanError(span, exception.PUBSUB_BROKER_ERROR.Error(),
+				logger.CustomLogFields{
+					constants.Error: err.Error(),
+				})
 			return exception.PUBSUB_BROKER_ERROR
 		}
 

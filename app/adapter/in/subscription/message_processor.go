@@ -17,9 +17,13 @@ import (
 func init() {
 	ioc.Registry(
 		newMessageProcessor,
-		subscriptionwrapper.NewSubscriptionManager)
+		subscriptionwrapper.NewSubscriptionManager,
+		subscriptionwrapper.NewHandleMessageAcknowledgement)
 }
-func newMessageProcessor(sm subscriptionwrapper.SubscriptionManager) subscriptionwrapper.MessageProcessor {
+func newMessageProcessor(
+	sm subscriptionwrapper.SubscriptionManager,
+	handleMessageAck subscriptionwrapper.HandleMessageAcknowledgement,
+) subscriptionwrapper.MessageProcessor {
 	subscriptionName := "INSERT_YOUR_SUBSCRIPTION_NAME_HERE"
 	subscriptionRef := sm.Subscription(subscriptionName)
 	subscriptionRef.ReceiveSettings.MaxOutstandingMessages = 5
@@ -33,7 +37,7 @@ func newMessageProcessor(sm subscriptionwrapper.SubscriptionManager) subscriptio
 			))
 		var input interface{}
 		defer func() {
-			statusCode = subscriptionwrapper.HandleMessageAcknowledgement(span,
+			statusCode = handleMessageAck(span,
 				&subscriptionwrapper.HandleMessageAcknowledgementDetails{
 					SubscriptionName: subscriptionRef.String(),
 					Error:            err,

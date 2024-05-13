@@ -56,10 +56,6 @@ func NewConf() (Conf, error) {
 	return conf, validateConfig(conf)
 }
 
-func Values() Conf {
-	return ioc.Get[Conf](NewConf)
-}
-
 func validateConfig(conf Conf) error {
 	var validationErrors []error
 

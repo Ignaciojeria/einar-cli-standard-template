@@ -7,6 +7,7 @@ import (
 	"os"
 	"strconv"
 
+	ioc "github.com/Ignaciojeria/einar-ioc"
 	"go.opentelemetry.io/otel/trace"
 )
 
@@ -26,23 +27,36 @@ const (
 	spanIDKey  = "span_id"
 )
 
-var logger = slog.New(slog.NewJSONHandler(os.Stdout, nil))
+type Logger struct {
+	*slog.Logger
+	conf configuration.Conf
+}
 
-func SpanLogger(span trace.Span) *slog.Logger {
+func init() {
+	ioc.Registry(NewLogger, configuration.NewConf)
+}
+func NewLogger(conf configuration.Conf) Logger {
+	return Logger{
+		Logger: slog.New(slog.NewJSONHandler(os.Stdout, nil)),
+		conf:   conf,
+	}
+}
+
+func (l Logger) SpanLogger(span trace.Span) *slog.Logger {
 	traceID := span.SpanContext().TraceID().String()
 	spanID := span.SpanContext().SpanID().String()
 
-	ddService := configuration.Values().DD_SERVICE
-	ddEnv := configuration.Values().DD_ENV
-	ddVersion := configuration.Values().DD_VERSION
+	ddService := l.conf.DD_SERVICE
+	ddEnv := l.conf.DD_ENV
+	ddVersion := l.conf.DD_VERSION
 
 	if ddService == "" || ddEnv == "" || ddVersion == "" {
-		return logger.With(
+		return l.Logger.With(
 			slog.String(traceIDKey, traceID),
 			slog.String(spanIDKey, spanID),
 		)
 	}
-	return logger.With(
+	return l.Logger.With(
 		slog.String(traceIDKey, traceID),
 		slog.String(spanIDKey, spanID),
 		slog.String(ddTraceIDKey, convertTraceID(traceID)),
@@ -55,16 +69,12 @@ func SpanLogger(span trace.Span) *slog.Logger {
 
 type CustomLogFields map[string]interface{}
 
-func LogSpanError(span trace.Span, message string, fields CustomLogFields) {
-	SpanLogger(span).Error(message, constants.Fields, fields)
+func (l Logger) LogSpanError(span trace.Span, message string, fields CustomLogFields) {
+	l.SpanLogger(span).Error(message, constants.Fields, fields)
 }
 
-func LogSpanInfo(span trace.Span, message string, fields CustomLogFields) {
-	SpanLogger(span).Info(message, constants.Fields, fields)
-}
-
-func Logger() *slog.Logger {
-	return logger
+func (l Logger) LogSpanInfo(span trace.Span, message string, fields CustomLogFields) {
+	l.SpanLogger(span).Info(message, constants.Fields, fields)
 }
 
 func convertTraceID(id string) string {

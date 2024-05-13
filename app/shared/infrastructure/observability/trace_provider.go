@@ -12,7 +12,7 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 )
 
-func NeTracerProvider(ctx context.Context) (*tracesdk.TracerProvider, error) {
+func NewTracerProvider(ctx context.Context, conf configuration.Conf) (*tracesdk.TracerProvider, error) {
 	client := otlptracegrpc.NewClient()
 	exporter, err := otlptrace.New(ctx, client)
 
@@ -25,7 +25,7 @@ func NeTracerProvider(ctx context.Context) (*tracesdk.TracerProvider, error) {
 		// Record information about this application in a Resource.
 		tracesdk.WithResource(resource.NewWithAttributes(
 			semconv.SchemaURL,
-			semconv.ServiceNameKey.String(configuration.Values().PROJECT_NAME),
+			semconv.ServiceNameKey.String(conf.PROJECT_NAME),
 		)),
 	)
 	return tp, nil

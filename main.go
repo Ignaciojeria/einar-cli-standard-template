@@ -1,6 +1,7 @@
 package main
 
 import (
+	"archetype/app/shared/configuration"
 	"archetype/app/shared/constants"
 	_ "archetype/app/shared/infrastructure/healthcheck"
 	"archetype/app/shared/infrastructure/observability"
@@ -25,7 +26,8 @@ func main() {
 		log.Fatal(err)
 	}
 	ctx := context.Background()
-	tp, err := observability.NeTracerProvider(ctx)
+	tp, err := observability.NewTracerProvider(ctx,
+		ioc.Get[configuration.Conf](configuration.NewConf))
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(0)
