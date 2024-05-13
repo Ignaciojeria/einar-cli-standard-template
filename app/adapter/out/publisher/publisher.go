@@ -20,9 +20,9 @@ type INewPublishEvent func(ctx context.Context, input interface{}) error
 
 func init() {
 	ioc.Registry(NewPublishEvent,
-		pubsubclient.NewClientWrapper)
+		pubsubclient.NewClient)
 }
-func NewPublishEvent(c pubsubclient.ClientWrapper) INewPublishEvent {
+func NewPublishEvent(c *pubsub.Client) INewPublishEvent {
 	topicName := "INSERT_YOUR_TOPIC_NAME_HERE"
 	topic := c.Topic(topicName)
 	return func(ctx context.Context, input interface{}) error {

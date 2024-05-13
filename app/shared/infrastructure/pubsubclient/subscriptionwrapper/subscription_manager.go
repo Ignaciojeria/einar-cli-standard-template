@@ -25,7 +25,7 @@ type SubscriptionManager interface {
 }
 
 type SubscriptionWrapper struct {
-	clientWrapper    pubsubclient.ClientWrapper
+	client           *pubsub.Client
 	httpServer       serverwrapper.EchoWrapper
 	messageProcessor MessageProcessor
 }
@@ -35,28 +35,28 @@ const subscription_name = "subscription_name"
 func init() {
 	ioc.Registry(
 		NewSubscriptionManager,
-		pubsubclient.NewClientWrapper,
+		pubsubclient.NewClient,
 		serverwrapper.NewEchoWrapper,
 	)
 }
 
-func NewSubscriptionManager(cw pubsubclient.ClientWrapper, s serverwrapper.EchoWrapper) SubscriptionManager {
-	return &SubscriptionWrapper{clientWrapper: cw, httpServer: s}
+func NewSubscriptionManager(c *pubsub.Client, s serverwrapper.EchoWrapper) SubscriptionManager {
+	return &SubscriptionWrapper{client: c, httpServer: s}
 }
 
 func newSubscriptionManagerWithMessageProcessor(
-	cw pubsubclient.ClientWrapper,
+	c *pubsub.Client,
 	s serverwrapper.EchoWrapper,
 	mp MessageProcessor) SubscriptionManager {
-	return &SubscriptionWrapper{clientWrapper: cw, httpServer: s, messageProcessor: mp}
+	return &SubscriptionWrapper{client: c, httpServer: s, messageProcessor: mp}
 }
 
 func (sw *SubscriptionWrapper) Subscription(id string) *pubsub.Subscription {
-	return sw.clientWrapper.Subscription(id)
+	return sw.client.Subscription(id)
 }
 
 func (sw SubscriptionWrapper) WithMessageProcessor(mp MessageProcessor) SubscriptionManager {
-	return newSubscriptionManagerWithMessageProcessor(sw.clientWrapper, sw.httpServer, mp)
+	return newSubscriptionManagerWithMessageProcessor(sw.client, sw.httpServer, mp)
 }
 
 func (s *SubscriptionWrapper) Start() (SubscriptionManager, error) {
