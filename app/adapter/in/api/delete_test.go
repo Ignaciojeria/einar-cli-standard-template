@@ -15,7 +15,9 @@ import (
 
 func TestNewTemplateDelete(t *testing.T) {
 	e := echo.New()
-	wrapper := serverwrapper.NewEchoWrapper(e, configuration.Conf{}, logger.NewLogger(configuration.Conf{}))
+
+	conf := configuration.Conf{}
+	wrapper := serverwrapper.NewEchoWrapper(e, conf, logger.NewLogger(conf))
 
 	newTemplateDelete(wrapper)
 

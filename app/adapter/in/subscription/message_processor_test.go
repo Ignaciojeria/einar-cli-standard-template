@@ -11,14 +11,9 @@ import (
 	"testing"
 
 	"cloud.google.com/go/pubsub"
-	ioc "github.com/Ignaciojeria/einar-ioc"
 )
 
 func TestMessageProcessor_Pull(t *testing.T) {
-
-	defer ioc.NewMockBehaviourForTesting[configuration.Conf](configuration.NewConf, configuration.Conf{
-		GOOGLE_PROJECT_ID: "fake-project",
-	}).Release()
 
 	// Prepare mock data model to be used in the test
 	expectedDataModel := map[string]interface{}{"key": "value"}
