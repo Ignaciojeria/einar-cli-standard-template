@@ -56,6 +56,7 @@ func NewEchoWrapper(
 		},
 	}))
 	return EchoWrapper{
+		conf: c,
 		Echo: e,
 	}
 }
