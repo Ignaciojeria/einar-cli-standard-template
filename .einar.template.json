@@ -378,6 +378,12 @@
                         "name": "newMessageProcessor",
                         "append_at_start":"new",
                         "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "TestMessageProcessor_Pull",
+                        "append_at_start":"Test",
+                        "append_at_end":""
                     }
                 ]
             }]
