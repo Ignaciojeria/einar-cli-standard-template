@@ -17,6 +17,7 @@ type Conf struct {
 	VERSION                     string `required:"true"`
 	COUNTRY                     string `required:"true"`
 	GEMINI_API_KEY              string `required:"false"`
+	STORJ_ACCESS_GRANT          string `required:"false"`
 	PROJECT_NAME                string `required:"false"`
 	GOOGLE_PROJECT_ID           string `required:"false"`
 	OTEL_EXPORTER_OTLP_ENDPOINT string `required:"false"`
@@ -41,6 +42,7 @@ func NewConf() (Conf, error) {
 		GEMINI_API_KEY:              os.Getenv("GEMINI_API_KEY"),
 		GOOGLE_PROJECT_ID:           os.Getenv("GOOGLE_PROJECT_ID"),
 		OTEL_EXPORTER_OTLP_ENDPOINT: os.Getenv("OTEL_EXPORTER_OTLP_ENDPOINT"),
+		STORJ_ACCESS_GRANT:          os.Getenv("STORJ_ACCESS_GRANT"),
 	}
 	setupDatadog(&conf)
 	if conf.DD_SERVICE != "" && conf.DD_ENV != "" &&
