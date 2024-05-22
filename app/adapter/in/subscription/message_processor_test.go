@@ -3,7 +3,7 @@ package subscription
 import (
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/infrastructure/pubsubclient/subscriptionwrapper"
-	"archetype/app/shared/logger"
+	"archetype/app/shared/logging"
 	"archetype/mocks"
 	"context"
 	"encoding/json"
@@ -37,7 +37,7 @@ func TestMessageProcessor_Pull(t *testing.T) {
 		},
 	}
 	messageProcessor := newMessageProcessor(mockMgr, subscriptionwrapper.NewHandleMessageAcknowledgement(
-		logger.NewLogger(configuration.Conf{
+		logging.NewLogger(configuration.Conf{
 			PROJECT_NAME: "fake-project",
 		}),
 	))

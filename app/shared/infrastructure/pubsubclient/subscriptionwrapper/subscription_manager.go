@@ -4,7 +4,7 @@ import (
 	"archetype/app/shared/constants"
 	"archetype/app/shared/infrastructure/pubsubclient"
 	"archetype/app/shared/infrastructure/serverwrapper"
-	"archetype/app/shared/logger"
+	"archetype/app/shared/logging"
 
 	"context"
 	"io"
@@ -26,7 +26,7 @@ type SubscriptionManager interface {
 
 type SubscriptionWrapper struct {
 	client           *pubsub.Client
-	logger           logger.Logger
+	logger           logging.Logger
 	httpServer       serverwrapper.EchoWrapper
 	messageProcessor MessageProcessor
 }
@@ -38,13 +38,13 @@ func init() {
 		NewSubscriptionManager,
 		pubsubclient.NewClient,
 		serverwrapper.NewEchoWrapper,
-		logger.NewLogger,
+		logging.NewLogger,
 	)
 }
 func NewSubscriptionManager(
 	c *pubsub.Client,
 	s serverwrapper.EchoWrapper,
-	l logger.Logger) SubscriptionManager {
+	l logging.Logger) SubscriptionManager {
 	return &SubscriptionWrapper{client: c, httpServer: s, logger: l}
 }
 

@@ -3,6 +3,7 @@ package bucket
 import (
 	"archetype/app/shared/infrastructure/observability"
 	"archetype/app/shared/infrastructure/storj"
+	"archetype/app/shared/logging"
 	"bytes"
 	"context"
 	"errors"
@@ -21,16 +22,18 @@ type StorJBucket struct {
 	sharedLinkCreds *edge.Credentials
 	bucketName      string
 	upLink          *storj.Uplink
+	logger          logging.Logger
 }
 
 func init() {
 	ioc.Registry(
 		NewStorJBucket,
-		storj.NewUplink)
+		storj.NewUplink,
+		logging.NewLogger)
 }
 
-func NewStorJBucket(ul *storj.Uplink) (storj.UplinkManager, error) {
-	sharedLinkExpiration := 2 * time.Minute
+func NewStorJBucket(ul *storj.Uplink, logger logging.Logger) (storj.UplinkManager, error) {
+	sharedLinkExpiration := 10 * time.Minute
 	fileExpiration := 7 * 24 * time.Hour
 	bucketName := "insert-your-bucket-name"
 	bucketFolderName := ""
@@ -75,6 +78,7 @@ func NewStorJBucket(ul *storj.Uplink) (storj.UplinkManager, error) {
 		sharedLinkCreds: credentials,
 		bucketName:      bucketName,
 		upLink:          ul,
+		logger:          logger,
 	}
 	return bucket, nil
 }

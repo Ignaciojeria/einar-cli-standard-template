@@ -2,7 +2,7 @@ package subscriptionwrapper
 
 import (
 	"archetype/app/shared/constants"
-	"archetype/app/shared/logger"
+	"archetype/app/shared/logging"
 	"errors"
 	"net/http"
 
@@ -20,15 +20,15 @@ type HandleMessageAcknowledgementDetails struct {
 	Error               error
 	Message             *pubsub.Message
 	ErrorsRequiringNack []error
-	CustomLogFields     logger.CustomLogFields
+	CustomLogFields     logging.CustomLogFields
 }
 
 func init() {
 	ioc.Registry(
 		NewHandleMessageAcknowledgement,
-		logger.NewLogger)
+		logging.NewLogger)
 }
-func NewHandleMessageAcknowledgement(l logger.Logger) HandleMessageAcknowledgement {
+func NewHandleMessageAcknowledgement(l logging.Logger) HandleMessageAcknowledgement {
 	return func(span trace.Span, details *HandleMessageAcknowledgementDetails) int {
 		if details.Error != nil {
 			span.RecordError(details.Error)

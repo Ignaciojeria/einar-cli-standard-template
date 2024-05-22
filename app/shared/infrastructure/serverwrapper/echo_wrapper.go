@@ -3,7 +3,7 @@ package serverwrapper
 import (
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/infrastructure/observability"
-	logger "archetype/app/shared/logger"
+	"archetype/app/shared/logging"
 	"log"
 	"log/slog"
 
@@ -24,13 +24,13 @@ func init() {
 		NewEchoWrapper,
 		echo.New,
 		configuration.NewConf,
-		logger.NewLogger)
+		logging.NewLogger)
 }
 
 func NewEchoWrapper(
 	e *echo.Echo,
 	c configuration.Conf,
-	l logger.Logger) EchoWrapper {
+	l logging.Logger) EchoWrapper {
 	e.Use(otelecho.Middleware(c.PROJECT_NAME))
 	e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
 		LogStatus:   true,

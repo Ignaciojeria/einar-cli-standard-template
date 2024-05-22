@@ -476,6 +476,31 @@
                     }
                 ]
             }]
+        },
+        {
+            "kind":"resty-client",
+            "adapter_type":"outbound",
+            "command":"einar generate resty-client ${operation_name}",
+            "depends_on":["resty"],
+            "files": [{
+                "source_file": "app/adapter/out/restyclient/client.go",
+                "destination_dir": "app/adapter/out/restyclient",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"PascalCase",
+                        "name": "Client",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "NewClient",
+                        "append_at_start":"New",
+                        "append_at_end":""
+                    }
+                ]
+            }]
         }
     ],
     "installation_commands":[
@@ -548,6 +573,21 @@
             ],
             "libraries": [
                 "storj.io/uplink"
+            ]
+        },
+        {
+            "name":"resty",
+            "depends_on":[],
+            "files": [
+                {   
+                    "source_file": "app/shared/infrastructure/restyclient/client.go",
+                    "destination_dir": "app/shared/infrastructure/restyclient",
+                    "ioc_discovery":true
+                }
+            ],
+            "libraries": [
+                "github.com/go-resty/resty/v2",
+                "github.com/dubonzi/otelresty"
             ]
         }
     ]

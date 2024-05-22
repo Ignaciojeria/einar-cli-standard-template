@@ -8,7 +8,7 @@ import (
 
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/infrastructure/serverwrapper"
-	"archetype/app/shared/logger"
+	"archetype/app/shared/logging"
 
 	"github.com/labstack/echo/v4"
 )
@@ -17,7 +17,7 @@ func TestNewTemplateDelete(t *testing.T) {
 	e := echo.New()
 
 	conf := configuration.Conf{}
-	wrapper := serverwrapper.NewEchoWrapper(e, conf, logger.NewLogger(conf))
+	wrapper := serverwrapper.NewEchoWrapper(e, conf, logging.NewLogger(conf))
 
 	newTemplateDelete(wrapper)
 

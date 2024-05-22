@@ -5,7 +5,7 @@ import (
 	"archetype/app/shared/exception"
 	"archetype/app/shared/infrastructure/observability"
 	"archetype/app/shared/infrastructure/pubsubclient"
-	"archetype/app/shared/logger"
+	"archetype/app/shared/logging"
 	"context"
 	"encoding/json"
 
@@ -22,9 +22,9 @@ func init() {
 	ioc.Registry(
 		NewPublishEvent,
 		pubsubclient.NewClient,
-		logger.NewLogger)
+		logging.NewLogger)
 }
-func NewPublishEvent(c *pubsub.Client, l logger.Logger) INewPublishEvent {
+func NewPublishEvent(c *pubsub.Client, logger logging.Logger) INewPublishEvent {
 	topicName := "INSERT_YOUR_TOPIC_NAME_HERE"
 	topic := c.Topic(topicName)
 	return func(ctx context.Context, input interface{}) error {
@@ -54,8 +54,8 @@ func NewPublishEvent(c *pubsub.Client, l logger.Logger) INewPublishEvent {
 		if err != nil {
 			span.SetStatus(codes.Error, exception.PUBSUB_BROKER_ERROR.Error())
 			span.RecordError(err)
-			l.LogSpanError(span, exception.PUBSUB_BROKER_ERROR.Error(),
-				logger.CustomLogFields{
+			logger.LogSpanError(span, exception.PUBSUB_BROKER_ERROR.Error(),
+				logging.CustomLogFields{
 					constants.Error: err.Error(),
 				})
 			return exception.PUBSUB_BROKER_ERROR
