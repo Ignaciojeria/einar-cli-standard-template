@@ -439,6 +439,37 @@
                 ]
             }
         ]
+        },
+        {
+            "kind":"bucket",
+            "adapter_type":"outbound",
+            "command":"einar generate uplink-bucket ${operation_name}",
+            "depends_on":["uplink"],
+            "files": [{
+                "source_file": "app/adapter/out/bucket.go",
+                "destination_dir": "app/adapter/out",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"PascalCase",
+                        "name": "StorJBucket",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "NewStorJBucket",
+                        "append_at_start":"New",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "NewStorJBucketCreatePublicSharedLink",
+                        "append_at_start":"",
+                        "append_at_end":"CreatePublicSharedLink"
+                    }
+                ]
+            }]
         }
     ],
     "installation_commands":[
@@ -498,6 +529,20 @@
             "libraries": [
              "firebase.google.com/go",
              "cloud.google.com/go/firestore"]
+        },
+        {
+            "name":"uplink",
+            "depends_on":[],
+            "files": [
+                {   
+                    "source_file": "app/shared/infrastructure/storj/uplink.go",
+                    "destination_dir": "app/shared/infrastructure/storj",
+                    "ioc_discovery":true
+                }
+            ],
+            "libraries": [
+                "storj.io/uplink"
+            ]
         }
     ]
 }
