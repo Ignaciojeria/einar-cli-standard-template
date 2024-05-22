@@ -467,6 +467,12 @@
                         "name": "NewStorJBucketCreatePublicSharedLink",
                         "append_at_start":"",
                         "append_at_end":"CreatePublicSharedLink"
+                    },
+                    {
+                        "kind":"kebab",
+                        "name": "insert-your-bucket-name",
+                        "append_at_start":"",
+                        "append_at_end":""
                     }
                 ]
             }]
