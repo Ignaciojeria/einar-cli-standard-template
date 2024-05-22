@@ -441,7 +441,7 @@
         ]
         },
         {
-            "kind":"bucket",
+            "kind":"uplink-bucket",
             "adapter_type":"outbound",
             "command":"einar generate uplink-bucket ${operation_name}",
             "depends_on":["uplink"],
