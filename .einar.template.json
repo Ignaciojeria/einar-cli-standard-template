@@ -446,8 +446,8 @@
             "command":"einar generate uplink-bucket ${operation_name}",
             "depends_on":["uplink"],
             "files": [{
-                "source_file": "app/adapter/out/bucket.go",
-                "destination_dir": "app/adapter/out",
+                "source_file": "app/adapter/out/bucket/bucket.go",
+                "destination_dir": "app/adapter/out/bucket",
                 "ioc_discovery":true,
                 "replace_holders": [
                     {
