@@ -11,15 +11,15 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-type Client func(ctx context.Context, input interface{}) (interface{}, error)
+type HTTPClient func(ctx context.Context, input interface{}) (interface{}, error)
 
 func init() {
-	ioc.Registry(NewClient, newresty.NewClient, logging.NewLogger)
+	ioc.Registry(NewHTTPClient, newresty.NewClient, logging.NewLogger)
 }
-func NewClient(cli *resty.Client, logger logging.Logger) Client {
+func NewHTTPClient(cli *resty.Client, logger logging.Logger) HTTPClient {
 	return func(ctx context.Context, input interface{}) (interface{}, error) {
 		_, span := observability.Tracer.Start(ctx,
-			"Client",
+			"HTTPClient",
 			trace.WithSpanKind(trace.SpanKindInternal))
 		defer span.End()
 		return nil, nil

@@ -489,13 +489,13 @@
                 "replace_holders": [
                     {
                         "kind":"PascalCase",
-                        "name": "Client",
+                        "name": "HTTPClient",
                         "append_at_start":"",
                         "append_at_end":""
                     },
                     {
                         "kind":"PascalCase",
-                        "name": "NewClient",
+                        "name": "NewHTTPClient",
                         "append_at_start":"New",
                         "append_at_end":""
                     }
