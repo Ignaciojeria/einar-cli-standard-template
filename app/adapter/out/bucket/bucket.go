@@ -5,6 +5,7 @@ import (
 	"archetype/app/shared/infrastructure/storj"
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"time"
@@ -56,6 +57,11 @@ func NewStorJBucket(ul *storj.Uplink) (storj.UplinkManager, error) {
 		&edge.RegisterAccessOptions{Public: true})
 	if err != nil {
 		return StorJBucket{}, fmt.Errorf("could not register access: %w", err)
+	}
+	// Create Bucket
+	_, err = ul.Project.CreateBucket(ctx, bucketName)
+	if err != nil && !errors.Is(err, uplink.ErrBucketAlreadyExists) {
+		return StorJBucket{}, fmt.Errorf("error creating bucket: %w", err)
 	}
 
 	// Ensure the desired Bucket within the Project is created.
