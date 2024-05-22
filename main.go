@@ -1,7 +1,6 @@
 package main
 
 import (
-	_ "archetype/app/adapter/out/bucket"
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/constants"
 	_ "archetype/app/shared/infrastructure/healthcheck"
