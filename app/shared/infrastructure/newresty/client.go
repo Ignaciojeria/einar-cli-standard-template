@@ -1,4 +1,4 @@
-package restyclient
+package newresty
 
 import (
 	ioc "github.com/Ignaciojeria/einar-ioc"

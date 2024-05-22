@@ -580,8 +580,8 @@
             "depends_on":[],
             "files": [
                 {   
-                    "source_file": "app/shared/infrastructure/restyclient/client.go",
-                    "destination_dir": "app/shared/infrastructure/restyclient",
+                    "source_file": "app/shared/infrastructure/newresty/client.go",
+                    "destination_dir": "app/shared/infrastructure/newresty",
                     "ioc_discovery":true
                 }
             ],
