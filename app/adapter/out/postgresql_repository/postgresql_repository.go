@@ -25,7 +25,7 @@ func NewRunPostgreSQLOperation(connection *gorm.DB, logger logging.Logger) RunPo
 			"RunPostgreSQLOperation",
 			trace.WithSpanKind(trace.SpanKindInternal))
 		defer span.End()
-		//PUT YOUR FIRESTORE OPERATION HERE
+		//PUT YOUR POSTGRESQL OPERATION HERE
 		return nil
 	}
 }
