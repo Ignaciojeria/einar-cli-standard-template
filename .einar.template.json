@@ -573,6 +573,11 @@
                     "source_file": "app/shared/infrastructure/storj/uplink.go",
                     "destination_dir": "app/shared/infrastructure/storj",
                     "ioc_discovery":true
+                },
+                {   
+                    "source_file": "app/shared/configuration/storj.go",
+                    "destination_dir": "app/shared/configuration",
+                    "ioc_discovery":false
                 }
             ],
             "libraries": [
@@ -587,11 +592,6 @@
                     "source_file": "app/shared/infrastructure/httpresty/client.go",
                     "destination_dir": "app/shared/infrastructure/httpresty",
                     "ioc_discovery":true
-                },
-                {   
-                    "source_file": "app/shared/configuration/storj.go",
-                    "destination_dir": "app/shared/configuration",
-                    "ioc_discovery":false
                 }
             ],
             "libraries": [
