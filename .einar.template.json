@@ -74,8 +74,12 @@
                 "destination_file": "app/shared/configuration/conf.go"
             },
             {
-                "source_file": "app/shared/configuration/validate_config.go",
-                "destination_file": "app/shared/configuration/validate_config.go"
+                "source_file": "app/shared/configuration/env_loader.go",
+                "destination_file": "app/shared/configuration/env_loader.go"
+            },
+            {
+                "source_file": "app/shared/configuration/validate_conf.go",
+                "destination_file": "app/shared/configuration/validate_conf.go"
             },
             {
                 "source_file": "main.go",
@@ -575,7 +579,7 @@
                     "ioc_discovery":true
                 },
                 {   
-                    "source_file": "app/shared/configuration/storj.go",
+                    "source_file": "app/shared/configuration/storj_conf.go",
                     "destination_dir": "app/shared/configuration",
                     "ioc_discovery":false
                 }
@@ -609,7 +613,7 @@
                     "ioc_discovery":true
                 },
                 {   
-                    "source_file": "app/shared/configuration/postgresql.go",
+                    "source_file": "app/shared/configuration/postgresql_conf.go",
                     "destination_dir": "app/shared/configuration",
                     "ioc_discovery":false
                 }

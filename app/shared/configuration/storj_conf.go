@@ -1,8 +1,6 @@
 package configuration
 
 import (
-	"os"
-
 	ioc "github.com/Ignaciojeria/einar-ioc"
 )
 
@@ -11,11 +9,11 @@ type StorjConfiguration struct {
 }
 
 func init() {
-	ioc.Registry(NewStorjConfiguration)
+	ioc.Registry(NewStorjConfiguration, NewEnvLoader)
 }
-func NewStorjConfiguration() (StorjConfiguration, error) {
+func NewStorjConfiguration(env EnvLoader) (StorjConfiguration, error) {
 	conf := StorjConfiguration{
-		STORJ_ACCESS_GRANT: os.Getenv("STORJ_ACCESS_GRANT"),
+		STORJ_ACCESS_GRANT: env.Get("STORJ_ACCESS_GRANT"),
 	}
 	return validateConfig(conf)
 }

@@ -2,12 +2,10 @@ package configuration
 
 import (
 	"archetype/app/shared/constants"
-	"log/slog"
 	"os"
 	"strings"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
-	"github.com/joho/godotenv"
 )
 
 type Conf struct {
@@ -25,22 +23,19 @@ type Conf struct {
 }
 
 func init() {
-	ioc.Registry(NewConf)
+	ioc.Registry(NewConf, NewEnvLoader)
 }
-func NewConf() (Conf, error) {
-	if err := godotenv.Load(); err != nil {
-		slog.Warn(".env not found, loading environment from system.")
-	}
+func NewConf(env EnvLoader) (Conf, error) {
 	conf := Conf{
-		PORT:                        os.Getenv("PORT"),
-		VERSION:                     os.Getenv(constants.Version),
-		COUNTRY:                     strings.ToUpper(os.Getenv("COUNTRY")),
-		PROJECT_NAME:                os.Getenv("PROJECT_NAME"),
-		GEMINI_API_KEY:              os.Getenv("GEMINI_API_KEY"),
-		GOOGLE_PROJECT_ID:           os.Getenv("GOOGLE_PROJECT_ID"),
-		OTEL_EXPORTER_OTLP_ENDPOINT: os.Getenv("OTEL_EXPORTER_OTLP_ENDPOINT"),
+		PORT:                        env.Get("PORT"),
+		VERSION:                     env.Get(constants.Version),
+		COUNTRY:                     strings.ToUpper(env.Get("COUNTRY")),
+		PROJECT_NAME:                env.Get("PROJECT_NAME"),
+		GEMINI_API_KEY:              env.Get("GEMINI_API_KEY"),
+		GOOGLE_PROJECT_ID:           env.Get("GOOGLE_PROJECT_ID"),
+		OTEL_EXPORTER_OTLP_ENDPOINT: env.Get("OTEL_EXPORTER_OTLP_ENDPOINT"),
 	}
-	setupDatadog(&conf)
+	setupDatadog(&conf, env)
 	if conf.DD_SERVICE != "" && conf.DD_ENV != "" &&
 		conf.DD_VERSION != "" && conf.DD_AGENT_HOST != "" &&
 		conf.OTEL_EXPORTER_OTLP_ENDPOINT != "" {
@@ -54,14 +49,14 @@ func NewConf() (Conf, error) {
 	return validateConfig(conf)
 }
 
-func setupDatadog(c *Conf) {
+func setupDatadog(c *Conf, env EnvLoader) {
 	os.Setenv("DD_SERVICE", c.PROJECT_NAME)
 	c.DD_SERVICE = c.PROJECT_NAME
-	if os.Getenv("DD_ENV") == "" {
+	if env.Get("DD_ENV") == "" {
 		os.Setenv("DD_ENV", "unknown")
 	}
-	c.DD_ENV = os.Getenv("DD_ENV")
-	c.DD_AGENT_HOST = os.Getenv("DD_AGENT_HOST")
+	c.DD_ENV = env.Get("DD_ENV")
+	c.DD_AGENT_HOST = env.Get("DD_AGENT_HOST")
 	os.Setenv("DD_VERSION", c.VERSION)
 	c.DD_VERSION = c.VERSION
 }
