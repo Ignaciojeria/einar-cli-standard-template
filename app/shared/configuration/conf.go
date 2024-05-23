@@ -2,10 +2,8 @@ package configuration
 
 import (
 	"archetype/app/shared/constants"
-	"fmt"
 	"log/slog"
 	"os"
-	"reflect"
 	"strings"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
@@ -17,7 +15,6 @@ type Conf struct {
 	VERSION                     string `required:"true"`
 	COUNTRY                     string `required:"true"`
 	GEMINI_API_KEY              string `required:"false"`
-	STORJ_ACCESS_GRANT          string `required:"false"`
 	PROJECT_NAME                string `required:"false"`
 	GOOGLE_PROJECT_ID           string `required:"false"`
 	OTEL_EXPORTER_OTLP_ENDPOINT string `required:"false"`
@@ -42,7 +39,6 @@ func NewConf() (Conf, error) {
 		GEMINI_API_KEY:              os.Getenv("GEMINI_API_KEY"),
 		GOOGLE_PROJECT_ID:           os.Getenv("GOOGLE_PROJECT_ID"),
 		OTEL_EXPORTER_OTLP_ENDPOINT: os.Getenv("OTEL_EXPORTER_OTLP_ENDPOINT"),
-		STORJ_ACCESS_GRANT:          os.Getenv("STORJ_ACCESS_GRANT"),
 	}
 	setupDatadog(&conf)
 	if conf.DD_SERVICE != "" && conf.DD_ENV != "" &&
@@ -55,32 +51,7 @@ func NewConf() (Conf, error) {
 		conf.PORT = "8080"
 	}
 
-	return conf, validateConfig(conf)
-}
-
-func validateConfig(conf Conf) error {
-	var validationErrors []error
-
-	val := reflect.ValueOf(conf)
-	for i := 0; i < val.NumField(); i++ {
-		field := val.Type().Field(i)
-		value := val.Field(i).String()
-
-		requiredTag := field.Tag.Get("required")
-		if requiredTag == "true" && value == "" {
-			validationErrors = append(validationErrors, fmt.Errorf("%s is required but not set", field.Name))
-		}
-	}
-	if len(validationErrors) > 0 {
-		// Convert errors to strings
-		var errorStrings []string
-		for _, err := range validationErrors {
-			errorStrings = append(errorStrings, err.Error())
-		}
-		return fmt.Errorf("configuration errors:\n%s", strings.Join(errorStrings, "\n"))
-	}
-
-	return nil
+	return validateConfig(conf)
 }
 
 func setupDatadog(c *Conf) {

@@ -47,6 +47,12 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.19.0 // indirect
 	github.com/heimdalr/dag v1.4.0 // indirect
 	github.com/hellofresh/health-go v2.0.2+incompatible // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20231201235250-de7065d80cb9 // indirect
+	github.com/jackc/pgx/v5 v5.5.5 // indirect
+	github.com/jackc/puddle/v2 v2.2.1 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/jtolio/noiseconn v0.0.0-20230111204749-d7ec1a08b0b8 // indirect
 	github.com/klauspost/compress v1.17.7 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
@@ -78,6 +84,9 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240401170217-c3f982113cda // indirect
 	google.golang.org/grpc v1.63.0 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
+	gorm.io/driver/postgres v1.5.7 // indirect
+	gorm.io/gorm v1.25.10 // indirect
+	gorm.io/plugin/opentelemetry v0.1.4 // indirect
 	storj.io/common v0.0.0-20240424123607-5f226fc92c16 // indirect
 	storj.io/drpc v0.0.33 // indirect
 	storj.io/eventkit v0.0.0-20240306141230-6cb545e5f892 // indirect

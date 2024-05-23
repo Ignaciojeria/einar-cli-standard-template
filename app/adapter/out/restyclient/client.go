@@ -1,7 +1,7 @@
 package restyclient
 
 import (
-	"archetype/app/shared/infrastructure/newresty"
+	"archetype/app/shared/infrastructure/httpresty"
 	"archetype/app/shared/infrastructure/observability"
 	"archetype/app/shared/logging"
 	"context"
@@ -14,7 +14,7 @@ import (
 type HTTPClient func(ctx context.Context, input interface{}) (interface{}, error)
 
 func init() {
-	ioc.Registry(NewHTTPClient, newresty.NewClient, logging.NewLogger)
+	ioc.Registry(NewHTTPClient, httpresty.NewClient, logging.NewLogger)
 }
 func NewHTTPClient(cli *resty.Client, logger logging.Logger) HTTPClient {
 	return func(ctx context.Context, input interface{}) (interface{}, error) {

@@ -1,4 +1,4 @@
-package newresty
+package httpresty
 
 import (
 	ioc "github.com/Ignaciojeria/einar-ioc"

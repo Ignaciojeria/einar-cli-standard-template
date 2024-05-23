@@ -44,10 +44,6 @@
     "base_template": {
        "folders": [
             {
-                "source_dir": "app/shared/configuration",
-                "destination_dir": "app/shared/configuration"
-            },
-            {
                 "source_dir": "app/shared/infrastructure/serverwrapper",
                 "destination_dir": "app/shared/infrastructure/serverwrapper"
             },
@@ -73,6 +69,14 @@
             }
         ],
         "files": [
+            {
+                "source_file": "app/shared/configuration/conf.go",
+                "destination_file": "app/shared/configuration/conf.go"
+            },
+            {
+                "source_file": "app/shared/configuration/validate_config.go",
+                "destination_file": "app/shared/configuration/validate_config.go"
+            },
             {
                 "source_file": "main.go",
                 "destination_file": "main.go"
@@ -580,14 +584,40 @@
             "depends_on":[],
             "files": [
                 {   
-                    "source_file": "app/shared/infrastructure/newresty/client.go",
-                    "destination_dir": "app/shared/infrastructure/newresty",
+                    "source_file": "app/shared/infrastructure/httpresty/client.go",
+                    "destination_dir": "app/shared/infrastructure/httpresty",
                     "ioc_discovery":true
+                },
+                {   
+                    "source_file": "app/shared/configuration/storj.go",
+                    "destination_dir": "app/shared/configuration",
+                    "ioc_discovery":false
                 }
             ],
             "libraries": [
                 "github.com/go-resty/resty/v2",
                 "github.com/dubonzi/otelresty"
+            ]
+        },
+        {
+            "name":"postgresql",
+            "depends_on":[],
+            "files": [
+                {   
+                    "source_file": "app/shared/infrastructure/postgresql/client.go",
+                    "destination_dir": "app/shared/infrastructure/postgresql",
+                    "ioc_discovery":true
+                },
+                {   
+                    "source_file": "app/shared/configuration/postgresql.go",
+                    "destination_dir": "app/shared/configuration",
+                    "ioc_discovery":false
+                }
+            ],
+            "libraries": [
+                "gorm.io/gorm",
+                "gorm.io/driver/postgres",
+                "gorm.io/plugin/opentelemetry/tracing"
             ]
         }
     ]

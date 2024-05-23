@@ -22,9 +22,9 @@ type Uplink struct {
 }
 
 func init() {
-	ioc.Registry(NewUplink, configuration.NewConf)
+	ioc.Registry(NewUplink, configuration.NewStorjConfiguration)
 }
-func NewUplink(env configuration.Conf) (*Uplink, error) {
+func NewUplink(env configuration.StorjConfiguration) (*Uplink, error) {
 	ctx := context.Background()
 	access, err := uplink.ParseAccess(env.STORJ_ACCESS_GRANT)
 	if err != nil {
