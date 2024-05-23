@@ -509,6 +509,32 @@
                     }
                 ]
             }]
+        },
+        {
+            "kind":"postgresql-repository",
+            "adapter_type":"outbound",
+            "command":"einar generate postgresql-repository ${operation_name}",
+            "depends_on":["postgresql"],
+            "files": [{
+                "source_file": "app/adapter/out/postgresql_repository/postgresql_repository.go",
+                "destination_dir": "app/adapter/out/postgresql_repository",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"PascalCase",
+                        "name": "RunPostgreSQLOperation",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "NewRunPostgreSQLOperation",
+                        "append_at_start":"New",
+                        "append_at_end":""
+                    }
+                ]
+            }
+        ]
         }
     ],
     "installation_commands":[
@@ -608,7 +634,7 @@
             "depends_on":[],
             "files": [
                 {   
-                    "source_file": "app/shared/infrastructure/postgresql/client.go",
+                    "source_file": "app/shared/infrastructure/postgresql/connection.go",
                     "destination_dir": "app/shared/infrastructure/postgresql",
                     "ioc_discovery":true
                 },
