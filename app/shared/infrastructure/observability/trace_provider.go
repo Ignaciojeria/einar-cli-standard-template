@@ -15,7 +15,6 @@ import (
 func NewTracerProvider(ctx context.Context, conf configuration.Conf) (*tracesdk.TracerProvider, error) {
 	client := otlptracegrpc.NewClient()
 	exporter, err := otlptrace.New(ctx, client)
-
 	if err != nil {
 		return nil, fmt.Errorf("creating OTLP trace exporter: %w", err)
 	}
@@ -26,6 +25,7 @@ func NewTracerProvider(ctx context.Context, conf configuration.Conf) (*tracesdk.
 		tracesdk.WithResource(resource.NewWithAttributes(
 			semconv.SchemaURL,
 			semconv.ServiceNameKey.String(conf.PROJECT_NAME),
+			semconv.DeploymentEnvironmentKey.String(conf.ENVIRONMENT),
 		)),
 	)
 	return tp, nil

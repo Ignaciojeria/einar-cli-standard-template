@@ -12,6 +12,7 @@ type Conf struct {
 	PORT                        string `required:"true"`
 	VERSION                     string `required:"true"`
 	COUNTRY                     string `required:"true"`
+	ENVIRONMENT                 string `required:"false"`
 	GEMINI_API_KEY              string `required:"false"`
 	PROJECT_NAME                string `required:"false"`
 	GOOGLE_PROJECT_ID           string `required:"false"`
@@ -34,6 +35,7 @@ func NewConf(env EnvLoader) (Conf, error) {
 		GEMINI_API_KEY:              env.Get("GEMINI_API_KEY"),
 		GOOGLE_PROJECT_ID:           env.Get("GOOGLE_PROJECT_ID"),
 		OTEL_EXPORTER_OTLP_ENDPOINT: env.Get("OTEL_EXPORTER_OTLP_ENDPOINT"),
+		ENVIRONMENT:                 env.Get("ENVIRONMENT"),
 	}
 	setupDatadog(&conf, env)
 	if conf.DD_SERVICE != "" && conf.DD_ENV != "" &&
@@ -51,6 +53,7 @@ func NewConf(env EnvLoader) (Conf, error) {
 
 func setupDatadog(c *Conf, env EnvLoader) {
 	os.Setenv("DD_SERVICE", c.PROJECT_NAME)
+	os.Setenv("DD_ENV", c.ENVIRONMENT)
 	c.DD_SERVICE = c.PROJECT_NAME
 	if env.Get("DD_ENV") == "" {
 		os.Setenv("DD_ENV", "unknown")
