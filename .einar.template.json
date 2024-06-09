@@ -649,6 +649,25 @@
                 "gorm.io/driver/postgres",
                 "gorm.io/plugin/opentelemetry/tracing"
             ]
+        },
+        {
+            "name":"nats",
+            "depends_on":[],
+            "files": [
+                {   
+                    "source_file": "app/shared/infrastructure/natsconn/connection.go",
+                    "destination_dir": "app/shared/infrastructure/natsconn",
+                    "ioc_discovery":true
+                },
+                {   
+                    "source_file": "app/shared/configuration/nats_conf.go",
+                    "destination_dir": "app/shared/configuration",
+                    "ioc_discovery":false
+                }
+            ],
+            "libraries": [
+                "github.com/nats-io/nats.go"
+            ]
         }
     ]
 }
