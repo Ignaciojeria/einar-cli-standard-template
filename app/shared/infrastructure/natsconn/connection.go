@@ -1,4 +1,4 @@
-package nats
+package natsconn
 
 import (
 	"archetype/app/shared/configuration"
@@ -8,9 +8,9 @@ import (
 )
 
 func init() {
-	ioc.Registry(New, configuration.NewNatsConfiguration)
+	ioc.Registry(NewConn, configuration.NewNatsConfiguration)
 }
-func New(conf configuration.NatsConfiguration) (*nats.Conn, error) {
+func NewConn(conf configuration.NatsConfiguration) (*nats.Conn, error) {
 	return nats.Connect(
 		conf.NATS_CONNECTION_URL,
 		nats.UserCredentials(conf.NATS_CONNECTION_CREDS_FILEPATH))
