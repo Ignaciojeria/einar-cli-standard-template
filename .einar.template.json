@@ -535,6 +535,44 @@
                 ]
             }
         ]
+        },
+        {
+            "kind":"nats-request",
+            "adapter_type":"inbound",
+            "command":"einar generate nats-request ${operation_name}",
+            "depends_on":["nats"],
+            "files": [{
+                "source_file": "app/adapter/in/natsrequest/nats_request.go",
+                "destination_dir": "app/adapter/in/natsrequest",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"camelCase",
+                        "name": "newNatsRequest",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    }
+                ]
+            }]
+        },
+        {
+            "kind":"nats-consumer",
+            "adapter_type":"inbound",
+            "command":"einar generate nats-consumer ${operation_name}",
+            "depends_on":["nats"],
+            "files": [{
+                "source_file": "app/adapter/in/natsconsumer/nats_consumer.go",
+                "destination_dir": "app/adapter/in/natsconsumer",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"camelCase",
+                        "name": "newNatsConsumer",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    }
+                ]
+            }]
         }
     ],
     "installation_commands":[
@@ -656,6 +694,11 @@
             "files": [
                 {   
                     "source_file": "app/shared/infrastructure/natsconn/connection.go",
+                    "destination_dir": "app/shared/infrastructure/natsconn",
+                    "ioc_discovery":true
+                },
+                {   
+                    "source_file": "app/shared/infrastructure/natsconn/jetstream.go",
                     "destination_dir": "app/shared/infrastructure/natsconn",
                     "ioc_discovery":true
                 },

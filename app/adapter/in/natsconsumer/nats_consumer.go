@@ -1,4 +1,4 @@
-package natsin
+package natsconsumer
 
 import (
 	"archetype/app/shared/infrastructure/natsconn"
@@ -10,9 +10,9 @@ import (
 )
 
 func init() {
-	ioc.Registry(NewNatsController, natsconn.NewJetStream, logging.NewLogger)
+	ioc.Registry(newNatsConsumer, natsconn.NewJetStream, logging.NewLogger)
 }
-func NewNatsController(js jetstream.JetStream, logger logging.Logger) (jetstream.ConsumeContext, error) {
+func newNatsConsumer(js jetstream.JetStream, logger logging.Logger) (jetstream.ConsumeContext, error) {
 	ctx := context.Background()
 	consumer, err := js.CreateOrUpdateConsumer(ctx, "stream-name", jetstream.ConsumerConfig{
 		Name:          "consumer-name",
