@@ -12,7 +12,7 @@ func init() {
 	ioc.Registry(newNatsRequest, natsconn.NewConn, logging.NewLogger)
 }
 func newNatsRequest(nc *nats.Conn, logger logging.Logger) (*nats.Subscription, error) {
-	return nc.Subscribe("help.request", func(msg *nats.Msg) {
-		nc.Publish(msg.Reply, []byte("Here is the help you requested"))
+	return nc.QueueSubscribe("example.request", "myQueueGroup", func(msg *nats.Msg) {
+		nc.Publish(msg.Reply, []byte("example response"))
 	})
 }
