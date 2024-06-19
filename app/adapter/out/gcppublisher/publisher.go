@@ -56,6 +56,7 @@ func NewPublishEvent(c *pubsub.Client, logger logging.Logger) INewPublishEvent {
 			span.RecordError(err)
 			logger.SpanLogger(span).Error(
 				systemerr.PUBSUB_BROKER_ERROR.Error(),
+				constants.TopicName, topicName,
 				constants.Error, err.Error())
 			return systemerr.PUBSUB_BROKER_ERROR
 		}
