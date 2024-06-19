@@ -1,33 +1,31 @@
-package subscription
+package gcpsubscription
 
 import (
-	"archetype/app/shared/exception"
 	"archetype/app/shared/infrastructure/observability"
 	"archetype/app/shared/infrastructure/pubsubclient/subscriptionwrapper"
-	"archetype/app/shared/logging"
 	"context"
 	"encoding/json"
+	"net/http"
 
 	"cloud.google.com/go/pubsub"
 	ioc "github.com/Ignaciojeria/einar-ioc"
 	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/trace"
 )
 
 func init() {
 	ioc.Registry(
 		newMessageProcessor,
-		subscriptionwrapper.NewSubscriptionManager,
-		subscriptionwrapper.NewHandleMessageAcknowledgement)
+		subscriptionwrapper.NewSubscriptionManager)
 }
 func newMessageProcessor(
 	sm subscriptionwrapper.SubscriptionManager,
-	handleMessageAck subscriptionwrapper.HandleMessageAcknowledgement,
 ) subscriptionwrapper.MessageProcessor {
 	subscriptionName := "INSERT_YOUR_SUBSCRIPTION_NAME_HERE"
 	subscriptionRef := sm.Subscription(subscriptionName)
 	subscriptionRef.ReceiveSettings.MaxOutstandingMessages = 5
-	messageProcessor := func(ctx context.Context, m *pubsub.Message) (statusCode int, err error) {
+	messageProcessor := func(ctx context.Context, m *pubsub.Message) (int, error) {
 		_, span := observability.Tracer.Start(ctx,
 			"messageProcessorStruct",
 			trace.WithSpanKind(trace.SpanKindConsumer), trace.WithAttributes(
@@ -35,29 +33,15 @@ func newMessageProcessor(
 				attribute.String("message.id", m.ID),
 				attribute.String("message.publishTime", m.PublishTime.String()),
 			))
+		defer span.End()
 		var input interface{}
-		defer func() {
-			statusCode = handleMessageAck(span,
-				&subscriptionwrapper.HandleMessageAcknowledgementDetails{
-					SubscriptionName: subscriptionRef.String(),
-					Error:            err,
-					Message:          m,
-					ErrorsRequiringNack: []error{
-						exception.INTERNAL_SERVER_ERROR,
-						exception.EXTERNAL_SERVER_ERROR,
-						exception.HTTP_NETWORK_ERROR,
-						exception.PUBSUB_BROKER_ERROR,
-					},
-					CustomLogFields: logging.CustomLogFields{
-						"customIndexField": "MyCustomFieldForIndexWhenSearchLogs",
-					},
-				})
-			span.End()
-		}()
 		if err := json.Unmarshal(m.Data, &input); err != nil {
-			return statusCode, err
+			span.SetStatus(codes.Error, err.Error())
+			m.Ack()
+			return http.StatusAccepted, err
 		}
-		return statusCode, nil
+		m.Ack()
+		return http.StatusOK, nil
 	}
 	go sm.WithMessageProcessor(messageProcessor).
 		WithPushHandler("/subscription/" + subscriptionName).

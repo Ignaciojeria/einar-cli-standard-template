@@ -52,8 +52,8 @@
                 "destination_dir": "app/shared/logging"
             },
             {
-                "source_dir": "app/shared/exception",
-                "destination_dir": "app/shared/exception"
+                "source_dir": "app/shared/systemerr",
+                "destination_dir": "app/shared/systemerr"
             },
             {
                 "source_dir": "app/shared/constants",
@@ -358,13 +358,13 @@
             }]
         },
         {
-            "kind":"subscription",
+            "kind":"gcp-subscription",
             "adapter_type":"inbound",
-            "command":"einar generate subscription ${operation_name}",
+            "command":"einar generate gpc-subscription ${operation_name}",
             "depends_on":["pubsub"],
             "files": [{
-                "source_file": "app/adapter/in/subscription/message_processor.go",
-                "destination_dir": "app/adapter/in/subscription",
+                "source_file": "app/adapter/in/gcpsubscription/message_processor.go",
+                "destination_dir": "app/adapter/in/gcpsubscription",
                 "ioc_discovery":true,
                 "replace_holders": [
                     {
@@ -376,8 +376,8 @@
                 ]
             },
             {
-                "source_file": "app/adapter/in/subscription/message_processor_test.go",
-                "destination_dir": "app/adapter/in/subscription",
+                "source_file": "app/adapter/in/gcpsubscription/message_processor_test.go",
+                "destination_dir": "app/adapter/in/gcpsubscription",
                 "append_at_end":"_test",
                 "ioc_discovery":true,
                 "replace_holders": [
@@ -423,13 +423,13 @@
         ]
         },
         {
-            "kind":"publisher",
+            "kind":"gcp-publisher",
             "adapter_type":"outbound",
-            "command":"einar generate publisher ${operation_name}",
+            "command":"einar generate gcp-publisher ${operation_name}",
             "depends_on":["pubsub"],
             "files": [{
-                "source_file": "app/adapter/out/publisher/publisher.go",
-                "destination_dir": "app/adapter/out/publisher",
+                "source_file": "app/adapter/out/gcppublisher/publisher.go",
+                "destination_dir": "app/adapter/out/gcppublisher",
                 "ioc_discovery":true,
                 "replace_holders": [
                     {

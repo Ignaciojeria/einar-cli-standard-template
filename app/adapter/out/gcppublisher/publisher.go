@@ -1,11 +1,11 @@
-package publisher
+package gcppublisher
 
 import (
 	"archetype/app/shared/constants"
-	"archetype/app/shared/exception"
 	"archetype/app/shared/infrastructure/observability"
 	"archetype/app/shared/infrastructure/pubsubclient"
 	"archetype/app/shared/logging"
+	"archetype/app/shared/systemerr"
 	"context"
 	"encoding/json"
 
@@ -52,13 +52,13 @@ func NewPublishEvent(c *pubsub.Client, logger logging.Logger) INewPublishEvent {
 		messageID, err := result.Get(ctx)
 
 		if err != nil {
-			span.SetStatus(codes.Error, exception.PUBSUB_BROKER_ERROR.Error())
+			span.SetStatus(codes.Error, systemerr.PUBSUB_BROKER_ERROR.Error())
 			span.RecordError(err)
-			logger.LogSpanError(span, exception.PUBSUB_BROKER_ERROR.Error(),
+			logger.LogSpanError(span, systemerr.PUBSUB_BROKER_ERROR.Error(),
 				logging.CustomLogFields{
 					constants.Error: err.Error(),
 				})
-			return exception.PUBSUB_BROKER_ERROR
+			return systemerr.PUBSUB_BROKER_ERROR
 		}
 
 		span.SetStatus(codes.Ok, "Message published with ID: "+messageID)

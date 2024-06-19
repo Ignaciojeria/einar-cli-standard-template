@@ -34,7 +34,7 @@ func NewHandleMessageAcknowledgement(l logging.Logger) HandleMessageAcknowledgem
 			span.RecordError(details.Error)
 			span.SetStatus(codes.Error, details.Error.Error())
 			l.SpanLogger(span).Error(
-				details.SubscriptionName+"_exception",
+				details.SubscriptionName+"_error",
 				subscription_name, details.SubscriptionName,
 				constants.Fields, details.CustomLogFields,
 				constants.Error, details.Error,
