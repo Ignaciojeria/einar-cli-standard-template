@@ -18,7 +18,8 @@ import (
 func init() {
 	ioc.Registry(
 		newMessageProcessor,
-		subscriptionwrapper.NewSubscriptionManager)
+		subscriptionwrapper.NewSubscriptionManager,
+		logging.NewLogger)
 }
 func newMessageProcessor(
 	sm subscriptionwrapper.SubscriptionManager,
