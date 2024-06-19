@@ -51,16 +51,17 @@ func NewSubscriptionManager(
 func newSubscriptionManagerWithMessageProcessor(
 	c *pubsub.Client,
 	s serverwrapper.EchoWrapper,
-	mp MessageProcessor) SubscriptionManager {
-	return &SubscriptionWrapper{client: c, httpServer: s, messageProcessor: mp}
+	mp MessageProcessor,
+	l logging.Logger) SubscriptionManager {
+	return &SubscriptionWrapper{client: c, httpServer: s, messageProcessor: mp, logger: l}
 }
 
 func (sw *SubscriptionWrapper) Subscription(id string) *pubsub.Subscription {
 	return sw.client.Subscription(id)
 }
 
-func (sw SubscriptionWrapper) WithMessageProcessor(mp MessageProcessor) SubscriptionManager {
-	return newSubscriptionManagerWithMessageProcessor(sw.client, sw.httpServer, mp)
+func (sw *SubscriptionWrapper) WithMessageProcessor(mp MessageProcessor) SubscriptionManager {
+	return newSubscriptionManagerWithMessageProcessor(sw.client, sw.httpServer, mp, sw.logger)
 }
 
 func (s *SubscriptionWrapper) Start(subscriptionRef *pubsub.Subscription) (SubscriptionManager, error) {
