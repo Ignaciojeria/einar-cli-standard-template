@@ -3,6 +3,7 @@ package gcpsubscription
 import (
 	"archetype/app/shared/infrastructure/gcppubsub/subscriptionwrapper"
 	"archetype/app/shared/infrastructure/observability"
+	"archetype/app/shared/logging"
 	"context"
 	"encoding/json"
 	"net/http"
@@ -21,6 +22,7 @@ func init() {
 }
 func newMessageProcessor(
 	sm subscriptionwrapper.SubscriptionManager,
+	logger logging.Logger,
 ) subscriptionwrapper.MessageProcessor {
 	subscriptionName := "INSERT_YOUR_SUBSCRIPTION_NAME_HERE"
 	subscriptionRef := sm.Subscription(subscriptionName)
@@ -34,6 +36,9 @@ func newMessageProcessor(
 				attribute.String("message.publishTime", m.PublishTime.String()),
 			))
 		defer span.End()
+		logger.
+			SpanLogger(span).
+			Info("MESSAGE_INPUT", "data", m.Data)
 		var input interface{}
 		if err := json.Unmarshal(m.Data, &input); err != nil {
 			span.SetStatus(codes.Error, err.Error())

@@ -2,7 +2,6 @@ package logging
 
 import (
 	"archetype/app/shared/configuration"
-	"archetype/app/shared/constants"
 	"log/slog"
 	"os"
 	"strconv"
@@ -65,16 +64,6 @@ func (l Logger) SpanLogger(span trace.Span) *slog.Logger {
 		slog.String(ddEnvKey, ddEnv),
 		slog.String(ddVersionKey, ddVersion),
 	)
-}
-
-type CustomLogFields map[string]interface{}
-
-func (l Logger) LogSpanError(span trace.Span, message string, fields CustomLogFields) {
-	l.SpanLogger(span).Error(message, constants.Fields, fields)
-}
-
-func (l Logger) LogSpanInfo(span trace.Span, message string, fields CustomLogFields) {
-	l.SpanLogger(span).Info(message, constants.Fields, fields)
 }
 
 func convertTraceID(id string) string {

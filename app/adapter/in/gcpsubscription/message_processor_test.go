@@ -1,6 +1,7 @@
 package gcpsubscription
 
 import (
+	"archetype/app/shared/logging"
 	"archetype/mocks"
 	"context"
 	"encoding/json"
@@ -33,7 +34,7 @@ func TestMessageProcessor_Pull(t *testing.T) {
 			return mockSubscription
 		},
 	}
-	messageProcessor := newMessageProcessor(mockMgr)
+	messageProcessor := newMessageProcessor(mockMgr, logging.Logger{})
 
 	// Invoke the Pull method with a background context and the mock message
 	statusCode, err := messageProcessor(context.Background(), mockMessage)
