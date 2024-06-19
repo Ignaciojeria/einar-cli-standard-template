@@ -1,4 +1,4 @@
-package bucket
+package storjbucket
 
 import (
 	"archetype/app/shared/infrastructure/observability"
@@ -122,4 +122,49 @@ func (b StorJBucket) Upload(ctx context.Context, objectKey string, dataToUpload 
 		return fmt.Errorf("could not commit uploaded object: %v", err)
 	}
 	return nil
+}
+
+func (b StorJBucket) ListFiles(ctx context.Context) ([]string, error) {
+	_, span := observability.Tracer.Start(ctx, "NewStorJBucketListFiles", trace.WithSpanKind(trace.SpanKindInternal))
+	defer span.End()
+	options := &uplink.ListObjectsOptions{
+		Recursive: true,
+	}
+	objectList := b.upLink.Project.ListObjects(ctx, b.bucketName, options)
+
+	var files []string
+	for objectList.Next() {
+		item := objectList.Item()
+		files = append(files, item.Key)
+	}
+
+	if err := objectList.Err(); err != nil {
+		span.RecordError(err)
+		return nil, fmt.Errorf("error listing files: %w", err)
+	}
+
+	return files, nil
+}
+
+func (b StorJBucket) Download(ctx context.Context, objectKey string) ([]byte, error) {
+	_, span := observability.Tracer.Start(ctx, "NewStorJBucketDownload", trace.WithSpanKind(trace.SpanKindInternal))
+	defer span.End()
+
+	// Start the download of the specified object from the bucket.
+	download, err := b.upLink.Project.DownloadObject(ctx, b.bucketName, objectKey, nil)
+	if err != nil {
+		span.RecordError(err)
+		return nil, fmt.Errorf("could not initiate download: %w", err)
+	}
+	defer download.Close()
+
+	// Read the data from the downloaded object.
+	var data bytes.Buffer
+	_, err = io.Copy(&data, download)
+	if err != nil {
+		span.RecordError(err)
+		return nil, fmt.Errorf("could not read data from download object: %w", err)
+	}
+
+	return data.Bytes(), nil
 }

@@ -449,13 +449,13 @@
         ]
         },
         {
-            "kind":"uplink-bucket",
+            "kind":"storj-bucket",
             "adapter_type":"outbound",
-            "command":"einar generate uplink-bucket ${operation_name}",
-            "depends_on":["uplink"],
+            "command":"einar generate storj-bucket ${operation_name}",
+            "depends_on":["storj"],
             "files": [{
-                "source_file": "app/adapter/out/bucket/bucket.go",
-                "destination_dir": "app/adapter/out/bucket",
+                "source_file": "app/adapter/out/storjbucket/bucket.go",
+                "destination_dir": "app/adapter/out/storjbucket",
                 "ioc_discovery":true,
                 "replace_holders": [
                     {
@@ -475,6 +475,18 @@
                         "name": "NewStorJBucketCreatePublicSharedLink",
                         "append_at_start":"",
                         "append_at_end":"CreatePublicSharedLink"
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "NewStorJBucketListFiles",
+                        "append_at_start":"",
+                        "append_at_end":"ListFiles"
+                    },
+                    {
+                        "kind":"PascalCase",
+                        "name": "NewStorJBucketDownload",
+                        "append_at_start":"",
+                        "append_at_end":"Download"
                     },
                     {
                         "kind":"kebab",
@@ -634,7 +646,7 @@
              "cloud.google.com/go/firestore"]
         },
         {
-            "name":"uplink",
+            "name":"storj",
             "depends_on":[],
             "files": [
                 {   
