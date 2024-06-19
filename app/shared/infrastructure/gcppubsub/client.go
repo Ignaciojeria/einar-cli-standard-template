@@ -1,4 +1,4 @@
-package pubsubclient
+package gcppubsub
 
 import (
 	"archetype/app/shared/configuration"
@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	ioc.Registry(pubsub.NewClient, configuration.NewConf)
+	ioc.Registry(NewClient, configuration.NewConf)
 }
 
 func NewClient(conf configuration.Conf) (*pubsub.Client, error) {

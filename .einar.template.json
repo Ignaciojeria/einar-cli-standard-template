@@ -361,7 +361,7 @@
             "kind":"gcp-subscription",
             "adapter_type":"inbound",
             "command":"einar generate gpc-subscription ${operation_name}",
-            "depends_on":["pubsub"],
+            "depends_on":["gcp-pubsub"],
             "files": [{
                 "source_file": "app/adapter/in/gcpsubscription/message_processor.go",
                 "destination_dir": "app/adapter/in/gcpsubscription",
@@ -426,7 +426,7 @@
             "kind":"gcp-publisher",
             "adapter_type":"outbound",
             "command":"einar generate gcp-publisher ${operation_name}",
-            "depends_on":["pubsub"],
+            "depends_on":["gcp-pubsub"],
             "files": [{
                 "source_file": "app/adapter/out/gcppublisher/publisher.go",
                 "destination_dir": "app/adapter/out/gcppublisher",
@@ -597,8 +597,8 @@
             ]
         },
         {
-            "name":"pubsub",
-            "command":"einar install pubsub",
+            "name":"gcp-pubsub",
+            "command":"einar install gcp-pubsub",
             "depends_on":[],
             "files": [
                 {   
@@ -607,8 +607,8 @@
                     "ioc_discovery":true
                 }
             ],
-            "source_dir": "app/shared/infrastructure/pubsubclient",
-            "destination_dir": "app/shared/infrastructure/pubsubclient",
+            "source_dir": "app/shared/infrastructure/gcppubsub",
+            "destination_dir": "app/shared/infrastructure/gcppubsub",
             "libraries": [
              "cloud.google.com/go/pubsub",
              "github.com/heimdalr/dag@v1.4.0"]

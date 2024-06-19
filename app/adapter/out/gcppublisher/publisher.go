@@ -2,8 +2,8 @@ package gcppublisher
 
 import (
 	"archetype/app/shared/constants"
+	"archetype/app/shared/infrastructure/gcppubsub"
 	"archetype/app/shared/infrastructure/observability"
-	"archetype/app/shared/infrastructure/pubsubclient"
 	"archetype/app/shared/logging"
 	"archetype/app/shared/systemerr"
 	"context"
@@ -21,7 +21,7 @@ type INewPublishEvent func(ctx context.Context, input interface{}) error
 func init() {
 	ioc.Registry(
 		NewPublishEvent,
-		pubsubclient.NewClient,
+		gcppubsub.NewClient,
 		logging.NewLogger)
 }
 func NewPublishEvent(c *pubsub.Client, logger logging.Logger) INewPublishEvent {

@@ -1,8 +1,8 @@
 package gcpsubscription
 
 import (
+	"archetype/app/shared/infrastructure/gcppubsub/subscriptionwrapper"
 	"archetype/app/shared/infrastructure/observability"
-	"archetype/app/shared/infrastructure/pubsubclient/subscriptionwrapper"
 	"context"
 	"encoding/json"
 	"net/http"

@@ -2,7 +2,7 @@ package subscriptionwrapper
 
 import (
 	"archetype/app/shared/constants"
-	"archetype/app/shared/infrastructure/pubsubclient"
+	"archetype/app/shared/infrastructure/gcppubsub"
 	"archetype/app/shared/infrastructure/serverwrapper"
 	"archetype/app/shared/logging"
 
@@ -36,7 +36,7 @@ const subscription_name = "subscription_name"
 func init() {
 	ioc.Registry(
 		NewSubscriptionManager,
-		pubsubclient.NewClient,
+		gcppubsub.NewClient,
 		serverwrapper.NewEchoWrapper,
 		logging.NewLogger,
 	)
