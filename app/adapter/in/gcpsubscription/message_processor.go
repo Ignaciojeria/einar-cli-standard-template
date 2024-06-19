@@ -39,7 +39,7 @@ func newMessageProcessor(
 		defer span.End()
 		logger.
 			SpanLogger(span).
-			Info("MESSAGE_INPUT", "data", m.Data)
+			Info("MESSAGE_INPUT", "data", string(m.Data))
 		var input interface{}
 		if err := json.Unmarshal(m.Data, &input); err != nil {
 			span.SetStatus(codes.Error, err.Error())
