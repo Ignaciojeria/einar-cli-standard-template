@@ -70,6 +70,10 @@
             {
                 "source_dir": "app/shared/infrastructure/healthcheck",
                 "destination_dir": "app/shared/infrastructure/healthcheck"
+            },
+            {
+                "source_dir": "app/shared/validator",
+                "destination_dir": "app/shared/validator"
             }
         ],
         "files": [
