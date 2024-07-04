@@ -9,6 +9,7 @@ import (
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/infrastructure/serverwrapper"
 	"archetype/app/shared/logging"
+	"archetype/app/shared/validator"
 
 	"github.com/labstack/echo/v4"
 )
@@ -17,7 +18,7 @@ func TestNewTemplateDelete(t *testing.T) {
 	e := echo.New()
 
 	conf := configuration.Conf{}
-	wrapper := serverwrapper.NewEchoWrapper(e, conf, logging.NewLogger(conf))
+	wrapper := serverwrapper.NewEchoWrapper(e, conf, logging.NewLogger(conf), validator.NewValidator())
 
 	newTemplateDelete(wrapper)
 

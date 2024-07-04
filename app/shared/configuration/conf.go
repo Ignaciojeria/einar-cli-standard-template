@@ -11,7 +11,6 @@ import (
 type Conf struct {
 	PORT                        string `required:"true"`
 	VERSION                     string `required:"true"`
-	COUNTRY                     string `required:"true"`
 	ENVIRONMENT                 string `required:"false"`
 	GEMINI_API_KEY              string `required:"false"`
 	PROJECT_NAME                string `required:"false"`
@@ -21,6 +20,7 @@ type Conf struct {
 	DD_ENV                      string `required:"false"`
 	DD_VERSION                  string `required:"false"`
 	DD_AGENT_HOST               string `required:"false"`
+	COUNTRY                     string `required:"false"`
 }
 
 func init() {

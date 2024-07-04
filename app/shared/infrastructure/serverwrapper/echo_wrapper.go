@@ -4,6 +4,7 @@ import (
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/infrastructure/observability"
 	"archetype/app/shared/logging"
+	"archetype/app/shared/validator"
 	"log"
 	"log/slog"
 
@@ -24,13 +25,16 @@ func init() {
 		NewEchoWrapper,
 		echo.New,
 		configuration.NewConf,
-		logging.NewLogger)
+		logging.NewLogger,
+		validator.NewValidator)
 }
 
 func NewEchoWrapper(
 	e *echo.Echo,
 	c configuration.Conf,
-	l logging.Logger) EchoWrapper {
+	l logging.Logger,
+	validator *validator.Validator) EchoWrapper {
+	e.Validator = validator
 	e.Use(otelecho.Middleware(c.PROJECT_NAME))
 	e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
 		LogStatus:   true,

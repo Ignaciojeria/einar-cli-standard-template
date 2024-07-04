@@ -39,6 +39,10 @@
         {
             "name":"otel-echo",
             "library": "go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho"
+        },
+        {
+            "name":"validatorv10",
+            "library":"github.com/go-playground/validator/v10"
         }
     ],
     "base_template": {
