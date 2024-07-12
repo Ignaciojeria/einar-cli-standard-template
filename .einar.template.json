@@ -731,6 +731,20 @@
             "libraries": [
                 "github.com/nats-io/nats.go"
             ]
+        },
+        {
+            "name":"ngrok",
+            "depends_on":[],
+            "files": [
+                {   
+                    "source_file": "app/shared/infrastructure/ngrok/tunel.go",
+                    "destination_dir": "app/shared/infrastructure/ngrok",
+                    "ioc_discovery":true
+                }
+            ],
+            "libraries": [
+                "github.com/nats-io/nats.go"
+            ]
         }
     ]
 }
