@@ -743,7 +743,7 @@
                 }
             ],
             "libraries": [
-                "github.com/nats-io/nats.go"
+                "golang.ngrok.com/ngrok"
             ]
         }
     ]

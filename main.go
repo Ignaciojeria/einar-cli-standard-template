@@ -4,7 +4,6 @@ import (
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/constants"
 	_ "archetype/app/shared/infrastructure/healthcheck"
-	_ "archetype/app/shared/infrastructure/natsconn"
 	"archetype/app/shared/infrastructure/observability"
 	"archetype/app/shared/infrastructure/serverwrapper"
 	"context"
