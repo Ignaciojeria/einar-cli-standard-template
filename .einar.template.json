@@ -737,7 +737,7 @@
             "depends_on":[],
             "files": [
                 {   
-                    "source_file": "app/shared/infrastructure/ngrok/tunel.go",
+                    "source_file": "app/shared/infrastructure/ngrok/tunnel.go",
                     "destination_dir": "app/shared/infrastructure/ngrok",
                     "ioc_discovery":true
                 }

@@ -12,9 +12,9 @@ import (
 )
 
 func init() {
-	ioc.Registry(newTunel, serverwrapper.NewEchoWrapper)
+	ioc.Registry(newTunnel, serverwrapper.NewEchoWrapper)
 }
-func newTunel(w serverwrapper.EchoWrapper) error {
+func newTunnel(w serverwrapper.EchoWrapper) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	var success bool
 	go func() {
