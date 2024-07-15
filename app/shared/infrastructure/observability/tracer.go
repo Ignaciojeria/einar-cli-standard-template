@@ -43,14 +43,18 @@ func newTracerProvider(conf configuration.Conf) error {
 			semconv.DeploymentEnvironmentKey.String(conf.ENVIRONMENT),
 		)),
 	)
+
+	// Register our TracerProvider as the global so any imported
+	// instrumentation in the future will default to using it.
 	otel.SetTracerProvider(tp)
+
 	// Set up signal handling for clean shutdown
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
 
 	go func() {
 		<-sigChan
-		fmt.Println("Received shutdown signal")
+		// Cleanly shutdown and flush telemetry when the application exits.
 		shutdownCtx, shutdownCancel := context.WithTimeout(context.Background(), time.Second*5)
 		defer shutdownCancel()
 		if err := tp.Shutdown(shutdownCtx); err != nil {
