@@ -2,6 +2,10 @@ package ngrok
 
 import (
 	"archetype/app/shared/infrastructure/serverwrapper"
+	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
 	"github.com/openziti/zrok/environment"
@@ -11,6 +15,7 @@ import (
 func init() {
 	ioc.Registry(newTunnel, serverwrapper.NewEchoWrapper)
 }
+
 func newTunnel(w serverwrapper.EchoWrapper) error {
 	root, err := environment.LoadRoot()
 	if err != nil {
@@ -31,6 +36,16 @@ func newTunnel(w serverwrapper.EchoWrapper) error {
 	if err != nil {
 		return err
 	}
+
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+	go func() {
+		<-sigChan
+		if err := sdk.DeleteShare(root, shr); err != nil {
+			fmt.Println("Failed to zrok tunnel shutdown:", err)
+		}
+	}()
+
 	w.Echo.Listener = listenner
 	return nil
 }
