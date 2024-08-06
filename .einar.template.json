@@ -733,17 +733,18 @@
             ]
         },
         {
-            "name":"ngrok",
+            "name":"zrok",
             "depends_on":[],
             "files": [
                 {   
-                    "source_file": "app/shared/infrastructure/ngrok/tunnel.go",
-                    "destination_dir": "app/shared/infrastructure/ngrok",
+                    "source_file": "app/shared/infrastructure/zrok/tunnel.go",
+                    "destination_dir": "app/shared/infrastructure/zrok",
                     "ioc_discovery":true
                 }
             ],
             "libraries": [
-                "golang.ngrok.com/ngrok"
+                "github.com/openziti/zrok/environment",
+                "github.com/openziti/zrok/sdk/golang/sdk"
             ]
         }
     ]

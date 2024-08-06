@@ -2,11 +2,9 @@ package observability
 
 import (
 	"archetype/app/shared/configuration"
+	"archetype/app/shared/infrastructure/shutdown"
 	"context"
 	"fmt"
-	"os"
-	"os/signal"
-	"syscall"
 	"time"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
@@ -47,22 +45,6 @@ func newTracerProvider(conf configuration.Conf) error {
 	// Register our TracerProvider as the global so any imported
 	// instrumentation in the future will default to using it.
 	otel.SetTracerProvider(tp)
-
-	// Set up signal handling for clean shutdown
-	sigChan := make(chan os.Signal, 1)
-	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
-
-	go func() {
-		<-sigChan
-		// Cleanly shutdown and flush telemetry when the application exits.
-		shutdownCtx, shutdownCancel := context.WithTimeout(context.Background(), time.Second*5)
-		defer shutdownCancel()
-		if err := tp.Shutdown(shutdownCtx); err != nil {
-			fmt.Println("Failed to shutdown tracer provider:", err)
-		}
-		cancel()
-		os.Exit(0) // Exit the application after the shutdown is complete
-	}()
-
+	shutdown.Handler(ctx, tp.Shutdown, time.Second*5, cancel)
 	return nil
 }

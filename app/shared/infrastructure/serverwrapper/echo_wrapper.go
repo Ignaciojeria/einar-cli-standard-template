@@ -3,10 +3,13 @@ package serverwrapper
 import (
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/infrastructure/observability"
+	"archetype/app/shared/infrastructure/shutdown"
 	"archetype/app/shared/logging"
 	"archetype/app/shared/validator"
+	"context"
 	"log"
 	"log/slog"
+	"time"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
 	"github.com/labstack/echo/v4"
@@ -59,19 +62,22 @@ func NewEchoWrapper(
 			return nil
 		},
 	}))
+	ctx, cancel := context.WithCancel(context.Background())
+	shutdown.Handler(ctx, e.Shutdown, time.Second*5, cancel)
 	return EchoWrapper{
 		conf: c,
 		Echo: e,
 	}
 }
 
-func Start() {
-	ioc.Get[EchoWrapper](NewEchoWrapper).start()
+func Start() error {
+	return ioc.Get[EchoWrapper](NewEchoWrapper).start()
 }
 
-func (s EchoWrapper) start() {
+func (s EchoWrapper) start() error {
 	s.printRoutes()
-	s.Echo.Logger.Fatal(s.Echo.Start(":" + s.conf.PORT))
+	err := s.Echo.Start(":" + s.conf.PORT)
+	return err
 }
 
 func (s EchoWrapper) printRoutes() {
