@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 
 	ioc "github.com/Ignaciojeria/einar-ioc"
@@ -47,5 +48,6 @@ func newTunnel(w serverwrapper.EchoWrapper) error {
 	}()
 
 	w.Echo.Listener = listenner
+	fmt.Println("Access server at the following endpoints: ", strings.Join(shr.FrontendEndpoints, "\n"))
 	return nil
 }
