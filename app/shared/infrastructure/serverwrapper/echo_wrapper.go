@@ -78,6 +78,7 @@ func Start() error {
 func (s EchoWrapper) start() error {
 	s.printRoutes()
 	err := s.Echo.Start(":" + s.conf.PORT)
+	fmt.Println(err)
 	fmt.Println("waiting for resources to shut down....")
 	time.Sleep(2 * time.Second)
 	fmt.Println("done.")
