@@ -41,10 +41,9 @@ func newTracerProvider(conf configuration.Conf) error {
 			semconv.DeploymentEnvironmentKey.String(conf.ENVIRONMENT),
 		)),
 	)
-
 	// Register our TracerProvider as the global so any imported
 	// instrumentation in the future will default to using it.
 	otel.SetTracerProvider(tp)
-	shutdown.Handler(ctx, tp.Shutdown, time.Second*5, cancel)
+	shutdown.Handler(ctx, tp.Shutdown, time.Second*2, cancel)
 	return nil
 }

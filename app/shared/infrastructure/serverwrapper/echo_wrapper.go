@@ -7,6 +7,7 @@ import (
 	"archetype/app/shared/logging"
 	"archetype/app/shared/validator"
 	"context"
+	"fmt"
 	"log"
 	"log/slog"
 	"time"
@@ -77,6 +78,9 @@ func Start() error {
 func (s EchoWrapper) start() error {
 	s.printRoutes()
 	err := s.Echo.Start(":" + s.conf.PORT)
+	fmt.Println("waiting for resources to shut down....")
+	time.Sleep(2 * time.Second)
+	fmt.Println("done.")
 	return err
 }
 
