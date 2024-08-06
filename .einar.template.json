@@ -74,6 +74,10 @@
             {
                 "source_dir": "app/shared/validator",
                 "destination_dir": "app/shared/validator"
+            },
+            {
+                "source_dir": "app/shared/infrastructure/shutdown",
+                "destination_dir": "app/shared/infrastructure/shutdown"
             }
         ],
         "files": [
