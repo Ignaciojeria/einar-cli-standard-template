@@ -6,7 +6,7 @@
         },
         {
             "name":"einar-ioc",
-            "library": "github.com/Ignaciojeria/einar-ioc"
+            "library": "github.com/Ignaciojeria/einar-ioc/v2"
         },
         {
             "name":"otel",

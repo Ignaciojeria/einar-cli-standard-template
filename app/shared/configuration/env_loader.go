@@ -4,7 +4,7 @@ import (
 	"log/slog"
 	"os"
 
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 	"github.com/joho/godotenv"
 )
 

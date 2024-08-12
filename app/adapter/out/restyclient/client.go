@@ -6,7 +6,7 @@ import (
 	"archetype/app/shared/logging"
 	"context"
 
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 	"github.com/go-resty/resty/v2"
 	"go.opentelemetry.io/otel/trace"
 )

@@ -3,7 +3,7 @@ package natsconn
 import (
 	"archetype/app/shared/configuration"
 
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 	"github.com/nats-io/nats.go"
 )
 

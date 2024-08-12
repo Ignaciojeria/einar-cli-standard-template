@@ -7,7 +7,7 @@ import (
 	"context"
 
 	"cloud.google.com/go/firestore"
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 	"go.opentelemetry.io/otel/trace"
 )
 

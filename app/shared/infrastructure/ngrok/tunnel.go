@@ -6,7 +6,7 @@ import (
 
 	"time"
 
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 	"golang.ngrok.com/ngrok"
 	"golang.ngrok.com/ngrok/config"
 )

@@ -4,7 +4,7 @@ import (
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/infrastructure/serverwrapper"
 
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 	"github.com/hellofresh/health-go/v5"
 	"github.com/labstack/echo/v4"
 )

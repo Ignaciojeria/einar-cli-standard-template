@@ -6,7 +6,7 @@ import (
 	"context"
 
 	firebase "firebase.google.com/go"
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 )
 
 func init() {

@@ -3,16 +3,18 @@ package serverwrapper
 import (
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/infrastructure/observability"
-	"archetype/app/shared/infrastructure/shutdown"
 	"archetype/app/shared/logging"
 	"archetype/app/shared/validator"
 	"context"
 	"fmt"
 	"log"
 	"log/slog"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho"
@@ -64,15 +66,29 @@ func NewEchoWrapper(
 		},
 	}))
 	ctx, cancel := context.WithCancel(context.Background())
-	shutdown.Handler(ctx, e.Shutdown, time.Second*5, cancel)
+
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+	go func() {
+		<-sigChan
+		shutdownCtx, shutdownCancel := context.WithTimeout(ctx, time.Second*2)
+		defer shutdownCancel()
+		if err := e.Shutdown(shutdownCtx); err != nil {
+			fmt.Println("Failed to shutdown:", err)
+		}
+		cancel()
+	}()
 	return EchoWrapper{
 		conf: c,
 		Echo: e,
 	}
 }
 
-func Start() error {
-	return ioc.Get[EchoWrapper](NewEchoWrapper).start()
+func init() {
+	ioc.RegistryAtEnd(Start, NewEchoWrapper)
+}
+func Start(e EchoWrapper) error {
+	return e.start()
 }
 
 func (s EchoWrapper) start() error {

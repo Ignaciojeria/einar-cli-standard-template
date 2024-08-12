@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 	"github.com/google/generative-ai-go/genai"
 )
 

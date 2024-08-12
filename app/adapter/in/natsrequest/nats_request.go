@@ -4,7 +4,7 @@ import (
 	"archetype/app/shared/infrastructure/natsconn"
 	"archetype/app/shared/logging"
 
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 	"github.com/nats-io/nats.go"
 )
 

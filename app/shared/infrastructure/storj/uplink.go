@@ -5,7 +5,7 @@ import (
 	"context"
 	"fmt"
 
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 	"storj.io/uplink"
 	"storj.io/uplink/edge"
 )

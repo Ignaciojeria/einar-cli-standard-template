@@ -4,7 +4,7 @@ import (
 	"archetype/app/shared/infrastructure/gemini"
 	"context"
 
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 )
 
 type IChat interface {
@@ -37,6 +37,8 @@ func (s chatStruct) SendMessage(ctx context.Context, domain interface{}) (interf
 	{ "age": 52, "name": "JohnDoe", "active": true, "scores": [12, 45, 23] }`)
 }
 
+/*
 func Instance() IChat {
 	return ioc.Get[IChat](NewChat)
 }
+*/

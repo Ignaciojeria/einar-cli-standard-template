@@ -7,7 +7,7 @@ import (
 
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

@@ -4,12 +4,11 @@ import (
 	"archetype/app/shared/constants"
 	_ "archetype/app/shared/infrastructure/healthcheck"
 	_ "archetype/app/shared/infrastructure/observability"
-	"archetype/app/shared/infrastructure/serverwrapper"
 	_ "embed"
 	"log"
 	"os"
 
-	ioc "github.com/Ignaciojeria/einar-ioc"
+	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 )
 
 //go:embed .version
@@ -20,5 +19,4 @@ func main() {
 	if err := ioc.LoadDependencies(); err != nil {
 		log.Fatal(err)
 	}
-	serverwrapper.Start()
 }
