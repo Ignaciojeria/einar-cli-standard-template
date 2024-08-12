@@ -8,7 +8,6 @@ import (
 
 	"archetype/app/shared/configuration"
 	"archetype/app/shared/infrastructure/serverwrapper"
-	"archetype/app/shared/logging"
 	"archetype/app/shared/validator"
 
 	"github.com/labstack/echo/v4"
@@ -19,7 +18,6 @@ func TestNewTemplatePost(t *testing.T) {
 	conf := configuration.Conf{}
 	wrapper := serverwrapper.NewEchoWrapper(e,
 		conf,
-		logging.NewLogger(conf),
 		validator.NewValidator())
 
 	newTemplatePost(wrapper)

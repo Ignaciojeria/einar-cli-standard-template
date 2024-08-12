@@ -1,7 +1,6 @@
 package usecase
 
 import (
-	"archetype/app/shared/infrastructure/observability"
 	"context"
 
 	ioc "github.com/Ignaciojeria/einar-ioc/v2"
@@ -15,8 +14,6 @@ func init() {
 
 func NewUseCase() INewUsecase {
 	return func(ctx context.Context, input interface{}) (interface{}, error) {
-		_, span := observability.Tracer.Start(ctx, "INewUsecase")
-		defer span.End()
 		return input, nil
 	}
 }

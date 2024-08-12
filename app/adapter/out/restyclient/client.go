@@ -2,26 +2,19 @@ package restyclient
 
 import (
 	"archetype/app/shared/infrastructure/httpresty"
-	"archetype/app/shared/infrastructure/observability"
-	"archetype/app/shared/logging"
 	"context"
 
 	ioc "github.com/Ignaciojeria/einar-ioc/v2"
 	"github.com/go-resty/resty/v2"
-	"go.opentelemetry.io/otel/trace"
 )
 
 type HTTPClient func(ctx context.Context, input interface{}) (interface{}, error)
 
 func init() {
-	ioc.Registry(NewHTTPClient, httpresty.NewClient, logging.NewLogger)
+	ioc.Registry(NewHTTPClient, httpresty.NewClient)
 }
-func NewHTTPClient(cli *resty.Client, logger logging.Logger) HTTPClient {
+func NewHTTPClient(cli *resty.Client) HTTPClient {
 	return func(ctx context.Context, input interface{}) (interface{}, error) {
-		_, span := observability.Tracer.Start(ctx,
-			"HTTPClient",
-			trace.WithSpanKind(trace.SpanKindInternal))
-		defer span.End()
 		return nil, nil
 	}
 }

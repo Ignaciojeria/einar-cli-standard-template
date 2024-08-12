@@ -1,9 +1,7 @@
 package storjbucket
 
 import (
-	"archetype/app/shared/infrastructure/observability"
 	"archetype/app/shared/infrastructure/storj"
-	"archetype/app/shared/logging"
 	"bytes"
 	"context"
 	"errors"
@@ -12,7 +10,6 @@ import (
 	"time"
 
 	ioc "github.com/Ignaciojeria/einar-ioc/v2"
-	"go.opentelemetry.io/otel/trace"
 	"storj.io/uplink"
 	"storj.io/uplink/edge"
 )
@@ -22,17 +19,15 @@ type StorJBucket struct {
 	sharedLinkCreds *edge.Credentials
 	bucketName      string
 	upLink          *storj.Uplink
-	logger          logging.Logger
 }
 
 func init() {
 	ioc.Registry(
 		NewStorJBucket,
-		storj.NewUplink,
-		logging.NewLogger)
+		storj.NewUplink)
 }
 
-func NewStorJBucket(ul *storj.Uplink, logger logging.Logger) (storj.UplinkManager, error) {
+func NewStorJBucket(ul *storj.Uplink) (storj.UplinkManager, error) {
 	sharedLinkExpiration := 10 * time.Minute
 	fileExpiration := 7 * 24 * time.Hour
 	bucketName := "insert-your-bucket-name"
@@ -78,22 +73,16 @@ func NewStorJBucket(ul *storj.Uplink, logger logging.Logger) (storj.UplinkManage
 		sharedLinkCreds: credentials,
 		bucketName:      bucketName,
 		upLink:          ul,
-		logger:          logger,
 	}
 	return bucket, nil
 }
 
 func (b StorJBucket) CreatePublicSharedLink(ctx context.Context, objectKey string) (string, error) {
-	_, span := observability.Tracer.Start(ctx,
-		"NewStorJBucketCreatePublicSharedLink",
-		trace.WithSpanKind(trace.SpanKindInternal))
-	defer span.End()
 	// Create a public link that is served by linksharing service.
 	url, err := edge.JoinShareURL("https://link.storjshare.io",
 		b.sharedLinkCreds.AccessKeyID,
 		b.bucketName, objectKey, nil)
 	if err != nil {
-		span.RecordError(err)
 		return "", fmt.Errorf("could not create a shared link: %w", err)
 	}
 	return url, nil
@@ -125,8 +114,6 @@ func (b StorJBucket) Upload(ctx context.Context, objectKey string, dataToUpload 
 }
 
 func (b StorJBucket) ListFiles(ctx context.Context) ([]string, error) {
-	_, span := observability.Tracer.Start(ctx, "NewStorJBucketListFiles", trace.WithSpanKind(trace.SpanKindInternal))
-	defer span.End()
 	options := &uplink.ListObjectsOptions{
 		Recursive: true,
 	}
@@ -139,7 +126,6 @@ func (b StorJBucket) ListFiles(ctx context.Context) ([]string, error) {
 	}
 
 	if err := objectList.Err(); err != nil {
-		span.RecordError(err)
 		return nil, fmt.Errorf("error listing files: %w", err)
 	}
 
@@ -147,13 +133,10 @@ func (b StorJBucket) ListFiles(ctx context.Context) ([]string, error) {
 }
 
 func (b StorJBucket) Download(ctx context.Context, objectKey string) ([]byte, error) {
-	_, span := observability.Tracer.Start(ctx, "NewStorJBucketDownload", trace.WithSpanKind(trace.SpanKindInternal))
-	defer span.End()
 
 	// Start the download of the specified object from the bucket.
 	download, err := b.upLink.Project.DownloadObject(ctx, b.bucketName, objectKey, nil)
 	if err != nil {
-		span.RecordError(err)
 		return nil, fmt.Errorf("could not initiate download: %w", err)
 	}
 	defer download.Close()
@@ -162,7 +145,6 @@ func (b StorJBucket) Download(ctx context.Context, objectKey string) ([]byte, er
 	var data bytes.Buffer
 	_, err = io.Copy(&data, download)
 	if err != nil {
-		span.RecordError(err)
 		return nil, fmt.Errorf("could not read data from download object: %w", err)
 	}
 

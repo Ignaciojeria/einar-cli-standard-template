@@ -12,7 +12,7 @@ import (
 func init() {
 	ioc.Registry(newNatsConsumer, natsconn.NewJetStream, logging.NewLogger)
 }
-func newNatsConsumer(js jetstream.JetStream, logger logging.Logger) (jetstream.ConsumeContext, error) {
+func newNatsConsumer(js jetstream.JetStream) (jetstream.ConsumeContext, error) {
 	ctx := context.Background()
 	consumer, err := js.CreateOrUpdateConsumer(ctx, "stream-name", jetstream.ConsumerConfig{
 		Name:          "consumer-name",
@@ -23,7 +23,7 @@ func newNatsConsumer(js jetstream.JetStream, logger logging.Logger) (jetstream.C
 		return nil, err
 	}
 	return consumer.Consume(func(msg jetstream.Msg) {
-		logger.Info("Received message", "data", string(msg.Data()))
+		//process received message here
 		msg.Ack()
 	})
 }

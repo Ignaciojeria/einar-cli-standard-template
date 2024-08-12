@@ -6,19 +6,7 @@
         },
         {
             "name":"einar-ioc",
-            "library": "github.com/Ignaciojeria/einar-ioc/v2"
-        },
-        {
-            "name":"otel",
-            "library": "go.opentelemetry.io/otel"
-        },
-        {
-            "name":"otlptrace",
-            "library": "go.opentelemetry.io/otel/exporters/otlp/otlptrace"
-        },
-        {
-            "name":"otlptracegrpc",
-            "library": "go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
+            "library": "github.com/Ignaciojeria/einar-ioc/v2@v2.4.0"
         },
         {
             "name":"uuid",
@@ -33,14 +21,6 @@
             "library": "github.com/hellofresh/health-go/v5"
         },
         {
-            "name":"echo-middleware",
-            "library": "github.com/labstack/echo/v4/middleware"
-        },
-        {
-            "name":"otel-echo",
-            "library": "go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho"
-        },
-        {
             "name":"validatorv10",
             "library":"github.com/go-playground/validator/v10"
         }
@@ -52,10 +32,6 @@
                 "destination_dir": "app/shared/infrastructure/serverwrapper"
             },
             {
-                "source_dir": "app/shared/logging",
-                "destination_dir": "app/shared/logging"
-            },
-            {
                 "source_dir": "app/shared/systemerr",
                 "destination_dir": "app/shared/systemerr"
             },
@@ -64,20 +40,12 @@
                 "destination_dir": "app/shared/constants"
             },
             {
-                "source_dir": "app/shared/infrastructure/observability",
-                "destination_dir": "app/shared/infrastructure/observability"
-            },
-            {
                 "source_dir": "app/shared/infrastructure/healthcheck",
                 "destination_dir": "app/shared/infrastructure/healthcheck"
             },
             {
                 "source_dir": "app/shared/validator",
                 "destination_dir": "app/shared/validator"
-            },
-            {
-                "source_dir": "app/shared/infrastructure/shutdown",
-                "destination_dir": "app/shared/infrastructure/shutdown"
             }
         ],
         "files": [
@@ -592,6 +560,25 @@
                     {
                         "kind":"camelCase",
                         "name": "newNatsConsumer",
+                        "append_at_start":"",
+                        "append_at_end":""
+                    }
+                ]
+            }]
+        },
+        {
+            "kind":"onload-job",
+            "adapter_type":"outbound",
+            "command":"einar generate onload-job ${operation_name}",
+            "depends_on":[""],
+            "files": [{
+                "source_file": "app/onload/on_load_job.go",
+                "destination_dir": "app/onload",
+                "ioc_discovery":true,
+                "replace_holders": [
+                    {
+                        "kind":"camelCase",
+                        "name": "onloadJob",
                         "append_at_start":"",
                         "append_at_end":""
                     }

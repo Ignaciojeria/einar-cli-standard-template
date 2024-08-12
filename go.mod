@@ -6,7 +6,7 @@ require (
 	cloud.google.com/go/firestore v1.15.0
 	cloud.google.com/go/pubsub v1.37.0
 	firebase.google.com/go v3.13.0+incompatible
-	github.com/Ignaciojeria/einar-ioc/v2 v2.0.1
+	github.com/Ignaciojeria/einar-ioc/v2 v2.4.0
 	github.com/dubonzi/otelresty v1.3.0
 	github.com/go-playground/validator/v10 v10.22.0
 	github.com/go-resty/resty/v2 v2.13.1

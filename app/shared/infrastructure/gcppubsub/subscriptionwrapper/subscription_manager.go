@@ -5,6 +5,8 @@ import (
 	"archetype/app/shared/infrastructure/gcppubsub"
 	"archetype/app/shared/infrastructure/serverwrapper"
 	"archetype/app/shared/logging"
+	"log/slog"
+	"os"
 
 	"context"
 	"io"
@@ -24,9 +26,10 @@ type SubscriptionManager interface {
 	Start(subscriptionRef *pubsub.Subscription) (SubscriptionManager, error)
 }
 
+var logger = slog.New(slog.NewJSONHandler(os.Stdout, nil))
+
 type SubscriptionWrapper struct {
 	client           *pubsub.Client
-	logger           logging.Logger
 	httpServer       serverwrapper.EchoWrapper
 	messageProcessor MessageProcessor
 }
@@ -43,17 +46,15 @@ func init() {
 }
 func NewSubscriptionManager(
 	c *pubsub.Client,
-	s serverwrapper.EchoWrapper,
-	l logging.Logger) SubscriptionManager {
-	return &SubscriptionWrapper{client: c, httpServer: s, logger: l}
+	s serverwrapper.EchoWrapper) SubscriptionManager {
+	return &SubscriptionWrapper{client: c, httpServer: s}
 }
 
 func newSubscriptionManagerWithMessageProcessor(
 	c *pubsub.Client,
 	s serverwrapper.EchoWrapper,
-	mp MessageProcessor,
-	l logging.Logger) SubscriptionManager {
-	return &SubscriptionWrapper{client: c, httpServer: s, messageProcessor: mp, logger: l}
+	mp MessageProcessor) SubscriptionManager {
+	return &SubscriptionWrapper{client: c, httpServer: s, messageProcessor: mp}
 }
 
 func (sw *SubscriptionWrapper) Subscription(id string) *pubsub.Subscription {
@@ -61,14 +62,13 @@ func (sw *SubscriptionWrapper) Subscription(id string) *pubsub.Subscription {
 }
 
 func (sw *SubscriptionWrapper) WithMessageProcessor(mp MessageProcessor) SubscriptionManager {
-	return newSubscriptionManagerWithMessageProcessor(sw.client, sw.httpServer, mp, sw.logger)
+	return newSubscriptionManagerWithMessageProcessor(sw.client, sw.httpServer, mp)
 }
 
 func (s *SubscriptionWrapper) Start(subscriptionRef *pubsub.Subscription) (SubscriptionManager, error) {
 	ctx := context.Background()
-
 	if err := subscriptionRef.Receive(ctx, s.receive); err != nil {
-		s.logger.Error(
+		logger.Error(
 			"subscription_signal_broken",
 			subscription_name, subscriptionRef.String(),
 			constants.Error, err.Error(),

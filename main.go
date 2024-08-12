@@ -3,7 +3,6 @@ package main
 import (
 	"archetype/app/shared/constants"
 	_ "archetype/app/shared/infrastructure/healthcheck"
-	_ "archetype/app/shared/infrastructure/observability"
 	_ "embed"
 	"log"
 	"os"
